@@ -1,10 +1,14 @@
 # Hazav'Iary — site vitrine
 
 Site de présentation de **Hazav'Iary**, entreprise malgache spécialisée dans l'énergie solaire
-et les solutions vertes. Thème solaire / énergie verte, référencement technique complet,
-simulateur de dimensionnement intégré.
+et les solutions vertes. Référencement technique complet, simulateur de dimensionnement intégré.
 
 Construit avec **Next.js 15 (App Router)**, **React 19**, **TypeScript** et **Tailwind CSS 3**.
+
+La charte reprend celle de l'application de gestion `RSitraka/Hazav-Iary` (voir
+[Thème](#thème--repris-de-lapplication-de-gestion)) : mêmes couleurs, mêmes formes, même logo,
+même clé de préférence clair/sombre. La stack diffère volontairement — Next.js rend les pages en
+statique, ce dont dépend tout le référencement.
 
 ---
 
@@ -121,20 +125,49 @@ src/
 
 ---
 
-## Thème
+## Thème — repris de l'application de gestion
 
-Palette définie dans `tailwind.config.ts` :
+Le système de design vient de `RSitraka/Hazav-Iary` (`frontend/src/theme.css`) : **interface
+claire, plate et contrastée**, accent turquoise pétrole, angles courts, bordures fines.
 
-- **`solar`** — jaune/orange, la production et le rendement
-- **`leaf`** — vert, la durabilité et l'énergie propre
-- **`night`** — vert très sombre, fond des sections immersives
+| Jeton | Clair | Sombre | Usage |
+| --- | --- | --- | --- |
+| `accent` | `#17788A` | `#35AEC4` | Interface, liens, boutons primaires |
+| `sun` | `#DE7A00` | `#F0972E` | Le soleil, la production |
+| `grow` | `#0F9D6B` | `#35C48C` | Validation, énergie propre |
+| `surface` | `#FFFFFF` | `#171C1F` | Cartes, panneaux, en-tête |
+| `tone` | `#F2F3F5` | `#101417` | Fond de page |
+| `ink` | `#14181C` | `#E9EDF0` | Texte courant |
 
-Les couleurs de surface passent par des variables CSS (`--bg`, `--fg`, `--brand`…) définies dans
-`globals.css`, ce qui donne un **mode sombre** complet. La préférence est mémorisée et appliquée
-avant la première peinture, sans clignotement.
+Toutes les couleurs passent par des variables CSS définies dans `globals.css` et exposées à
+Tailwind : **aucune classe `dark:` n'est nécessaire dans les composants**, le mode sombre suit
+automatiquement.
 
-Aucune image bitmap : toutes les illustrations sont des SVG intégrés au HTML — pas de requête
-réseau, pas de décalage de mise en page, rendu net sur tous les écrans.
+Autres règles héritées :
+
+- Rayons de **3 à 6 px**, bordures de 1 px, ombres discrètes — aucun dégradé, aucun flou
+- **Inter** pour le texte, **JetBrains Mono** pour les libellés, badges et fils d'Ariane
+  (10,5 px, gras, majuscules, interlettrage `.7px`)
+- Titres en graisse 800, interlettrage `-.2px`
+- Tuiles de chiffres avec filet d'accent de 3 px en haut (`.stat`), comme dans l'application
+- Mode sombre porté par la classe `dark` sur `<html>`, mémorisé sous la clé
+  **`hazaviary_theme`** — la même que l'application, donc la préférence est partagée entre les
+  deux sur un même domaine
+- Fond de page en dégradé fixe blanc → gris, repris de `.app::before`
+
+Écart assumé : le corps de texte passe de 14 px à 15 px, un site de lecture n'ayant pas la
+densité d'un outil de gestion.
+
+### Logo
+
+`public/logo-mark.png` (emblème), `public/logo.png` (verrou complet) et `src/app/icon.png`
+(favicon) sont dérivés du `logo.png` officiel de l'application. Le fond blanc d'origine a été
+rendu transparent par remplissage depuis les bords, ce qui préserve les blancs internes de
+l'emblème. En mode sombre, la marque est posée sur une pastille claire — même traitement que
+`html.dark .brand-logo` dans l'application.
+
+Hors logo, aucune image bitmap : les illustrations sont des SVG intégrés au HTML, colorés par les
+variables du thème — pas de requête réseau, pas de décalage de mise en page.
 
 ---
 

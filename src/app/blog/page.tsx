@@ -63,7 +63,7 @@ export default function BlogPage() {
             <article className="card card-hover relative grid gap-8 p-8 md:grid-cols-[1.3fr_1fr] md:items-center md:p-10">
               <div>
                 <div className="flex flex-wrap items-center gap-2 text-xs muted">
-                  <span className="rounded-full bg-leaf-500/15 px-3 py-1 font-semibold uppercase tracking-wider text-leaf-600 dark:text-leaf-400">
+                  <span className="rounded-sm bg-accent-soft px-3 py-1 font-semibold uppercase tracking-wider text-accent">
                     {featured.category}
                   </span>
                   <time dateTime={featured.date}>{formatDate(featured.date)}</time>
@@ -76,14 +76,14 @@ export default function BlogPage() {
                   </Link>
                 </h2>
                 <p className="lead mt-4 text-base sm:text-lg">{featured.description}</p>
-                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-leaf-600 dark:text-leaf-400">
+                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-accent">
                   Lire l&rsquo;article
                   <ArrowRightIcon width={16} height={16} />
                 </span>
               </div>
               <ul className="flex flex-wrap gap-2 md:justify-end">
                 {featured.keywords.slice(0, 4).map((keyword) => (
-                  <li key={keyword} className="rounded-full border px-3 py-1 text-xs muted">
+                  <li key={keyword} className="rounded-sm border px-3 py-1 text-xs muted">
                     {keyword}
                   </li>
                 ))}
@@ -94,7 +94,7 @@ export default function BlogPage() {
               {rest.map((post) => (
                 <article key={post.slug} className="card card-hover relative flex flex-col">
                   <div className="flex flex-wrap items-center gap-2 text-xs muted">
-                    <span className="font-semibold uppercase tracking-wider text-leaf-600 dark:text-leaf-400">
+                    <span className="font-semibold uppercase tracking-wider text-accent">
                       {post.category}
                     </span>
                     <span aria-hidden="true">·</span>

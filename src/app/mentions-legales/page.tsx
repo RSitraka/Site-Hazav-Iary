@@ -22,7 +22,7 @@ export default function MentionsLegalesPage() {
 
       <section className="section">
         <div className="container max-w-3xl prose-solar">
-          <p className="rounded-xl border border-solar-500/40 bg-solar-500/10 p-4 text-sm">
+          <p className="rounded border border-sun-line bg-sun-soft p-4 text-sm">
             <strong>À compléter avant mise en ligne :</strong> forme juridique, capital social,
             numéro RCS / NIF / STAT, nom du directeur de publication et coordonnées exactes de
             l&rsquo;hébergeur.

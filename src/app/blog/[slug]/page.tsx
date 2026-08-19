@@ -52,12 +52,8 @@ export default async function BlogPostPage({ params }: Params) {
       />
 
       <article>
-        <header className="relative overflow-hidden border-b">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-32 h-72 bg-sun-radial opacity-45 dark:opacity-25"
-          />
-          <div className="container relative max-w-3xl py-14 md:py-20">
+        <header className="border-b bg-surface">
+          <div className="container max-w-3xl py-12 md:py-16">
             <Breadcrumbs
               items={[
                 { name: "Blog", path: "/blog" },
@@ -66,7 +62,7 @@ export default async function BlogPostPage({ params }: Params) {
             />
 
             <div className="mt-6 flex flex-wrap items-center gap-2 text-sm muted">
-              <span className="rounded-full bg-leaf-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-leaf-600 dark:text-leaf-400">
+              <span className="rounded-sm bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
                 {post.category}
               </span>
               <time dateTime={post.date}>{formatDate(post.date)}</time>
@@ -86,7 +82,7 @@ export default async function BlogPostPage({ params }: Params) {
           {/* Le HTML provient de nos propres fichiers Markdown versionnés. */}
           <div className="prose-solar" dangerouslySetInnerHTML={{ __html: post.html }} />
 
-          <aside className="card mt-14 bg-[rgb(var(--bg-subtle))]">
+          <aside className="card mt-14 bg-surface">
             <h2 className="h3 text-base">Envie de chiffrer votre propre installation ?</h2>
             <p className="mt-2 text-sm leading-relaxed muted">
               Le simulateur calcule votre consommation mensuelle et le matériel nécessaire en deux
@@ -106,13 +102,13 @@ export default async function BlogPostPage({ params }: Params) {
       </article>
 
       {related.length > 0 && (
-        <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+        <section className="section border-t bg-surface">
           <div className="container">
             <h2 className="h2">À lire également</h2>
             <div className="mt-10 grid gap-5 md:grid-cols-3">
               {related.map((item) => (
                 <article key={item.slug} className="card card-hover relative flex flex-col">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-leaf-600 dark:text-leaf-400">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-accent">
                     {item.category}
                   </span>
                   <h3 className="h3 mt-3 text-lg">

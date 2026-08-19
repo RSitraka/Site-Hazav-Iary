@@ -52,7 +52,7 @@ export default function ServicesPage() {
             return (
               <article key={service.slug} className="card card-hover relative flex flex-col">
                 <div className="flex items-start gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-solar-400/20 to-leaf-500/20 text-leaf-600 dark:text-leaf-400">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded border border-accent-line bg-accent-soft text-accent">
                     <Icon width={22} height={22} />
                   </span>
                   <div>
@@ -65,7 +65,7 @@ export default function ServicesPage() {
                       </Link>
                     </h2>
                     {service.priceFrom && (
-                      <p className="mt-1 text-sm font-medium text-solar-600">{service.priceFrom}</p>
+                      <p className="mt-1 text-sm font-medium text-sun">{service.priceFrom}</p>
                     )}
                   </div>
                 </div>
@@ -76,14 +76,14 @@ export default function ServicesPage() {
                   {service.benefits.slice(0, 2).map((benefit) => (
                     <li
                       key={benefit}
-                      className="rounded-full border px-3 py-1 text-xs font-medium muted"
+                      className="rounded-sm border px-3 py-1 text-xs font-medium muted"
                     >
                       {benefit}
                     </li>
                   ))}
                 </ul>
 
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-leaf-600 dark:text-leaf-400">
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
                   Détail de la prestation
                   <ArrowRightIcon width={15} height={15} />
                 </span>

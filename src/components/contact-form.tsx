@@ -66,7 +66,7 @@ export function ContactForm() {
   if (status === "sent") {
     return (
       <div className="card flex flex-col items-center gap-4 py-14 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-leaf-500/15 text-leaf-600 dark:text-leaf-400">
+        <span className="flex h-14 w-14 items-center justify-center rounded-sm bg-accent-soft text-accent">
           <CheckIcon width={28} height={28} strokeWidth={2.2} />
         </span>
         <h2 className="h3">Demande transmise</h2>
@@ -93,14 +93,14 @@ export function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="subject" className="text-sm font-medium">
-            Votre projet <span className="text-solar-600">*</span>
+            Votre projet <span className="text-sun">*</span>
           </label>
           <select
             id="subject"
             name="subject"
             required
             defaultValue=""
-            className="mt-1.5 w-full rounded-xl border bg-transparent px-3.5 py-2.5 text-sm"
+            className="mt-1.5 w-full rounded border bg-transparent px-3.5 py-2.5 text-sm"
           >
             <option value="" disabled>
               Sélectionnez un service
@@ -121,7 +121,7 @@ export function ContactForm() {
             id="budget"
             name="budget"
             defaultValue=""
-            className="mt-1.5 w-full rounded-xl border bg-transparent px-3.5 py-2.5 text-sm"
+            className="mt-1.5 w-full rounded border bg-transparent px-3.5 py-2.5 text-sm"
           >
             <option value="">Je ne sais pas encore</option>
             <option value="< 5 M Ar">Moins de 5 millions Ar</option>
@@ -134,7 +134,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="message" className="text-sm font-medium">
-          Décrivez votre besoin <span className="text-solar-600">*</span>
+          Décrivez votre besoin <span className="text-sun">*</span>
         </label>
         <textarea
           id="message"
@@ -142,7 +142,7 @@ export function ContactForm() {
           required
           rows={5}
           placeholder="Surface de toiture, appareils à alimenter, coupures subies, échéance souhaitée..."
-          className="mt-1.5 w-full rounded-xl border bg-transparent px-3.5 py-2.5 text-sm"
+          className="mt-1.5 w-full rounded border bg-transparent px-3.5 py-2.5 text-sm"
         />
       </div>
 
@@ -153,7 +153,7 @@ export function ContactForm() {
       </div>
 
       {status === "error" && (
-        <p role="alert" className="rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-sm">
+        <p role="alert" className="rounded border border-red-500/40 bg-red-500/10 p-3 text-sm">
           L&rsquo;envoi a échoué. Écrivez-nous directement à{" "}
           <a href={`mailto:${site.email}`} className="link-underline">
             {site.email}
@@ -190,7 +190,7 @@ function Field({
   return (
     <div>
       <label htmlFor={name} className="text-sm font-medium">
-        {label} {required && <span className="text-solar-600">*</span>}
+        {label} {required && <span className="text-sun">*</span>}
       </label>
       <input
         id={name}
@@ -198,7 +198,7 @@ function Field({
         type={type}
         required={required}
         autoComplete={autoComplete}
-        className="mt-1.5 w-full rounded-xl border bg-transparent px-3.5 py-2.5 text-sm"
+        className="mt-1.5 w-full rounded border bg-transparent px-3.5 py-2.5 text-sm"
       />
     </div>
   );

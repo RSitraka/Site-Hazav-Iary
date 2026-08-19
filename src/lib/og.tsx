@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 
@@ -5,9 +7,16 @@ export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 export const ogAlt = `${site.name} — ${site.tagline}`;
 
+/** Emblème officiel, encodé en base64 : next/og n'accède pas au réseau. */
+function markDataUri() {
+  const file = path.join(process.cwd(), "public", "logo-mark.png");
+  return `data:image/png;base64,${fs.readFileSync(file).toString("base64")}`;
+}
+
 /**
  * Image de partage générée au build (Open Graph et Twitter Card).
- * Rendue en PNG 1200×630 par next/og, sans dépendance externe.
+ * Reprend la charte de l'application : fond clair, accent turquoise,
+ * libellés monospace, filet d'accent — comme les tuiles `.stat`.
  */
 export function renderOgImage() {
   return new ImageResponse(
@@ -19,62 +28,41 @@ export function renderOgImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "72px",
-          background: "linear-gradient(135deg, #061511 0%, #0A211A 55%, #05261D 100%)",
-          color: "#ECF5F1",
+          padding: "64px 72px",
+          background: "#FFFFFF",
+          color: "#14181C",
           fontFamily: "sans-serif",
-          position: "relative",
+          borderTop: "10px solid #17788A",
         }}
       >
-        {/* Halo solaire */}
-        <div
-          style={{
-            position: "absolute",
-            top: -260,
-            right: -160,
-            width: 640,
-            height: 640,
-            borderRadius: 640,
-            background:
-              "radial-gradient(circle, rgba(255,206,77,0.55) 0%, rgba(245,162,0,0.18) 45%, rgba(245,162,0,0) 70%)",
-            display: "flex",
-          }}
-        />
-
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div
-            style={{
-              width: 64,
-              height: 64,
-              borderRadius: 18,
-              background: "linear-gradient(135deg, #FFCE4D, #F5A200)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 36,
-              fontWeight: 700,
-              color: "#061511",
-            }}
-          >
-            H
+        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={markDataUri()} width={76} height={76} alt="" />
+          <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: -0.5, display: "flex" }}>
+            <span style={{ color: "#4B555F" }}>HAZAV</span>
+            <span style={{ color: "#17788A" }}>&#8217;IARY</span>
           </div>
-          <div style={{ fontSize: 34, fontWeight: 700, letterSpacing: -0.5 }}>{site.name}</div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", maxWidth: 900 }}>
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: 960 }}>
           <div
             style={{
-              fontSize: 22,
-              letterSpacing: 3,
-              textTransform: "uppercase",
-              color: "#32D583",
-              marginBottom: 20,
               display: "flex",
+              alignSelf: "flex-start",
+              fontSize: 20,
+              letterSpacing: 3,
+              fontWeight: 700,
+              color: "#17788A",
+              background: "#E2EFF2",
+              border: "1px solid #A8CDD5",
+              borderRadius: 2,
+              padding: "6px 12px",
+              marginBottom: 26,
             }}
           >
-            Énergie solaire &amp; solutions vertes
+            ÉNERGIE SOLAIRE &amp; SOLUTIONS VERTES
           </div>
-          <div style={{ fontSize: 68, fontWeight: 700, lineHeight: 1.12, letterSpacing: -1.5 }}>
+          <div style={{ fontSize: 62, fontWeight: 800, lineHeight: 1.12, letterSpacing: -1.5 }}>
             {site.tagline}
           </div>
         </div>
@@ -84,16 +72,16 @@ export function renderOgImage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            fontSize: 24,
-            color: "rgba(236,245,241,0.72)",
-            borderTop: "1px solid rgba(236,245,241,0.16)",
-            paddingTop: 28,
+            fontSize: 22,
+            color: "#4B555F",
+            borderTop: "1px solid #E3E6E9",
+            paddingTop: 26,
           }}
         >
           <div style={{ display: "flex" }}>
             Installation · Stockage · Pompage · Maintenance
           </div>
-          <div style={{ display: "flex", color: "#FFBB1C", fontWeight: 600 }}>
+          <div style={{ display: "flex", color: "#DE7A00", fontWeight: 700 }}>
             {site.url.replace(/^https?:\/\//, "")}
           </div>
         </div>

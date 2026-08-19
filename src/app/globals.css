@@ -2,37 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
-/* --------------------------------------------------------------------------
-   Jetons de couleur — thème clair par défaut, thème sombre via .dark
-   -------------------------------------------------------------------------- */
+/* =====================================================================
+   HAZAV'IARY — Site vitrine
+   Thème repris de l'application de gestion (frontend/src/theme.css) :
+   fonds blancs / gris clairs, texte noir, accent turquoise vif.
+
+   Règles conservées :
+   1. Texte courant NOIR, secondaires en gris franchement lisibles.
+   2. Fonds blancs et gris clairs ; le fond de page est un gris (--tone).
+   3. Couleurs vives et saturées : accent turquoise pour l'interface,
+      orange et vert comme couleurs de sens — ici aussi couleurs
+      sectorielles (soleil, énergie propre).
+   4. Aspect plat : bordures fines, angles courts, ombres discrètes.
+
+   Écart assumé par rapport à l'application : le corps de texte passe de
+   14 px à 15 px, un site de lecture n'ayant pas la densité d'un outil
+   de gestion.
+   ===================================================================== */
 @layer base {
   :root {
-    --bg: 255 255 255;
-    --bg-subtle: 247 250 248;
+    /* Accent principal : turquoise/pétrole vif. */
+    --accent: 23 120 138; /* #17788A */
+    --accent-deep: 15 92 107; /* #0F5C6B */
+    --accent-soft: 226 239 242; /* #E2EFF2 */
+    --accent-line: 168 205 213; /* #A8CDD5 */
+    --on-accent: 255 255 255;
+
+    --slate: 126 150 162; /* #7E96A2 */
+
+    /* Fonds : blanc et gris clairs */
+    --tone: 242 243 245; /* #F2F3F5 */
     --surface: 255 255 255;
-    --border: 224 232 228;
-    --fg: 6 21 17;
-    --fg-muted: 78 96 88;
-    --brand: 3 152 85; /* leaf-600 */
-    --brand-fg: 255 255 255;
-    --accent: 245 162 0; /* solar-500 */
+    --panel-2: 247 248 249; /* #F7F8F9 */
+    --panel-3: 237 239 241; /* #EDEFF1 */
+    --border: 227 230 233; /* #E3E6E9 */
+    --border-2: 201 207 213; /* #C9CFD5 */
+
+    /* Couleurs de sens */
+    --green: 15 157 107; /* #0F9D6B */
+    --green-deep: 11 128 88; /* #0B8058 */
+    --green-soft: 225 245 236; /* #E1F5EC */
+    --green-line: 166 223 199; /* #A6DFC7 */
+    --green-ink: 10 107 74; /* #0A6B4A */
+    --orange: 222 122 0; /* #DE7A00 */
+    --orange-deep: 178 95 0; /* #B25F00 */
+    --orange-soft: 252 238 218; /* #FCEEDA */
+    --orange-line: 239 197 140; /* #EFC58C */
+    --orange-ink: 154 84 0; /* #9A5400 */
+    --red: 214 40 57; /* #D62839 */
+
+    /* Texte */
+    --text: 20 24 28; /* #14181C */
+    --text-dim: 75 85 95; /* #4B555F */
+    --text-mut: 119 130 140; /* #77828C */
+
+    /* Formes plates */
+    --shadow: 0 2px 6px rgba(16, 24, 32, 0.08);
+    --shadow-sm: 0 1px 3px rgba(16, 24, 32, 0.06);
+    --shadow-lg: 0 12px 36px rgba(16, 24, 32, 0.2);
+
+    --scroll: 195 202 209;
+    --scroll-hover: 167 177 186;
+
     color-scheme: light;
   }
 
   .dark {
-    --bg: 6 21 17;
-    --bg-subtle: 10 33 26;
-    --surface: 10 33 26;
-    --border: 28 60 48;
-    --fg: 236 245 241;
-    --fg-muted: 158 182 171;
-    --brand: 52 213 131; /* leaf-400 */
-    --brand-fg: 6 21 17;
-    --accent: 255 187 28; /* solar-400 */
+    /* Accent éclairci pour rester lisible sur fond sombre. */
+    --accent: 53 174 196; /* #35AEC4 */
+    --accent-deep: 30 126 145; /* #1E7E91 */
+    --accent-soft: 22 50 58; /* #16323A */
+    --accent-line: 44 95 109; /* #2C5F6D */
+    --on-accent: 8 24 28; /* #08181C */
+
+    --slate: 110 131 142; /* #6E838E */
+
+    --tone: 16 20 23; /* #101417 */
+    --surface: 23 28 31; /* #171C1F */
+    --panel-2: 30 36 41; /* #1E2429 */
+    --panel-3: 38 45 51; /* #262D33 */
+    --border: 42 50 56; /* #2A3238 */
+    --border-2: 59 69 76; /* #3B454C */
+
+    --green: 53 196 140; /* #35C48C */
+    --green-deep: 42 168 118; /* #2AA876 */
+    --green-soft: 16 50 42; /* #10322A */
+    --green-line: 30 92 70; /* #1E5C46 */
+    --green-ink: 111 220 171; /* #6FDCAB */
+    --orange: 240 151 46; /* #F0972E */
+    --orange-deep: 201 122 30; /* #C97A1E */
+    --orange-soft: 51 36 15; /* #33240F */
+    --orange-line: 107 76 30; /* #6B4C1E */
+    --orange-ink: 245 180 99; /* #F5B463 */
+    --red: 240 97 111; /* #F0616F */
+
+    --text: 233 237 240; /* #E9EDF0 */
+    --text-dim: 170 181 188; /* #AAB5BC */
+    --text-mut: 126 138 146; /* #7E8A92 */
+
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.6);
+
+    --scroll: 59 69 76;
+    --scroll-hover: 78 90 98;
+
     color-scheme: dark;
   }
 
   * {
+    box-sizing: border-box;
     border-color: rgb(var(--border));
   }
 
@@ -55,135 +134,214 @@
   }
 
   body {
-    background-color: rgb(var(--bg));
-    color: rgb(var(--fg));
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    text-rendering: optimizeLegibility;
+    /* Fond de page fixe : blanc en haut, gris de base ensuite — comme .app
+       dans l'application. */
+    background-color: rgb(var(--tone));
+    background-image: linear-gradient(
+      180deg,
+      rgb(var(--surface)) 0%,
+      rgb(var(--tone)) 42%,
+      rgb(var(--tone)) 100%
+    );
+    background-attachment: fixed;
+    color: rgb(var(--text));
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background-color: rgb(var(--accent) / 0.28);
+    background: rgb(var(--accent) / 0.25);
+    color: rgb(var(--text));
   }
 
   :focus-visible {
     outline: 2px solid rgb(var(--accent));
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline-offset: 2px;
+    border-radius: 3px;
   }
 
   h1,
   h2,
   h3,
   h4 {
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    color: rgb(var(--text));
     text-wrap: balance;
   }
 
   p {
     text-wrap: pretty;
   }
+
+  /* Barre de défilement */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--scroll));
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--scroll-hover));
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
 /* --------------------------------------------------------------------------
-   Composants réutilisables
+   Composants — mêmes formes que l'application
    -------------------------------------------------------------------------- */
 @layer components {
-  .surface {
-    background-color: rgb(var(--surface));
-  }
-
   .muted {
-    color: rgb(var(--fg-muted));
+    color: rgb(var(--text-mut));
   }
 
+  .dim {
+    color: rgb(var(--text-dim));
+  }
+
+  /* ---------- Boutons ---------- */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold
-      transition-all duration-200 will-change-transform;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm border
+      px-4 py-2.5 text-sm font-semibold transition-colors duration-150;
+    border-color: rgb(var(--border-2));
+    background: rgb(var(--surface));
+    color: rgb(var(--text));
+  }
+
+  .btn:hover {
+    border-color: rgb(var(--accent));
+    color: rgb(var(--accent));
   }
 
   .btn-primary {
-    @apply btn text-night-950 shadow-glow hover:-translate-y-0.5;
-    background-image: linear-gradient(135deg, #ffce4d, #f5a200);
+    @apply btn font-bold;
+    background: rgb(var(--accent));
+    border-color: rgb(var(--accent));
+    color: rgb(var(--on-accent));
   }
 
   .btn-primary:hover {
-    background-image: linear-gradient(135deg, #ffbb1c, #d18300);
+    background: rgb(var(--accent-deep));
+    border-color: rgb(var(--accent-deep));
+    color: rgb(var(--on-accent));
+  }
+
+  /* Bouton d'appel secondaire : orange, la couleur « soleil » de la charte. */
+  .btn-accent {
+    @apply btn font-bold;
+    background: rgb(var(--orange));
+    border-color: rgb(var(--orange));
+    color: #fff;
+  }
+
+  .btn-accent:hover {
+    background: rgb(var(--orange-deep));
+    border-color: rgb(var(--orange-deep));
+    color: #fff;
   }
 
   .btn-secondary {
-    @apply btn border bg-transparent hover:-translate-y-0.5;
-    border-color: rgb(var(--border));
-    color: rgb(var(--fg));
-  }
-
-  .btn-secondary:hover {
-    border-color: rgb(var(--brand) / 0.6);
-    background-color: rgb(var(--brand) / 0.08);
+    @apply btn;
   }
 
   .btn-ghost {
-    @apply btn px-4 py-2;
-    color: rgb(var(--fg-muted));
+    @apply btn border-transparent bg-transparent px-2.5 py-2;
+    color: rgb(var(--text-dim));
+  }
+
+  .btn-ghost:hover {
+    color: rgb(var(--accent));
+    border-color: rgb(var(--border));
+  }
+
+  .btn-lg {
+    @apply px-5 py-3 text-[0.95rem];
+  }
+
+  /* ---------- Panneaux ---------- */
+  .panel {
+    @apply relative rounded border p-6 shadow-sm;
+    background: rgb(var(--surface));
+    animation: rise 0.3s ease both;
   }
 
   .card {
-    @apply surface rounded-2xl border p-6 shadow-soft transition-all duration-300;
+    @apply relative rounded border p-5 shadow-sm transition-colors duration-150;
+    background: rgb(var(--surface));
   }
 
   .card-hover:hover {
-    @apply -translate-y-1 shadow-lift;
-    border-color: rgb(var(--brand) / 0.4);
+    border-color: rgb(var(--accent));
+  }
+
+  /* Tuile de chiffre clé : filet d'accent de 3 px en haut, comme .stat. */
+  .stat {
+    @apply relative overflow-hidden rounded border p-5 shadow-sm;
+    background: rgb(var(--surface));
+    border-top: 3px solid rgb(var(--accent));
+  }
+
+  /* ---------- Libellés monospace ---------- */
+  .label {
+    @apply font-mono text-[10.5px] font-bold uppercase tracking-label;
+    color: rgb(var(--text-mut));
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em];
-    border-color: rgb(var(--brand) / 0.35);
-    background-color: rgb(var(--brand) / 0.08);
-    color: rgb(var(--brand));
+    @apply inline-flex items-center gap-1.5 rounded-[2px] border px-2 py-[3px] font-mono text-[10.5px] font-bold uppercase tracking-label;
+    background: rgb(var(--accent-soft));
+    border-color: rgb(var(--accent-line));
+    color: rgb(var(--accent));
   }
 
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-[2px] border px-2 py-[3px] font-mono text-[10.5px] font-bold uppercase tracking-label;
+  }
+
+  .badge-sun {
+    background: rgb(var(--orange-soft));
+    border-color: rgb(var(--orange-line));
+    color: rgb(var(--orange));
+  }
+
+  .badge-grow {
+    background: rgb(var(--green-soft));
+    border-color: rgb(var(--green-line));
+    color: rgb(var(--green));
+  }
+
+  /* ---------- Rythme et titres ---------- */
   .section {
-    @apply py-20 md:py-28;
+    @apply py-16 md:py-20;
   }
 
   .h1 {
-    @apply font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl;
+    @apply text-[2.1rem] font-extrabold leading-[1.12] tracking-title sm:text-[2.6rem] lg:text-[3rem];
   }
 
   .h2 {
-    @apply font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl;
+    @apply text-[1.6rem] font-extrabold leading-tight tracking-title sm:text-[1.95rem];
   }
 
   .h3 {
-    @apply font-display text-xl font-semibold tracking-tight;
+    @apply text-lg font-extrabold tracking-title;
   }
 
   .lead {
-    @apply text-lg leading-relaxed sm:text-xl;
-    color: rgb(var(--fg-muted));
+    @apply text-[1.0625rem] leading-relaxed;
+    color: rgb(var(--text-dim));
   }
 
   .link-underline {
-    @apply relative font-medium transition-colors;
-    color: rgb(var(--brand));
-  }
-
-  .link-underline::after {
-    content: "";
-    @apply absolute -bottom-0.5 left-0 h-px w-0 transition-all duration-300;
-    background-color: rgb(var(--brand));
-  }
-
-  .link-underline:hover::after {
-    @apply w-full;
-  }
-
-  /* Grille lumineuse de fond pour les sections sombres */
-  .grid-glow {
-    background-image:
-      linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    color: rgb(var(--accent));
+    @apply font-semibold hover:underline;
   }
 }
 
@@ -192,18 +350,18 @@
    -------------------------------------------------------------------------- */
 @layer components {
   .prose-solar {
-    @apply text-[1.0625rem] leading-[1.8];
-    color: rgb(var(--fg-muted));
+    @apply text-[1.0625rem] leading-[1.75];
+    color: rgb(var(--text-dim));
   }
 
   .prose-solar h2 {
-    @apply font-display mt-12 mb-4 text-2xl font-bold tracking-tight scroll-mt-28;
-    color: rgb(var(--fg));
+    @apply mt-11 mb-4 scroll-mt-24 text-[1.45rem] font-extrabold tracking-title;
+    color: rgb(var(--text));
   }
 
   .prose-solar h3 {
-    @apply font-display mt-8 mb-3 text-lg font-semibold scroll-mt-28;
-    color: rgb(var(--fg));
+    @apply mt-8 mb-3 scroll-mt-24 text-lg font-extrabold tracking-title;
+    color: rgb(var(--text));
   }
 
   .prose-solar p {
@@ -224,22 +382,23 @@
   }
 
   .prose-solar li::marker {
-    color: rgb(var(--brand));
+    color: rgb(var(--accent));
   }
 
   .prose-solar strong {
-    color: rgb(var(--fg));
-    @apply font-semibold;
+    color: rgb(var(--text));
+    @apply font-bold;
   }
 
   .prose-solar a {
-    color: rgb(var(--brand));
-    @apply font-medium underline underline-offset-4;
+    color: rgb(var(--accent));
+    @apply font-semibold underline underline-offset-4;
   }
 
   .prose-solar blockquote {
-    @apply my-7 border-l-4 pl-5 italic;
-    border-color: rgb(var(--accent));
+    @apply my-7 rounded-sm border-l-[3px] py-1 pl-5;
+    border-color: rgb(var(--orange));
+    color: rgb(var(--text-dim));
   }
 
   .prose-solar table {
@@ -252,14 +411,20 @@
   }
 
   .prose-solar th {
-    background-color: rgb(var(--bg-subtle));
-    color: rgb(var(--fg));
-    @apply font-semibold;
+    background: rgb(var(--panel-3));
+    color: rgb(var(--text));
+    @apply font-mono text-[11px] font-bold uppercase tracking-label;
   }
 
   .prose-solar code {
-    @apply rounded px-1.5 py-0.5 text-[0.875em];
-    background-color: rgb(var(--bg-subtle));
+    @apply rounded-[2px] px-1.5 py-0.5 font-mono text-[0.85em];
+    background: rgb(var(--panel-3));
+    color: rgb(var(--text));
+  }
+
+  .prose-solar pre {
+    @apply my-6 overflow-x-auto rounded-sm border p-4;
+    background: rgb(var(--panel-2));
   }
 
   .prose-solar hr {

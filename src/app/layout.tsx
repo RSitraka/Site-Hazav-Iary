@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 import { SiteHeader } from "@/components/site-header";
@@ -8,17 +8,18 @@ import { JsonLd } from "@/components/json-ld";
 import { site } from "@/lib/site";
 import { organizationSchema, websiteSchema } from "@/lib/seo";
 
+/** Mêmes familles que l'application de gestion : Inter + JetBrains Mono. */
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
 });
 
-const sora = Sora({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
-  weight: ["600", "700"],
-  variable: "--font-display",
+  weight: ["500", "700", "800"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -80,30 +81,31 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#061511" },
-  ],
+  // Une seule balise theme-color, mise à jour par la bascule clair/sombre —
+  // même fonctionnement que l'application.
+  themeColor: "#F2F3F5",
   width: "device-width",
   initialScale: 1,
 };
 
 /**
- * Applique le thème mémorisé avant la première peinture pour éviter
- * tout clignotement clair/sombre.
+ * Applique le mode clair/sombre AVANT le rendu, sinon la page clignoterait
+ * en clair avant de passer en sombre. La clé de stockage est celle de
+ * l'application (`hazaviary_theme`) : la préférence est donc partagée entre
+ * le site et l'outil de gestion sur un même domaine.
  */
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark')}catch(e){}})();`;
+const themeScript = `(function(){try{var s=localStorage.getItem('hazaviary_theme');var d=s==='dark'||(s!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark');var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#101417')}}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${sora.variable}`} suppressHydrationWarning>
+    <html lang="fr" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="font-sans antialiased">
         <a
           href="#contenu"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-solar-500 focus:px-5 focus:py-2.5 focus:font-semibold focus:text-night-950"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2.5 focus:font-bold focus:text-accent-on"
         >
           Aller au contenu principal
         </a>

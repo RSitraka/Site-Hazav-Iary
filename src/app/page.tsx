@@ -22,7 +22,7 @@ import { buildMetadata, faqSchema } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: `${site.name} — Installateur solaire à Madagascar`,
   description:
-    "Installateur de panneaux solaires à Antananarivo et dans toute Madagascar : autoconsommation, systèmes hybrides, batteries lithium, pompage solaire et électrification rurale. Étude de dimensionnement offerte, devis sous 48 h.",
+    "Installateur de panneaux solaires dans toute Madagascar : autoconsommation, systèmes hybrides, batteries lithium, pompage solaire et électrification rurale. Étude de dimensionnement offerte, devis sous 48 h.",
   path: "/",
   keywords: [
     "installateur panneaux solaires Madagascar",
@@ -42,18 +42,9 @@ export default function HomePage() {
       <JsonLd data={faqSchema(homeFaq)} />
 
       {/* ------------------------------- HERO ------------------------------- */}
-      <section className="relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 -top-24 h-[32rem] bg-sun-radial opacity-60 dark:opacity-35"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-leaf-radial opacity-40"
-        />
-
-        <div className="container relative grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_.95fr] lg:py-24">
-          <div className="animate-fade-up">
+      <section className="border-b bg-surface">
+        <div className="container grid items-center gap-12 py-14 lg:grid-cols-[1.05fr_.95fr] lg:py-20">
+          <div className="animate-rise">
             <p className="eyebrow">
               <SunIcon width={14} height={14} />
               Énergie solaire &amp; solutions vertes
@@ -61,7 +52,7 @@ export default function HomePage() {
 
             <h1 className="h1 mt-6">
               L&rsquo;énergie solaire qui{" "}
-              <span className="bg-gradient-to-r from-solar-500 to-leaf-500 bg-clip-text text-transparent">
+              <span className="text-accent">
                 éclaire durablement
               </span>{" "}
               Madagascar
@@ -85,36 +76,36 @@ export default function HomePage() {
 
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm muted">
               <li className="flex items-center gap-2">
-                <ShieldIcon width={18} height={18} className="text-leaf-500" />
+                <ShieldIcon width={18} height={18} className="text-accent" />
                 Matériel garanti jusqu&rsquo;à 25 ans
               </li>
               <li className="flex items-center gap-2">
-                <BoltIcon width={18} height={18} className="text-solar-500" />
+                <BoltIcon width={18} height={18} className="text-sun" />
                 Étude de dimensionnement offerte
               </li>
               <li className="flex items-center gap-2">
-                <LeafIcon width={18} height={18} className="text-leaf-500" />
+                <LeafIcon width={18} height={18} className="text-accent" />
                 Équipes 100 % malgaches
               </li>
             </ul>
           </div>
 
           <div className="relative">
-            <HeroArt className="mx-auto w-full max-w-lg drop-shadow-xl" />
+            <HeroArt className="mx-auto w-full max-w-lg" />
           </div>
         </div>
 
         {/* Chiffres clés */}
-        <div className="container relative pb-16">
-          <dl className="grid gap-px overflow-hidden rounded-3xl border bg-[rgb(var(--border))] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="container pb-14">
+          <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {keyFigures.map((figure) => (
-              <div key={figure.label} className="bg-[rgb(var(--bg))] p-6">
+              <div key={figure.label} className="stat">
                 <dt className="sr-only">{figure.label}</dt>
                 <dd>
-                  <span className="font-display text-3xl font-bold tracking-tight text-leaf-600 dark:text-leaf-400">
+                  <span className="text-[2rem] font-extrabold tracking-title text-accent">
                     {figure.value}
                   </span>
-                  <span className="mt-1 block font-medium">{figure.label}</span>
+                  <span className="mt-1 block font-semibold">{figure.label}</span>
                   <span className="mt-1 block text-sm muted">{figure.hint}</span>
                 </dd>
               </div>
@@ -129,7 +120,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Nos services"
             title="Des solutions solaires pour chaque usage"
-            lead="Du kit domestique à la centrale industrielle, nous couvrons l'ensemble de la chaîne : étude, fourniture, installation et maintenance."
+            lead="Du kit domestique à la centrale industrielle, nous couvrons l'ensemble de la chaîne : étude, fourniture, installation et maintenance."
           />
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -141,12 +132,12 @@ export default function HomePage() {
                   href={`/services/${service.slug}`}
                   className="card card-hover group flex flex-col"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-solar-400/20 to-leaf-500/20 text-leaf-600 dark:text-leaf-400">
+                  <span className="flex h-12 w-12 items-center justify-center rounded border border-accent-line bg-accent-soft text-accent">
                     <Icon width={22} height={22} />
                   </span>
                   <h3 className="h3 mt-5 text-lg">{service.short}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed muted">{service.excerpt}</p>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-leaf-600 dark:text-leaf-400">
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
                     En savoir plus
                     <ArrowRightIcon
                       width={15}
@@ -162,7 +153,7 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------- POURQUOI NOUS -------------------------- */}
-      <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+      <section className="section border-t bg-surface">
         <div className="container grid gap-14 lg:grid-cols-2 lg:items-center">
           <div>
             <SectionHeading
@@ -213,7 +204,7 @@ export default function HomePage() {
           <ol className="mt-12 grid gap-5 md:grid-cols-3 lg:grid-cols-5">
             {processSteps.map((step) => (
               <li key={step.step} className="card card-hover">
-                <span className="font-display text-3xl font-bold text-solar-500">{step.step}</span>
+                <span className="text-3xl font-bold text-sun">{step.step}</span>
                 <h3 className="h3 mt-3 text-base">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed muted">{step.text}</p>
               </li>
@@ -223,9 +214,9 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------- SIMULATEUR --------------------------- */}
-      <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+      <section className="section border-t bg-surface">
         <div className="container">
-          <div className="card grid items-center gap-8 border-solar-500/30 p-8 md:grid-cols-[1.3fr_1fr] md:p-12">
+          <div className="card grid items-center gap-8 border-sun-line p-8 md:grid-cols-[1.3fr_1fr] md:p-12">
             <div>
               <p className="eyebrow">
                 <BoltIcon width={14} height={14} />
@@ -252,7 +243,7 @@ export default function HomePage() {
               ].map((row) => (
                 <div
                   key={row.label}
-                  className="flex items-center justify-between rounded-xl border bg-[rgb(var(--bg-subtle))] px-4 py-3"
+                  className="flex items-center justify-between rounded border bg-surface px-4 py-3"
                 >
                   <span className="font-medium">{row.label}</span>
                   <span className="muted">{row.value}</span>
@@ -280,7 +271,7 @@ export default function HomePage() {
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {projects.slice(0, 3).map((project) => (
               <article key={project.slug} className="card card-hover flex flex-col">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-leaf-600 dark:text-leaf-400">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
                   <span>{project.category}</span>
                   <span aria-hidden="true" className="muted">
                     ·
@@ -288,7 +279,7 @@ export default function HomePage() {
                   <span className="muted">{project.year}</span>
                 </div>
                 <h3 className="h3 mt-3 text-lg">{project.title}</h3>
-                <p className="mt-1 text-sm font-medium text-solar-600">{project.power}</p>
+                <p className="mt-1 text-sm font-medium text-sun">{project.power}</p>
                 <p className="mt-3 flex-1 text-sm leading-relaxed muted">{project.summary}</p>
                 <p className="mt-4 border-t pt-4 text-sm font-medium">{project.location}</p>
               </article>
@@ -298,7 +289,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------------------------- TÉMOIGNAGES --------------------------- */}
-      <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+      <section className="section border-t bg-surface">
         <div className="container">
           <SectionHeading eyebrow="Témoignages" title="Ce que disent nos clients" align="center" />
           <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -328,7 +319,7 @@ export default function HomePage() {
               {posts.map((post) => (
                 <article key={post.slug} className="card card-hover relative flex flex-col">
                   <div className="flex items-center gap-2 text-xs muted">
-                    <span className="font-semibold uppercase tracking-wider text-leaf-600 dark:text-leaf-400">
+                    <span className="font-semibold uppercase tracking-wider text-accent">
                       {post.category}
                     </span>
                     <span aria-hidden="true">·</span>
@@ -349,7 +340,7 @@ export default function HomePage() {
       )}
 
       {/* --------------------------------- FAQ ------------------------------ */}
-      <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+      <section className="section border-t bg-surface">
         <div className="container grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
           <SectionHeading
             eyebrow="Questions fréquentes"

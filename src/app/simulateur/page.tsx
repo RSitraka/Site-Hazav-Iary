@@ -76,7 +76,7 @@ export default function SimulateurPage() {
         </div>
       </section>
 
-      <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+      <section className="section border-t bg-surface">
         <div className="container grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
           <SectionHeading
             eyebrow="Méthode de calcul"

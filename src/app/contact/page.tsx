@@ -46,7 +46,7 @@ export default function ContactPage() {
               <h2 className="h3">Nous joindre directement</h2>
               <ul className="mt-5 space-y-4 text-sm">
                 <li className="flex gap-3">
-                  <PhoneIcon width={20} height={20} className="mt-0.5 shrink-0 text-solar-500" />
+                  <PhoneIcon width={20} height={20} className="mt-0.5 shrink-0 text-sun" />
                   <span>
                     <span className="block font-medium">Téléphone</span>
                     <a href={`tel:${site.phoneHref}`} className="link-underline">
@@ -55,7 +55,7 @@ export default function ContactPage() {
                   </span>
                 </li>
                 <li className="flex gap-3">
-                  <MailIcon width={20} height={20} className="mt-0.5 shrink-0 text-solar-500" />
+                  <MailIcon width={20} height={20} className="mt-0.5 shrink-0 text-sun" />
                   <span>
                     <span className="block font-medium">Email</span>
                     <a href={`mailto:${site.email}`} className="link-underline">
@@ -64,7 +64,7 @@ export default function ContactPage() {
                   </span>
                 </li>
                 <li className="flex gap-3">
-                  <MapPinIcon width={20} height={20} className="mt-0.5 shrink-0 text-solar-500" />
+                  <MapPinIcon width={20} height={20} className="mt-0.5 shrink-0 text-sun" />
                   <span>
                     <span className="block font-medium">Adresse</span>
                     <span className="muted">
@@ -75,7 +75,7 @@ export default function ContactPage() {
                   </span>
                 </li>
                 <li className="flex gap-3">
-                  <ClockIcon width={20} height={20} className="mt-0.5 shrink-0 text-solar-500" />
+                  <ClockIcon width={20} height={20} className="mt-0.5 shrink-0 text-sun" />
                   <span>
                     <span className="block font-medium">Horaires</span>
                     <span className="muted">
@@ -88,7 +88,7 @@ export default function ContactPage() {
               </ul>
             </div>
 
-            <div className="card bg-[rgb(var(--bg-subtle))]">
+            <div className="card bg-surface">
               <h2 className="h3 text-base">Zones d&rsquo;intervention</h2>
               <p className="mt-2 text-sm leading-relaxed muted">
                 Nous intervenons dans toute {site.address.countryName}. Les déplacements hors de
@@ -97,7 +97,7 @@ export default function ContactPage() {
               </p>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {site.areaServed.map((area) => (
-                  <li key={area} className="rounded-full border px-3 py-1 text-xs font-medium muted">
+                  <li key={area} className="rounded-sm border px-3 py-1 text-xs font-medium muted">
                     {area}
                   </li>
                 ))}

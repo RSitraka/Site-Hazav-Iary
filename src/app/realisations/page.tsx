@@ -45,7 +45,7 @@ export default function RealisationsPage() {
           {categories.map((category) => (
             <li
               key={category}
-              className="rounded-full border px-4 py-1.5 text-sm font-medium muted"
+              className="rounded-sm border px-4 py-1.5 text-sm font-medium muted"
             >
               {category}
             </li>
@@ -58,10 +58,10 @@ export default function RealisationsPage() {
           {projects.map((project) => (
             <article key={project.slug} className="card card-hover flex flex-col">
               <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wider">
-                <span className="rounded-full bg-leaf-500/15 px-3 py-1 text-leaf-600 dark:text-leaf-400">
+                <span className="rounded-sm bg-accent-soft px-3 py-1 text-accent">
                   {project.category}
                 </span>
-                <span className="rounded-full bg-solar-500/15 px-3 py-1 text-solar-700 dark:text-solar-300">
+                <span className="rounded-sm bg-sun-soft px-3 py-1 text-sun-ink">
                   {project.power}
                 </span>
                 <span className="muted">{project.year}</span>
@@ -80,7 +80,7 @@ export default function RealisationsPage() {
                       width={16}
                       height={16}
                       strokeWidth={2.2}
-                      className="mt-0.5 shrink-0 text-leaf-500"
+                      className="mt-0.5 shrink-0 text-accent"
                     />
                     <span>{result}</span>
                   </li>
@@ -91,15 +91,15 @@ export default function RealisationsPage() {
         </div>
       </section>
 
-      <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+      <section className="section border-t bg-surface">
         <div className="container">
           <SectionHeading eyebrow="En chiffres" title="Notre parc installé" align="center" />
           <dl className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {keyFigures.map((figure) => (
-              <div key={figure.label} className="card text-center">
+              <div key={figure.label} className="stat text-center">
                 <dt className="sr-only">{figure.label}</dt>
                 <dd>
-                  <span className="font-display text-4xl font-bold text-leaf-600 dark:text-leaf-400">
+                  <span className="text-[2.25rem] font-extrabold tracking-title text-accent">
                     {figure.value}
                   </span>
                   <span className="mt-2 block font-medium">{figure.label}</span>

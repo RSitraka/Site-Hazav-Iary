@@ -206,7 +206,7 @@ export function SolarSimulator() {
                       type="button"
                       onClick={() => remove(a.id)}
                       aria-label={`Retirer ${a.name}`}
-                      className="rounded-full p-1.5 muted transition-colors hover:bg-red-500/10 hover:text-red-500"
+                      className="rounded-sm p-1.5 muted transition-colors hover:bg-red-500/10 hover:text-red-500"
                     >
                       <CloseIcon width={16} height={16} />
                     </button>
@@ -225,7 +225,7 @@ export function SolarSimulator() {
         </div>
 
         {/* Ajout manuel */}
-        <div className="mt-6 grid gap-2 rounded-xl border p-3 sm:grid-cols-[1.6fr_.8fr_.8fr_.6fr_auto]">
+        <div className="mt-6 grid gap-2 rounded border p-3 sm:grid-cols-[1.6fr_.8fr_.8fr_.6fr_auto]">
           <input
             aria-label="Nom du nouvel appareil"
             placeholder="Autre appareil"
@@ -275,7 +275,7 @@ export function SolarSimulator() {
                 key={p.name}
                 type="button"
                 onClick={() => addPreset(p)}
-                className="rounded-full border px-3 py-1.5 text-xs font-medium transition-colors hover:border-leaf-500 hover:bg-leaf-500/10"
+                className="rounded-sm border px-3 py-1.5 text-xs font-medium transition-colors hover:border-accent hover:bg-panel"
               >
                 + {p.name}
                 <span className="muted"> · {p.watts} W</span>
@@ -339,23 +339,23 @@ export function SolarSimulator() {
 
       {/* ------------------------------ Résultats --------------------------- */}
       <div className="lg:sticky lg:top-24">
-        <div className="card border-leaf-500/30 bg-[rgb(var(--bg-subtle))]">
+        <div className="card border-accent-line bg-surface">
           <h2 className="h3">Votre pré-dimensionnement</h2>
 
           <dl className="mt-5 grid grid-cols-2 gap-3">
-            <div className="rounded-xl border bg-[rgb(var(--surface))] p-4">
+            <div className="rounded border bg-surface p-4">
               <dt className="text-xs muted">Consommation</dt>
               <dd className="mt-1">
-                <span className="font-display text-2xl font-bold tabular-nums">
+                <span className="text-2xl font-bold tabular-nums">
                   {numberFr.format(result.monthlyKwh)}
                 </span>
                 <span className="block text-xs font-medium muted">kWh / mois</span>
               </dd>
             </div>
-            <div className="rounded-xl border bg-[rgb(var(--surface))] p-4">
+            <div className="rounded border bg-surface p-4">
               <dt className="text-xs muted">Besoin journalier</dt>
               <dd className="mt-1">
-                <span className="font-display text-2xl font-bold tabular-nums">
+                <span className="text-2xl font-bold tabular-nums">
                   {numberFr.format(result.dailyWh / 1000)}
                 </span>
                 <span className="block text-xs font-medium muted">kWh / jour</span>
@@ -384,8 +384,8 @@ export function SolarSimulator() {
             />
           </ul>
 
-          <p className="mt-5 flex gap-2 rounded-xl border border-solar-500/30 bg-solar-500/10 p-3 text-xs leading-relaxed">
-            <SunIcon width={16} height={16} className="mt-0.5 shrink-0 text-solar-600" />
+          <p className="mt-5 flex gap-2 rounded border border-sun-line bg-sun-soft p-3 text-xs leading-relaxed">
+            <SunIcon width={16} height={16} className="mt-0.5 shrink-0 text-sun" />
             <span>
               Estimation indicative basée sur {PEAK_SUN_HOURS} heures d&rsquo;ensoleillement
               équivalent plein soleil et {Math.round(SYSTEM_EFFICIENCY * 100)} % de rendement
@@ -415,14 +415,14 @@ function ResultRow({
   hint: string;
 }) {
   return (
-    <li className="flex gap-4 rounded-xl border bg-[rgb(var(--surface))] p-4">
-      <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-leaf-500/15 text-leaf-600 dark:text-leaf-400">
+    <li className="flex gap-4 rounded border bg-surface p-4">
+      <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-accent-soft text-accent">
         {icon}
       </span>
       <span className="min-w-0 flex-1">
         <span className="flex flex-wrap items-baseline justify-between gap-x-3">
           <span className="text-sm font-medium">{label}</span>
-          <span className="font-display text-lg font-bold tabular-nums">{value}</span>
+          <span className="text-lg font-bold tabular-nums">{value}</span>
         </span>
         <span className="mt-0.5 block text-xs muted">{hint}</span>
       </span>

@@ -78,12 +78,12 @@ export default function AProposPage() {
             </div>
           </div>
 
-          <dl className="grid gap-px overflow-hidden rounded-3xl border bg-[rgb(var(--border))] sm:grid-cols-2">
+          <dl className="grid gap-4 sm:grid-cols-2">
             {keyFigures.map((figure) => (
-              <div key={figure.label} className="bg-[rgb(var(--bg))] p-6">
+              <div key={figure.label} className="stat">
                 <dt className="sr-only">{figure.label}</dt>
                 <dd>
-                  <span className="font-display text-3xl font-bold text-leaf-600 dark:text-leaf-400">
+                  <span className="text-[2rem] font-extrabold tracking-title text-accent">
                     {figure.value}
                   </span>
                   <span className="mt-1 block font-medium">{figure.label}</span>
@@ -95,7 +95,7 @@ export default function AProposPage() {
         </div>
       </section>
 
-      <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+      <section className="section border-t bg-surface">
         <div className="container">
           <SectionHeading
             eyebrow="Nos valeurs"
@@ -105,7 +105,7 @@ export default function AProposPage() {
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {values.map((value) => (
               <article key={value.title} className="card card-hover">
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-solar-400/20 to-leaf-500/20 text-leaf-600 dark:text-leaf-400">
+                <span className="flex h-12 w-12 items-center justify-center rounded border border-accent-line bg-accent-soft text-accent">
                   <value.icon width={22} height={22} />
                 </span>
                 <h3 className="h3 mt-5 text-lg">{value.title}</h3>
@@ -134,7 +134,7 @@ export default function AProposPage() {
             <ol className="mt-6 space-y-4">
               {processSteps.map((step) => (
                 <li key={step.step} className="card flex gap-5">
-                  <span className="font-display text-2xl font-bold text-solar-500">{step.step}</span>
+                  <span className="text-2xl font-bold text-sun">{step.step}</span>
                   <span>
                     <span className="block font-semibold">{step.title}</span>
                     <span className="mt-1 block text-sm leading-relaxed muted">{step.text}</span>

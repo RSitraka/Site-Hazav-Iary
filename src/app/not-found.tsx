@@ -11,13 +11,9 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <section className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-24 h-96 bg-sun-radial opacity-50 dark:opacity-30"
-      />
-      <div className="container relative py-24 text-center md:py-32">
-        <p className="font-display text-7xl font-bold text-solar-500">404</p>
+    <section className="border-b bg-surface">
+      <div className="container py-24 text-center md:py-32">
+        <p className="text-7xl font-bold text-sun">404</p>
         <h1 className="h2 mt-6">Cette page a disparu du réseau</h1>
         <p className="lead mx-auto mt-4 max-w-xl">
           Le lien est peut-être obsolète, ou l&rsquo;adresse comporte une erreur. Voici par où
@@ -40,7 +36,7 @@ export default function NotFound() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-full border px-4 py-2 text-sm font-medium transition-colors hover:border-leaf-500 hover:bg-leaf-500/10"
+                  className="rounded-sm border px-4 py-2 text-sm font-medium transition-colors hover:border-accent hover:bg-panel"
                 >
                   {item.label}
                 </Link>

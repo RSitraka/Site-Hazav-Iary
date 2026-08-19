@@ -1,5 +1,14 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Le thème reprend celui de l'application de gestion Hazav'Iary
+ * (frontend/src/theme.css) : interface claire, plate et contrastée, accent
+ * turquoise pétrole, angles courts, bordures fines.
+ *
+ * Toutes les couleurs passent par des variables CSS définies dans
+ * globals.css, ce qui rend le mode sombre automatique : aucune classe
+ * `dark:` n'est nécessaire dans les composants.
+ */
 const config: Config = {
   darkMode: "class",
   content: ["./src/**/*.{ts,tsx,md}"],
@@ -11,74 +20,68 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Soleil : chaleur, production, rendement
-        solar: {
-          50: "#FFF9E8",
-          100: "#FFEFC2",
-          200: "#FFE08A",
-          300: "#FFCE4D",
-          400: "#FFBB1C",
-          500: "#F5A200",
-          600: "#D18300",
-          700: "#A66200",
-          800: "#7A4700",
-          900: "#4D2C00",
+        accent: {
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          deep: "rgb(var(--accent-deep) / <alpha-value>)",
+          soft: "rgb(var(--accent-soft) / <alpha-value>)",
+          line: "rgb(var(--accent-line) / <alpha-value>)",
+          on: "rgb(var(--on-accent) / <alpha-value>)",
         },
-        // Vert : durabilite, energie propre
-        leaf: {
-          50: "#ECFDF3",
-          100: "#D1FADF",
-          200: "#A6F4C5",
-          300: "#6CE9A6",
-          400: "#32D583",
-          500: "#12B76A",
-          600: "#039855",
-          700: "#027A48",
-          800: "#05603A",
-          900: "#054F31",
+        // Couleurs de sens, reprises telles quelles de l'application.
+        sun: {
+          DEFAULT: "rgb(var(--orange) / <alpha-value>)",
+          deep: "rgb(var(--orange-deep) / <alpha-value>)",
+          soft: "rgb(var(--orange-soft) / <alpha-value>)",
+          line: "rgb(var(--orange-line) / <alpha-value>)",
+          ink: "rgb(var(--orange-ink) / <alpha-value>)",
         },
-        // Nuit : fond des sections immersives
-        night: {
-          50: "#EFF5F2",
-          100: "#D3E3DC",
-          700: "#0F2E24",
-          800: "#0A211A",
-          900: "#061511",
-          950: "#030B08",
+        grow: {
+          DEFAULT: "rgb(var(--green) / <alpha-value>)",
+          deep: "rgb(var(--green-deep) / <alpha-value>)",
+          soft: "rgb(var(--green-soft) / <alpha-value>)",
+          line: "rgb(var(--green-line) / <alpha-value>)",
+          ink: "rgb(var(--green-ink) / <alpha-value>)",
         },
-        sky: { 500: "#0A7EA4", 600: "#08657F" },
+        // Surfaces et texte
+        tone: "rgb(var(--tone) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        panel: "rgb(var(--panel-2) / <alpha-value>)",
+        "panel-3": "rgb(var(--panel-3) / <alpha-value>)",
+        line: "rgb(var(--border) / <alpha-value>)",
+        "line-strong": "rgb(var(--border-2) / <alpha-value>)",
+        ink: {
+          DEFAULT: "rgb(var(--text) / <alpha-value>)",
+          dim: "rgb(var(--text-dim) / <alpha-value>)",
+          mut: "rgb(var(--text-mut) / <alpha-value>)",
+        },
+        slate: { DEFAULT: "rgb(var(--slate) / <alpha-value>)" },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
+        sans: ["var(--font-sans)", "Inter", "Segoe UI", "Roboto", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "SFMono-Regular", "ui-monospace", "monospace"],
+      },
+      // Angles courts : l'application est volontairement plate.
+      borderRadius: {
+        DEFAULT: "4px",
+        sm: "3px",
+        md: "4px",
+        lg: "4px",
+        xl: "6px",
+        "2xl": "6px",
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(6,21,17,.04), 0 8px 24px -12px rgba(6,21,17,.18)",
-        lift: "0 2px 4px rgba(6,21,17,.05), 0 24px 48px -24px rgba(6,21,17,.35)",
-        glow: "0 0 0 1px rgba(245,162,0,.25), 0 20px 60px -20px rgba(245,162,0,.45)",
+        sm: "var(--shadow-sm)",
+        DEFAULT: "var(--shadow)",
+        lg: "var(--shadow-lg)",
       },
-      backgroundImage: {
-        "sun-radial":
-          "radial-gradient(circle at 50% 0%, rgba(255,187,28,.55), rgba(255,187,28,0) 60%)",
-        "leaf-radial":
-          "radial-gradient(circle at 80% 20%, rgba(18,183,106,.35), rgba(18,183,106,0) 55%)",
-      },
+      letterSpacing: { title: "-.2px", label: ".7px" },
       keyframes: {
-        "fade-up": {
-          from: { opacity: "0", transform: "translateY(14px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
-        "spin-slow": { to: { transform: "rotate(360deg)" } },
-        pulseGlow: {
-          "0%,100%": { opacity: "0.55" },
-          "50%": { opacity: "1" },
+        rise: {
+          from: { opacity: "0", transform: "translateY(6px)" },
+          to: { opacity: "1", transform: "none" },
         },
       },
-      animation: {
-        "fade-up": "fade-up .7s cubic-bezier(.16,1,.3,1) both",
-        "spin-slow": "spin-slow 60s linear infinite",
-        "pulse-glow": "pulseGlow 6s ease-in-out infinite",
-      },
+      animation: { rise: "rise .3s ease both" },
     },
   },
   plugins: [],

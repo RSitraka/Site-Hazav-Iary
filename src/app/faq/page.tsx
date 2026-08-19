@@ -42,7 +42,7 @@ export default function FaqPage() {
         </div>
       </section>
 
-      <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+      <section className="section border-t bg-surface">
         <div className="container max-w-3xl">
           <SectionHeading
             eyebrow="Par prestation"
@@ -54,7 +54,7 @@ export default function FaqPage() {
               .filter((service) => service.faq.length > 0)
               .map((service) => (
                 <div key={service.slug}>
-                  <h2 className="h3 mb-3 text-base uppercase tracking-wider text-leaf-600 dark:text-leaf-400">
+                  <h2 className="h3 mb-3 text-base uppercase tracking-wider text-accent">
                     {service.short}
                   </h2>
                   <FaqList items={service.faq} />

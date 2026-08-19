@@ -3,9 +3,14 @@
 import { useEffect, useState } from "react";
 import { MoonIcon, SunIcon } from "@/components/icons";
 
+/** Même clé de stockage que l'application de gestion. */
+const KEY = "hazaviary_theme";
+
 /**
- * Bascule clair/sombre. La préférence est persistée dans localStorage et
- * appliquée avant la peinture par le script inline du layout (pas de flash).
+ * Bascule clair/sombre. Le mode est porté par la classe `dark` sur <html> :
+ * tout le thème n'étant qu'un jeu de tokens CSS, rien d'autre n'a besoin de
+ * connaître le mode courant. Le script inline du layout l'applique avant la
+ * première peinture.
  */
 export function ThemeToggle({ className = "" }: { className?: string }) {
   const [dark, setDark] = useState(false);
@@ -20,8 +25,13 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     const next = !dark;
     setDark(next);
     document.documentElement.classList.toggle("dark", next);
+
+    // Barre d'adresse des navigateurs mobiles assortie au fond de page.
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", next ? "#101417" : "#F2F3F5");
+
     try {
-      localStorage.setItem("theme", next ? "dark" : "light");
+      localStorage.setItem(KEY, next ? "dark" : "light");
     } catch {
       /* stockage indisponible : la préférence n'est simplement pas mémorisée */
     }
@@ -33,9 +43,9 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       onClick={toggle}
       aria-label={dark ? "Activer le thème clair" : "Activer le thème sombre"}
       aria-pressed={mounted ? dark : undefined}
-      className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors hover:bg-leaf-500/10 ${className}`}
+      className={`grid h-[38px] w-[38px] place-items-center rounded-sm border border-line-strong bg-surface text-ink transition-colors hover:border-accent hover:text-accent ${className}`}
     >
-      {dark ? <MoonIcon width={18} height={18} /> : <SunIcon width={18} height={18} />}
+      {dark ? <MoonIcon width={17} height={17} /> : <SunIcon width={17} height={17} />}
     </button>
   );
 }

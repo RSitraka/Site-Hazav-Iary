@@ -15,19 +15,19 @@ export function Breadcrumbs({ items }: { items: { name: string; path: string }[]
   return (
     <>
       <JsonLd data={breadcrumbSchema(full)} />
-      <nav aria-label="Fil d'Ariane" className="text-sm">
-        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 muted">
+      <nav aria-label="Fil d'Ariane">
+        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-label muted">
           {full.map((item, i) => {
             const last = i === full.length - 1;
             return (
               <li key={item.path} className="flex items-center gap-2">
                 {last ? (
-                  <span aria-current="page" className="font-medium">
+                  <span aria-current="page" className="text-ink-dim">
                     {item.name}
                   </span>
                 ) : (
                   <>
-                    <Link href={item.path} className="transition-colors hover:text-leaf-600">
+                    <Link href={item.path} className="transition-colors hover:text-accent">
                       {item.name}
                     </Link>
                     <span aria-hidden="true">/</span>
@@ -60,18 +60,14 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden border-b">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-32 h-72 bg-sun-radial opacity-50 dark:opacity-30"
-      />
-      <div className="container relative py-14 md:py-20">
+    <section className="border-b bg-surface">
+      <div className="container py-12 md:py-16">
         <Breadcrumbs items={breadcrumbs} />
-        <div className="mt-6 max-w-3xl animate-fade-up">
+        <div className="mt-6 max-w-3xl animate-rise">
           <p className="eyebrow">{eyebrow}</p>
-          <h1 className="h1 mt-5">{title}</h1>
-          <p className="lead mt-5">{lead}</p>
-          {children && <div className="mt-8">{children}</div>}
+          <h1 className="h1 mt-4">{title}</h1>
+          <p className="lead mt-4">{lead}</p>
+          {children && <div className="mt-7">{children}</div>}
         </div>
       </div>
     </section>
@@ -98,8 +94,8 @@ export function SectionHeading({
   return (
     <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
       {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-      <Tag className="h2 mt-4">{title}</Tag>
-      {lead && <p className="lead mt-4">{lead}</p>}
+      <Tag className="h2 mt-3">{title}</Tag>
+      {lead && <p className="lead mt-3">{lead}</p>}
     </div>
   );
 }
@@ -110,13 +106,13 @@ export function SectionHeading({
 
 export function CheckList({ items, className = "" }: { items: string[]; className?: string }) {
   return (
-    <ul className={`space-y-3 ${className}`}>
+    <ul className={`space-y-2.5 ${className}`}>
       {items.map((item) => (
         <li key={item} className="flex gap-3">
-          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-leaf-500/15 text-leaf-600 dark:text-leaf-400">
-            <CheckIcon width={13} height={13} strokeWidth={2.4} />
+          <span className="mt-0.5 grid h-[18px] w-[18px] shrink-0 place-items-center rounded-[2px] border border-grow-line bg-grow-soft text-grow">
+            <CheckIcon width={12} height={12} strokeWidth={2.6} />
           </span>
-          <span className="muted">{item}</span>
+          <span className="dim">{item}</span>
         </li>
       ))}
     </ul>
@@ -129,18 +125,18 @@ export function CheckList({ items, className = "" }: { items: string[]; classNam
 
 export function FaqList({ items }: { items: { question: string; answer: string }[] }) {
   return (
-    <div className="divide-y rounded-2xl border">
+    <div className="divide-y rounded border bg-surface shadow-sm">
       {items.map((item) => (
-        <details key={item.question} className="group px-5 py-4 sm:px-6">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-1 font-medium marker:hidden">
-            <span className="h3 text-base sm:text-lg">{item.question}</span>
+        <details key={item.question} className="group px-5 py-4">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold marker:hidden">
+            <span className="h3 text-base">{item.question}</span>
             <ChevronDownIcon
-              width={20}
-              height={20}
-              className="shrink-0 text-leaf-600 transition-transform duration-300 group-open:rotate-180 dark:text-leaf-400"
+              width={18}
+              height={18}
+              className="shrink-0 text-accent transition-transform duration-200 group-open:rotate-180"
             />
           </summary>
-          <p className="mt-3 leading-relaxed muted">{item.answer}</p>
+          <p className="mt-3 leading-relaxed dim">{item.answer}</p>
         </details>
       ))}
     </div>
@@ -153,12 +149,14 @@ export function FaqList({ items }: { items: { question: string; answer: string }
 
 export function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <figure className="card card-hover flex h-full flex-col">
-      <QuoteIcon width={28} height={28} className="text-solar-400" />
-      <blockquote className="mt-4 flex-1 leading-relaxed">« {item.quote} »</blockquote>
-      <figcaption className="mt-6 border-t pt-4 text-sm">
-        <span className="font-semibold">{item.author}</span>
-        <span className="block muted">{item.role}</span>
+    <figure className="card flex h-full flex-col">
+      <QuoteIcon width={24} height={24} className="text-sun" />
+      <blockquote className="mt-3 flex-1 leading-relaxed dim">« {item.quote} »</blockquote>
+      <figcaption className="mt-5 border-t pt-4 text-sm">
+        <span className="font-bold">{item.author}</span>
+        <span className="mt-0.5 block font-mono text-[11px] uppercase tracking-label muted">
+          {item.role}
+        </span>
       </figcaption>
     </figure>
   );
@@ -186,24 +184,16 @@ export function CtaBand({
   return (
     <section className="section">
       <div className="container">
-        <div className="relative overflow-hidden rounded-3xl border bg-night-900 px-6 py-14 text-center text-night-100 sm:px-12">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 grid-glow" />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 bg-sun-radial opacity-60 animate-pulse-glow"
-          />
-          <div className="relative mx-auto max-w-2xl">
+        <div className="rounded border border-accent-line bg-accent-soft px-6 py-12 text-center sm:px-12">
+          <div className="mx-auto max-w-2xl">
             <h2 className="h2">{title}</h2>
-            <p className="mt-4 text-lg leading-relaxed text-night-100/75">{text}</p>
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link href={primaryHref} className="btn-primary">
+            <p className="mt-3 text-[1.0625rem] leading-relaxed dim">{text}</p>
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link href={primaryHref} className="btn-primary btn-lg">
                 {primaryLabel}
                 <ArrowRightIcon width={16} height={16} />
               </Link>
-              <Link
-                href={secondaryHref}
-                className="btn rounded-full border border-white/20 text-night-100 transition-colors hover:border-solar-400 hover:text-solar-400"
-              >
+              <Link href={secondaryHref} className="btn-secondary btn-lg">
                 {secondaryLabel}
               </Link>
             </div>

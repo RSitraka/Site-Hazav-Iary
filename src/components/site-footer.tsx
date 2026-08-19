@@ -8,32 +8,25 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-24 overflow-hidden border-t bg-night-900 text-night-100">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 grid-glow" />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[42rem] -translate-x-1/2 bg-sun-radial opacity-40"
-      />
-
-      <div className="container relative py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+    <footer className="mt-20 border-t bg-surface">
+      <div className="container py-14">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
-            <div className="flex items-center gap-2.5 font-display text-lg font-bold">
-              <LogoMark />
-              <span>
-                Hazav<span className="text-solar-400">&rsquo;</span>Iary
+            <div className="flex items-center gap-2.5">
+              <LogoMark className="h-10 w-10" />
+              <span className="text-[1.05rem] font-extrabold tracking-title">
+                <span className="text-ink-dim">HAZAV</span>
+                <span className="text-accent">&rsquo;IARY</span>
               </span>
             </div>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-night-100/70">
-              {site.description}
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed dim">{site.description}</p>
+            <div className="mt-5 flex flex-wrap gap-2">
               {site.social.facebook && (
                 <a
                   href={site.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer me"
-                  className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium transition-colors hover:border-solar-400 hover:text-solar-400"
+                  className="rounded-sm border px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-label text-ink-dim transition-colors hover:border-accent hover:text-accent"
                 >
                   Facebook
                 </a>
@@ -43,7 +36,7 @@ export function SiteFooter() {
                   href={site.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer me"
-                  className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium transition-colors hover:border-solar-400 hover:text-solar-400"
+                  className="rounded-sm border px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-label text-ink-dim transition-colors hover:border-accent hover:text-accent"
                 >
                   LinkedIn
                 </a>
@@ -52,7 +45,7 @@ export function SiteFooter() {
           </div>
 
           <nav aria-labelledby="footer-services">
-            <h2 id="footer-services" className="text-sm font-semibold uppercase tracking-wider text-solar-400">
+            <h2 id="footer-services" className="label">
               Services
             </h2>
             <ul className="mt-4 space-y-2.5 text-sm">
@@ -60,7 +53,7 @@ export function SiteFooter() {
                 <li key={service.slug}>
                   <Link
                     href={`/services/${service.slug}`}
-                    className="text-night-100/70 transition-colors hover:text-white"
+                    className="text-ink-dim transition-colors hover:text-accent"
                   >
                     {service.short}
                   </Link>
@@ -70,13 +63,16 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-labelledby="footer-entreprise">
-            <h2 id="footer-entreprise" className="text-sm font-semibold uppercase tracking-wider text-solar-400">
+            <h2 id="footer-entreprise" className="label">
               Entreprise
             </h2>
             <ul className="mt-4 space-y-2.5 text-sm">
               {[...footerNav.entreprise, ...footerNav.ressources].map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-night-100/70 transition-colors hover:text-white">
+                  <Link
+                    href={item.href}
+                    className="text-ink-dim transition-colors hover:text-accent"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -85,10 +81,10 @@ export function SiteFooter() {
           </nav>
 
           <div>
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-solar-400">Contact</h2>
-            <ul className="mt-4 space-y-3 text-sm text-night-100/80">
+            <h2 className="label">Contact</h2>
+            <ul className="mt-4 space-y-3 text-sm text-ink-dim">
               <li className="flex gap-3">
-                <MapPinIcon width={18} height={18} className="mt-0.5 shrink-0 text-leaf-400" />
+                <MapPinIcon width={17} height={17} className="mt-0.5 shrink-0 text-accent" />
                 <span>
                   {site.address.street}
                   <br />
@@ -96,19 +92,19 @@ export function SiteFooter() {
                 </span>
               </li>
               <li className="flex gap-3">
-                <PhoneIcon width={18} height={18} className="mt-0.5 shrink-0 text-leaf-400" />
-                <a href={`tel:${site.phoneHref}`} className="transition-colors hover:text-white">
+                <PhoneIcon width={17} height={17} className="mt-0.5 shrink-0 text-accent" />
+                <a href={`tel:${site.phoneHref}`} className="transition-colors hover:text-accent">
                   {site.phone}
                 </a>
               </li>
               <li className="flex gap-3">
-                <MailIcon width={18} height={18} className="mt-0.5 shrink-0 text-leaf-400" />
-                <a href={`mailto:${site.email}`} className="transition-colors hover:text-white">
+                <MailIcon width={17} height={17} className="mt-0.5 shrink-0 text-accent" />
+                <a href={`mailto:${site.email}`} className="transition-colors hover:text-accent">
                   {site.email}
                 </a>
               </li>
               <li className="flex gap-3">
-                <ClockIcon width={18} height={18} className="mt-0.5 shrink-0 text-leaf-400" />
+                <ClockIcon width={17} height={17} className="mt-0.5 shrink-0 text-accent" />
                 <span>
                   Lun. – Ven. 8 h – 17 h
                   <br />
@@ -119,13 +115,12 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-night-100/60 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-2 border-t pt-6 font-mono text-[11px] uppercase tracking-label muted sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {site.legalName}. Tous droits réservés.
+            © {year} {site.legalName} — Tous droits réservés
           </p>
           <p>
-            Énergie solaire et solutions vertes à {site.address.city} et dans toute {" "}
-            {site.address.countryName}.
+            Énergie solaire à {site.address.city} et dans toute {site.address.countryName}
           </p>
         </div>
       </div>

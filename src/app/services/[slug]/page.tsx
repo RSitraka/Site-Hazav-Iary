@@ -67,7 +67,7 @@ export default async function ServicePage({ params }: Params) {
             Estimer mon besoin
           </Link>
           {service.priceFrom && (
-            <span className="rounded-full border border-solar-500/40 bg-solar-500/10 px-4 py-2 text-sm font-semibold text-solar-700 dark:text-solar-300">
+            <span className="rounded-sm border border-sun-line bg-sun-soft px-4 py-2 text-sm font-semibold text-sun-ink">
               {service.priceFrom}
             </span>
           )}
@@ -77,7 +77,7 @@ export default async function ServicePage({ params }: Params) {
       <section className="section">
         <div className="container grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
           <div>
-            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-solar-400/20 to-leaf-500/20 text-leaf-600 dark:text-leaf-400">
+            <span className="flex h-14 w-14 items-center justify-center rounded border border-accent-line bg-accent-soft text-accent">
               <Icon width={26} height={26} />
             </span>
             <h2 className="h2 mt-6">En quoi consiste cette prestation</h2>
@@ -92,7 +92,7 @@ export default async function ServicePage({ params }: Params) {
             <ol className="mt-5 space-y-5">
               {service.deliverables.map((item, i) => (
                 <li key={item.title} className="flex gap-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-leaf-500/15 text-sm font-bold text-leaf-600 dark:text-leaf-400">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-accent-soft text-sm font-bold text-accent">
                     {i + 1}
                   </span>
                   <span>
@@ -110,7 +110,7 @@ export default async function ServicePage({ params }: Params) {
       </section>
 
       {service.faq.length > 0 && (
-        <section className="section border-t bg-[rgb(var(--bg-subtle))]">
+        <section className="section border-t bg-surface">
           <div className="container">
             <SectionHeading
               eyebrow="Questions fréquentes"
@@ -135,7 +135,7 @@ export default async function ServicePage({ params }: Params) {
               >
                 <h3 className="h3 text-base">{other.short}</h3>
                 <p className="mt-2 text-sm leading-relaxed muted">{other.excerpt}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-leaf-600 dark:text-leaf-400">
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
                   Découvrir
                   <ArrowRightIcon
                     width={15}

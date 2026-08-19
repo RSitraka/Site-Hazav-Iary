@@ -24,7 +24,7 @@ export default function ConfidentialitePage() {
 
       <section className="section">
         <div className="container max-w-3xl prose-solar">
-          <p className="rounded-xl border border-solar-500/40 bg-solar-500/10 p-4 text-sm">
+          <p className="rounded border border-sun-line bg-sun-soft p-4 text-sm">
             <strong>À adapter :</strong> ce texte décrit le fonctionnement par défaut du site. Si
             vous ajoutez un outil de mesure d&rsquo;audience, un pixel publicitaire ou un service
             tiers de formulaire, complétez les sections correspondantes.
