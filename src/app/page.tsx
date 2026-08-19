@@ -15,21 +15,28 @@ import {
 } from "@/components/icons";
 import { keyFigures, site } from "@/lib/site";
 import { services } from "@/lib/services";
-import { commitments, generalFaq, processSteps, projects, testimonials } from "@/lib/content";
+import {
+  commitments,
+  equipmentCatalog,
+  generalFaq,
+  interventionZones,
+  processSteps,
+  testimonials,
+} from "@/lib/content";
 import { getAllPosts, formatDate } from "@/lib/posts";
 import { buildMetadata, faqSchema } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: `${site.name} — Installateur solaire à Madagascar`,
+  title: `${site.name} — Installateur de panneaux solaires à Antananarivo`,
   description:
-    "Installateur de panneaux solaires dans toute Madagascar : autoconsommation, systèmes hybrides, batteries lithium, pompage solaire et électrification rurale. Étude de dimensionnement offerte, devis sous 48 h.",
+    "Installateur de panneaux solaires à Antananarivo : descente technique sur site, dimensionnement, contrat écrit, pose et suivi de chantier, avec paiement échelonné sur plusieurs mois.",
   path: "/",
   keywords: [
-    "installateur panneaux solaires Madagascar",
-    "énergie solaire Antananarivo",
-    "kit solaire Madagascar",
-    "entreprise énergie verte Madagascar",
-    "devis installation solaire",
+    "installateur panneaux solaires Antananarivo",
+    "énergie solaire Madagascar",
+    "pose plaque solaire Antananarivo",
+    "batterie lithium onduleur solaire",
+    "devis installation solaire Madagascar",
   ],
 });
 
@@ -59,14 +66,15 @@ export default function HomePage() {
             </h1>
 
             <p className="lead mt-6 max-w-xl">
-              {site.name} conçoit, installe et entretient vos installations photovoltaïques :
-              maisons, entreprises, exploitations agricoles et villages hors réseau. Un
-              dimensionnement calculé au plus juste, du matériel garanti, des équipes locales.
+              {site.name} installe des panneaux solaires dans l&rsquo;agglomération
+              d&rsquo;Antananarivo. Nous venons voir votre site avant de chiffrer, nous inscrivons
+              le montant et la durée dans un contrat, et le paiement s&rsquo;étale sur plusieurs
+              mois.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/contact" className="btn-primary">
-                Devis gratuit sous 48 h
+                Demander une visite technique
                 <ArrowRightIcon width={16} height={16} />
               </Link>
               <Link href="/simulateur" className="btn-secondary">
@@ -77,15 +85,15 @@ export default function HomePage() {
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm muted">
               <li className="flex items-center gap-2">
                 <ShieldIcon width={18} height={18} className="text-accent" />
-                Matériel garanti jusqu&rsquo;à 25 ans
+                Descente technique avant tout devis
               </li>
               <li className="flex items-center gap-2">
                 <BoltIcon width={18} height={18} className="text-sun" />
-                Étude de dimensionnement offerte
+                Contrat écrit : montant et durée fixés
               </li>
               <li className="flex items-center gap-2">
                 <LeafIcon width={18} height={18} className="text-accent" />
-                Équipes 100 % malgaches
+                Paiement échelonné sur plusieurs mois
               </li>
             </ul>
           </div>
@@ -119,11 +127,11 @@ export default function HomePage() {
         <div className="container">
           <SectionHeading
             eyebrow="Nos services"
-            title="Des solutions solaires pour chaque usage"
-            lead="Du kit domestique à la centrale industrielle, nous couvrons l'ensemble de la chaîne : étude, fourniture, installation et maintenance."
+            title="De la visite de site au suivi de l'installation"
+            lead="Six prestations qui couvrent la chaîne complète : descente technique, dimensionnement, contrat, fourniture, pose et entretien."
           />
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => {
               const Icon = serviceIcons[service.icon];
               return (
@@ -164,11 +172,12 @@ export default function HomePage() {
             <CheckList
               className="mt-8"
               items={[
-                "Relevé de consommation appareil par appareil, pas d'estimation approximative",
-                "Note de dimensionnement écrite : panneaux, batteries, onduleur, justifiés par le calcul",
-                "Devis détaillé ligne par ligne avec marques et garanties",
-                "Installation par des salariés formés, jamais sous-traitée à l'aveugle",
-                "Maintenance et supervision pour tenir la production dans la durée",
+                "Descente sur site : toiture, ombrages, tableau électrique et appareils à alimenter",
+                "Relevé appareil par appareil, pas une estimation donnée au téléphone",
+                "Dimensionnement écrit : panneaux, capacité batterie, puissance d'onduleur",
+                "Contrat qui fixe le montant convenu et la durée de paiement",
+                "Matériel sorti du stock et rattaché nominativement à votre chantier",
+                "Dossier de chantier conservé, puis entretien pour tenir la production",
               ]}
             />
             <div className="mt-8 flex flex-wrap gap-3">
@@ -198,10 +207,10 @@ export default function HomePage() {
         <div className="container">
           <SectionHeading
             eyebrow="Comment ça se passe"
-            title="Cinq étapes, de la première visite à la mise en service"
+            title="Six étapes, du premier appel au dernier versement"
             align="center"
           />
-          <ol className="mt-12 grid gap-5 md:grid-cols-3 lg:grid-cols-5">
+          <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {processSteps.map((step) => (
               <li key={step.step} className="card card-hover">
                 <span className="text-3xl font-bold text-sun">{step.step}</span>
@@ -237,7 +246,7 @@ export default function HomePage() {
             <div className="grid gap-3 text-sm">
               {[
                 { label: "Consommation mensuelle", value: "kWh/mois" },
-                { label: "Nombre de panneaux", value: "× 550 Wc" },
+                { label: "Nombre de panneaux", value: "× 450 Wc" },
                 { label: "Capacité batterie", value: "kWh / Ah" },
                 { label: "Puissance onduleur", value: "kVA" },
               ].map((row) => (
@@ -254,51 +263,65 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------------------------- RÉALISATIONS -------------------------- */}
+      {/* -------------------------- ZONES ET MATÉRIEL ----------------------- */}
       <section className="section border-t">
         <div className="container">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="Réalisations"
-              title="Des chantiers livrés partout à Madagascar"
-              lead="Villas, industries, coopératives agricoles, villages hors réseau : chaque contexte impose ses contraintes."
+              title="Nos chantiers autour d'Antananarivo"
+              lead="Dix quartiers et communes suivis, et un matériel identifié chantier par chantier."
             />
             <Link href="/realisations" className="btn-secondary">
-              Voir toutes les réalisations
+              Voir les réalisations
             </Link>
           </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {projects.slice(0, 3).map((project) => (
-              <article key={project.slug} className="card card-hover flex flex-col">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
-                  <span>{project.category}</span>
-                  <span aria-hidden="true" className="muted">
-                    ·
-                  </span>
-                  <span className="muted">{project.year}</span>
-                </div>
-                <h3 className="h3 mt-3 text-lg">{project.title}</h3>
-                <p className="mt-1 text-sm font-medium text-sun">{project.power}</p>
-                <p className="mt-3 flex-1 text-sm leading-relaxed muted">{project.summary}</p>
-                <p className="mt-4 border-t pt-4 text-sm font-medium">{project.location}</p>
-              </article>
-            ))}
+          <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_1.2fr]">
+            <div className="card">
+              <h3 className="label">Zones d&rsquo;intervention</h3>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {interventionZones.map((zone) => (
+                  <li key={zone} className="badge badge-grow">
+                    {zone}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {equipmentCatalog.map((group) => (
+                <article key={group.title} className="card">
+                  <h3 className="label">{group.title}</h3>
+                  <ul className="mt-3 space-y-1.5 text-sm dim">
+                    {group.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ---------------------------- TÉMOIGNAGES --------------------------- */}
-      <section className="section border-t bg-surface">
-        <div className="container">
-          <SectionHeading eyebrow="Témoignages" title="Ce que disent nos clients" align="center" />
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {testimonials.map((item) => (
-              <TestimonialCard key={item.author} item={item} />
-            ))}
+      {testimonials.length > 0 && (
+        <section className="section border-t bg-surface">
+          <div className="container">
+            <SectionHeading
+              eyebrow="Témoignages"
+              title="Ce que disent nos clients"
+              align="center"
+            />
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {testimonials.map((item) => (
+                <TestimonialCard key={item.author} item={item} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* -------------------------------- BLOG ------------------------------ */}
       {posts.length > 0 && (

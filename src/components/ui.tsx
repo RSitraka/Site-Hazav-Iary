@@ -168,8 +168,8 @@ export function TestimonialCard({ item }: { item: Testimonial }) {
 
 export function CtaBand({
   title = "Prêt à passer au solaire ?",
-  text = "Décrivez-nous votre projet : nous réalisons l'étude de dimensionnement et vous remettons un devis détaillé sous 48 heures.",
-  primaryLabel = "Demander un devis gratuit",
+  text = "Décrivez-nous votre projet : nous convenons d’une descente technique, puis nous chiffrons sur la base de ce que nous avons vu.",
+  primaryLabel = "Demander une visite technique",
   primaryHref = "/contact",
   secondaryLabel = "Estimer mon installation",
   secondaryHref = "/simulateur",

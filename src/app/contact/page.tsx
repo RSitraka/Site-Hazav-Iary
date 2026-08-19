@@ -8,8 +8,8 @@ import { site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact — devis solaire gratuit sous 48 h",
-  description: `Contactez ${site.name} à ${site.address.city} : étude de dimensionnement offerte et devis détaillé sous 48 heures pour votre installation solaire à Madagascar.`,
+  title: "Contact — demander une descente technique",
+  description: `Contactez ${site.name} à ${site.address.city} : nous convenons d'une descente technique sur votre site, puis nous chiffrons votre installation solaire.`,
   path: "/contact",
   keywords: [
     "devis installation solaire Madagascar",
@@ -33,7 +33,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Parlons de votre projet solaire"
-        lead="Décrivez-nous votre situation en quelques lignes. Nous revenons vers vous sous 48 heures ouvrées avec une première estimation et une proposition de visite technique."
+        lead="Décrivez-nous votre situation en quelques lignes. Nous revenons vers vous pour convenir d'une descente technique : c'est elle qui détermine ce qui est installable et à quel prix."
         breadcrumbs={[{ name: "Contact", path: "/contact" }]}
       />
 

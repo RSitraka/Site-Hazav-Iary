@@ -100,8 +100,6 @@ export function organizationSchema() {
     description: site.description,
     email: site.email,
     telephone: site.phone,
-    foundingDate: String(site.foundingYear),
-    priceRange: "$$",
     address: {
       "@type": "PostalAddress",
       streetAddress: site.address.street,

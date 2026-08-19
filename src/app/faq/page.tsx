@@ -7,13 +7,13 @@ import { services } from "@/lib/services";
 import { buildMetadata, faqSchema } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "FAQ : prix, rentabilité et durée de vie d'une installation solaire",
+  title: "FAQ : prix, paiement et durée de vie d'une installation solaire",
   description:
-    "Toutes les réponses sur l'énergie solaire à Madagascar : prix d'une installation, retour sur investissement, durée de vie des batteries, garanties, financement et zones d'intervention.",
+    "Les réponses aux questions les plus posées : comment le prix se fixe, le paiement échelonné sur plusieurs mois, la descente technique, les batteries, le matériel posé et les zones d'intervention.",
   path: "/faq",
   keywords: [
-    "prix installation solaire Madagascar",
-    "rentabilité panneaux solaires",
+    "prix installation solaire Antananarivo",
+    "paiement échelonné solaire",
     "durée de vie batterie solaire",
     "questions énergie solaire",
   ],
@@ -32,7 +32,7 @@ export default function FaqPage() {
       <PageHero
         eyebrow="Questions fréquentes"
         title="Tout ce qu'il faut savoir avant d'installer du solaire"
-        lead="Prix, rentabilité, entretien, garanties : les questions que nous posent le plus souvent nos clients, avec des réponses chiffrées."
+        lead="Comment le prix se fixe, comment se passe le paiement en plusieurs mois, ce que nous installons : les questions que nos clients posent le plus souvent."
         breadcrumbs={[{ name: "FAQ", path: "/faq" }]}
       />
 

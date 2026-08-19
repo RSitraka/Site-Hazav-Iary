@@ -1,9 +1,19 @@
+/**
+ * Les six prestations correspondent au métier décrit dans l'application de
+ * gestion (RSitraka/Hazav-Iary) : descente sur site, projet avec montant
+ * convenu et durée, matériel sorti du stock, contrats et documents, suivi de
+ * paiement échelonné.
+ *
+ * Aucun montant n'est publié sur le site : le prix se fixe après la descente
+ * technique, dans le contrat.
+ */
+
 export type Service = {
   slug: string;
   title: string;
   /** Titre court pour la navigation et les cartes. */
   short: string;
-  icon: "sun" | "factory" | "home" | "water" | "battery" | "audit" | "wrench" | "streetlight";
+  icon: "panel" | "map" | "audit" | "battery" | "factory" | "wrench";
   excerpt: string;
   /** Mots-clés ciblés pour le référencement de la page dédiée. */
   keywords: string[];
@@ -11,379 +21,323 @@ export type Service = {
   benefits: string[];
   deliverables: { title: string; text: string }[];
   faq: { question: string; answer: string }[];
-  priceFrom?: string;
 };
 
 export const services: Service[] = [
   {
-    slug: "installation-panneaux-solaires-maison",
-    title: "Installation de panneaux solaires pour la maison",
-    short: "Solaire résidentiel",
-    icon: "home",
+    slug: "installation-panneaux-solaires",
+    title: "Installation de panneaux solaires",
+    short: "Installation solaire",
+    icon: "panel",
     excerpt:
-      "Autoconsommation et systèmes hybrides pour les foyers : fini les délestages, votre facture d'électricité fond durablement.",
+      "Pose complète de votre installation photovoltaïque : panneaux, structure, câblage et protections, par nos techniciens.",
     keywords: [
-      "installation panneaux solaires Madagascar",
-      "kit solaire maison Antananarivo",
-      "autoconsommation solaire résidentielle",
-      "prix panneau solaire Madagascar",
+      "installation panneaux solaires Antananarivo",
+      "installateur solaire Madagascar",
+      "pose plaque solaire",
+      "panneau solaire 450W Madagascar",
     ],
     intro:
-      "Nous équipons les foyers malgaches de systèmes photovoltaïques dimensionnés au plus juste : assez de production pour couvrir les usages réels, sans surdimensionnement inutile. Chaque projet démarre par un relevé de consommation appareil par appareil, puis un dimensionnement panneaux / batteries / onduleur validé avec vous avant tout achat.",
+      "C'est notre cœur de métier : installer des plaques solaires chez des particuliers et des professionnels de l'agglomération d'Antananarivo. Nous posons des panneaux de 300 W et 450 W selon la place disponible en toiture et le besoin relevé lors de la descente, avec structure de fixation, supports de toit, câble solaire 6 mm² et connecteurs MC4.",
     benefits: [
-      "Continuité de service pendant les coupures réseau",
-      "Jusqu'à 70 % de réduction sur la facture d'électricité",
-      "Matériel garanti : panneaux 25 ans de rendement, onduleurs 5 à 10 ans",
-      "Installation propre, câblage normalisé et mise à la terre",
+      "Continuité de service pendant les coupures du réseau",
+      "Pose réalisée par nos propres techniciens, jamais sous-traitée à l'aveugle",
+      "Câblage normalisé, coffret de protection et disjoncteur DC systématiques",
+      "Chaque matériel posé est enregistré et rattaché à votre dossier de chantier",
     ],
     deliverables: [
       {
-        title: "Audit de consommation",
-        text: "Inventaire des appareils, puissances et heures d'usage pour un besoin en kWh/mois fiable.",
+        title: "Préparation du chantier",
+        text: "Matériel sorti du stock et affecté nominativement à votre projet avant le départ des équipes.",
       },
+      {
+        title: "Structure et pose",
+        text: "Supports de toit, structure de fixation, orientation des modules et fixation inox.",
+      },
+      {
+        title: "Câblage et protections",
+        text: "Câble solaire 6 mm², connecteurs MC4, disjoncteur DC, coffret de protection et mise à la terre.",
+      },
+      {
+        title: "Mise en service",
+        text: "Paramétrage, essais de charge et prise en main de l'installation avec vous.",
+      },
+    ],
+    faq: [
+      {
+        question: "Combien de temps dure une installation ?",
+        answer:
+          "Une installation résidentielle courante se pose en une à trois journées de chantier, selon la taille du système, l'accès à la toiture et la longueur de câblage à tirer. La date est fixée avec vous après la signature du contrat.",
+      },
+      {
+        question: "Faut-il être présent pendant les travaux ?",
+        answer:
+          "Une présence est nécessaire à l'arrivée de l'équipe et à la mise en service, pour la prise en main. Entre les deux, le chantier avance sans que vous ayez à rester sur place.",
+      },
+    ],
+  },
+  {
+    slug: "descente-technique-etude-site",
+    title: "Descente technique et étude de site",
+    short: "Descente technique",
+    icon: "map",
+    excerpt:
+      "Une visite sur place avant toute proposition : c'est elle qui détermine ce qui est réellement installable chez vous.",
+    keywords: [
+      "visite technique solaire Antananarivo",
+      "étude de site photovoltaïque",
+      "relevé installation solaire",
+      "diagnostic solaire Madagascar",
+    ],
+    intro:
+      "Nous ne chiffrons jamais une installation à distance. Une équipe se déplace chez vous — la descente est enregistrée avec sa date, son lieu et sa localisation cartographique — pour relever la toiture, les ombrages, le tableau électrique, les distances de câblage et les appareils à alimenter. La note de visite sert ensuite de base au dimensionnement et au devis.",
+    benefits: [
+      "Un besoin établi sur des mesures, pas sur une estimation au téléphone",
+      "Détection des contraintes réelles : ombrage, état de la toiture, accès, longueur de câbles",
+      "Repérage des appareils énergivores à corriger avant d'investir",
+      "Visite localisée et consignée : rien ne se perd entre le relevé et le chantier",
+    ],
+    deliverables: [
+      {
+        title: "Prise de rendez-vous",
+        text: "Date et lieu convenus, équipe technique affectée à la visite.",
+      },
+      {
+        title: "Relevé sur place",
+        text: "Toiture, orientation, ombrages, tableau électrique, cheminement des câbles.",
+      },
+      {
+        title: "Inventaire des usages",
+        text: "Appareils à alimenter, puissances et durées d'utilisation quotidiennes.",
+      },
+      {
+        title: "Note de visite",
+        text: "Compte rendu écrit et localisé, conservé dans votre dossier et repris dans le devis.",
+      },
+    ],
+    faq: [
+      {
+        question: "La descente est-elle facturée ?",
+        answer:
+          "Contactez-nous pour convenir de la visite : nous vous indiquons à ce moment-là les conditions, qui dépendent de la distance et de la nature du site. Rien n'est engagé avant votre accord.",
+      },
+      {
+        question: "Que faut-il préparer avant la visite ?",
+        answer:
+          "Un accès à la toiture et au tableau électrique, et si possible la liste des appareils que vous voulez alimenter. Le simulateur en ligne vous aide à la préparer en quelques minutes.",
+      },
+    ],
+  },
+  {
+    slug: "dimensionnement-devis-contrat",
+    title: "Dimensionnement, devis et contrat",
+    short: "Devis et contrat",
+    icon: "audit",
+    excerpt:
+      "Le système est calculé à partir du relevé, puis inscrit dans un contrat qui fixe le montant convenu et la durée.",
+    keywords: [
+      "devis installation solaire Antananarivo",
+      "dimensionnement solaire Madagascar",
+      "contrat installation photovoltaïque",
+      "paiement échelonné solaire",
+    ],
+    intro:
+      "À partir de la descente, nous calculons la puissance photovoltaïque, la capacité de batterie et la puissance d'onduleur nécessaires — assez pour couvrir vos usages réels, sans surdimensionnement inutile. Le résultat est traduit en une proposition écrite, puis en contrat : montant convenu, durée de paiement et matériel prévu y figurent noir sur blanc avant que le chantier ne démarre.",
+    benefits: [
+      "Un dimensionnement justifié par le calcul, pas par le catalogue",
+      "Un contrat écrit qui fixe le montant et la durée dès le départ",
+      "Un paiement réparti sur plusieurs mois : une avance, puis des mensualités",
+      "Contrats et documents conservés et consultables tout au long du chantier",
+    ],
+    deliverables: [
       {
         title: "Note de dimensionnement",
-        text: "Nombre de panneaux, capacité batterie (profondeur de décharge 50 %), puissance d'onduleur.",
+        text: "Nombre et puissance des panneaux, capacité batterie, puissance d'onduleur.",
       },
       {
-        title: "Pose et mise en service",
-        text: "Structure toiture, câblage DC/AC, protections, paramétrage et test de charge.",
+        title: "Proposition détaillée",
+        text: "Matériel prévu, prestations incluses et durée de chantier estimée.",
       },
       {
-        title: "Formation du client",
-        text: "Prise en main de l'onduleur, bons réflexes d'usage, entretien courant.",
-      },
-    ],
-    faq: [
-      {
-        question: "Combien de panneaux faut-il pour une maison à Antananarivo ?",
-        answer:
-          "Pour un foyer consommant 150 kWh par mois, il faut généralement 6 à 8 panneaux de 550 Wc, un parc batterie de 5 à 10 kWh et un onduleur hybride de 3 à 5 kVA. Le simulateur en ligne vous donne un premier ordre de grandeur en deux minutes.",
+        title: "Contrat",
+        text: "Montant convenu, durée de paiement et engagements des deux parties.",
       },
       {
-        question: "Peut-on garder le réseau public en complément ?",
-        answer:
-          "Oui. Nos configurations hybrides basculent automatiquement entre solaire, batterie et réseau. Le solaire reste prioritaire, le réseau ne sert que d'appoint : c'est la formule la plus rentable en zone urbaine.",
-      },
-    ],
-    priceFrom: "À partir de 4 500 000 Ar", // À VALIDER
-  },
-  {
-    slug: "solaire-entreprise-industrie",
-    title: "Solaire pour entreprises et industries",
-    short: "Solaire professionnel",
-    icon: "factory",
-    excerpt:
-      "Centrales en toiture ou au sol, pilotage de charge et suivi de production pour sécuriser votre outil de travail.",
-    keywords: [
-      "centrale solaire entreprise Madagascar",
-      "photovoltaïque industriel",
-      "solaire tertiaire Antananarivo",
-      "réduire le coût de l'énergie en entreprise",
-    ],
-    intro:
-      "Groupes électrogènes coûteux, coupures qui arrêtent la production : le solaire professionnel apporte une énergie prévisible. Nous concevons des centrales de 10 kWc à plusieurs centaines de kWc, en autoconsommation avec ou sans stockage, intégrées à vos contraintes d'exploitation.",
-    benefits: [
-      "Coût du kWh solaire jusqu'à 4 fois inférieur à celui du groupe électrogène",
-      "Retour sur investissement typique de 3 à 5 ans",
-      "Supervision à distance de la production et des alarmes",
-      "Chantier planifié sans arrêt de votre activité",
-    ],
-    deliverables: [
-      {
-        title: "Étude technico-économique",
-        text: "Courbe de charge, taux d'autoconsommation, TRI et plan de financement.",
-      },
-      {
-        title: "Ingénierie et plans",
-        text: "Schémas unifilaires, notes de calcul, dossier de conformité.",
-      },
-      {
-        title: "Réalisation clé en main",
-        text: "Approvisionnement, génie civil, pose, raccordement et essais.",
-      },
-      {
-        title: "Contrat d'exploitation",
-        text: "Monitoring, maintenance préventive et garantie de performance.",
+        title: "Échéancier",
+        text: "Avance à la commande puis mensualités régulières jusqu'au solde.",
       },
     ],
     faq: [
       {
-        question: "Le solaire peut-il remplacer totalement le groupe électrogène ?",
+        question: "Peut-on payer en plusieurs fois ?",
         answer:
-          "Le plus souvent il le relève plutôt qu'il ne le remplace : le solaire couvre la journée, le stockage lisse les pointes et le groupe reste en ultime secours. Le gasoil consommé chute alors de 60 à 90 %.",
+          "Oui, c'est notre fonctionnement habituel. Le contrat fixe un montant convenu et un nombre de mois : vous réglez une avance à la commande, puis des mensualités calculées sur le solde restant. Le suivi des versements est tenu à jour de notre côté.",
       },
       {
-        question: "Quelle surface de toiture faut-il ?",
+        question: "Le devis peut-il évoluer après signature ?",
         answer:
-          "Comptez environ 6 à 7 m² par kWc installé. Une centrale de 100 kWc demande donc à peu près 650 m² de toiture exploitable, ou un terrain équivalent pour une pose au sol.",
-      },
-    ],
-  },
-  {
-    slug: "kit-solaire-autonome-electrification-rurale",
-    title: "Kits solaires autonomes et électrification rurale",
-    short: "Électrification rurale",
-    icon: "sun",
-    excerpt:
-      "Kits individuels, mini-réseaux et équipements communautaires pour les zones hors réseau.",
-    keywords: [
-      "électrification rurale Madagascar",
-      "kit solaire autonome",
-      "mini-réseau solaire",
-      "solaire hors réseau",
-    ],
-    intro:
-      "Une large part de la population malgache vit sans accès fiable à l'électricité. Nous déployons des kits solaires individuels, des mini-réseaux de village et des équipements collectifs (écoles, centres de santé), avec formation des relais locaux pour la maintenance de premier niveau.",
-    benefits: [
-      "Solutions robustes pensées pour l'usage en zone enclavée",
-      "Recensement énergétique numérique des ménages",
-      "Formation d'un technicien relais par site",
-      "Compatible avec les financements bailleurs et ONG",
-    ],
-    deliverables: [
-      {
-        title: "Recensement terrain",
-        text: "Collecte hors-ligne des besoins, ménage par ménage.",
+          "Le montant convenu est celui du contrat. Un changement ne peut venir que d'une demande de votre part qui modifie le périmètre — dans ce cas, il fait l'objet d'un accord écrit avant d'être engagé.",
       },
       {
-        title: "Schéma de déploiement",
-        text: "Arbitrage entre kits individuels, mini-réseau ou solution mixte.",
-      },
-      {
-        title: "Installation et formation",
-        text: "Pose, mise en service et transfert de compétences local.",
-      },
-      {
-        title: "Suivi post-installation",
-        text: "Visites de contrôle et pièces de rechange disponibles.",
-      },
-    ],
-    faq: [
-      {
-        question: "Intervenez-vous en dehors d'Antananarivo ?",
+        question: "Pourquoi les prix ne sont-ils pas affichés sur le site ?",
         answer:
-          "Oui, nos équipes se déplacent sur l'ensemble des régions de Madagascar. Les projets ruraux sont organisés par campagnes afin de mutualiser la logistique.",
-      },
-    ],
-  },
-  {
-    slug: "pompage-solaire-agriculture",
-    title: "Pompage solaire pour l'agriculture et l'eau potable",
-    short: "Pompage solaire",
-    icon: "water",
-    excerpt:
-      "Irrigation et adduction d'eau sans carburant : la pompe tourne tant que le soleil brille.",
-    keywords: [
-      "pompage solaire Madagascar",
-      "pompe immergée solaire",
-      "irrigation solaire",
-      "adduction eau potable solaire",
-    ],
-    intro:
-      "Une pompe solaire supprime la ligne gasoil du budget d'exploitation et fonctionne sans surveillance. Nous dimensionnons l'ensemble forage, pompe, panneaux et réservoir tampon en fonction du débit journalier visé et de la hauteur manométrique totale.",
-    benefits: [
-      "Zéro carburant, aucun moteur thermique à entretenir",
-      "Débit calculé pour la saison sèche, pas pour la moyenne annuelle",
-      "Réservoir tampon plutôt que batteries : moins cher, plus durable",
-      "Adapté au maraîchage, au riz et à l'abreuvement du cheptel",
-    ],
-    deliverables: [
-      {
-        title: "Étude hydraulique",
-        text: "Débit, hauteur manométrique totale, profondeur de forage et besoin journalier.",
-      },
-      {
-        title: "Choix de la pompe",
-        text: "Immergée ou de surface, courbe de rendement adaptée au champ photovoltaïque.",
-      },
-      {
-        title: "Installation complète",
-        text: "Structure PV, variateur, câblage, protections et réservoir.",
-      },
-      { title: "Garantie et SAV", text: "Pièces disponibles et intervention sur site." },
-    ],
-    faq: [
-      {
-        question: "Faut-il des batteries pour une pompe solaire ?",
-        answer:
-          "Rarement. On stocke l'eau plutôt que l'électricité : un réservoir surélevé coûte moins cher qu'un parc batterie et dure bien plus longtemps.",
+          "Parce qu'ils dépendent entièrement de ce que vous voulez alimenter, de votre toiture et de l'autonomie souhaitée. Annoncer un tarif sans avoir vu le site reviendrait à annoncer un chiffre faux. Le prix se fixe après la descente technique.",
       },
     ],
   },
   {
     slug: "stockage-batteries-onduleurs",
-    title: "Stockage, batteries lithium et onduleurs hybrides",
+    title: "Stockage, batteries lithium et onduleurs",
     short: "Stockage et batteries",
     icon: "battery",
     excerpt:
-      "LiFePO4, GEL, onduleurs hybrides : le bon couple stockage/onduleur pour votre profil de consommation.",
+      "Batteries lithium 200 Ah, onduleurs 5 kVA et régulateurs MPPT : le couple stockage/conversion adapté à votre usage.",
     keywords: [
-      "batterie lithium solaire Madagascar",
-      "prix batterie LiFePO4",
-      "onduleur hybride solaire",
-      "stockage énergie solaire",
+      "batterie lithium 200Ah Madagascar",
+      "onduleur 5kVA solaire",
+      "régulateur MPPT 60A",
+      "stockage énergie solaire Antananarivo",
     ],
     intro:
-      "Le stockage représente souvent la moitié du budget d'une installation : c'est là que se jouent la rentabilité et la durée de vie du système. Nous comparons systématiquement lithium LiFePO4, GEL et AGM sur le coût du kWh restitué, et non sur le prix d'achat affiché.",
+      "Le stockage détermine ce que vous pourrez faire fonctionner la nuit et pendant les coupures. Nous installons des batteries lithium 200 Ah, des onduleurs 5 kVA et des régulateurs de charge MPPT 60 A, dimensionnés selon votre consommation nocturne et l'autonomie que vous souhaitez réellement couvrir.",
     benefits: [
-      "Dimensionnement à 50 % de profondeur de décharge pour le plomb, 80 à 90 % pour le lithium",
-      "Onduleurs hybrides avec priorité solaire paramétrable",
-      "Extension possible du parc batterie sans tout remplacer",
-      "Reprise et recyclage des anciennes batteries",
+      "Capacité calculée sur votre consommation de nuit, pas sur une moyenne",
+      "Lithium : décharge profonde admissible et durée de vie très supérieure au plomb",
+      "Régulation MPPT pour tirer le maximum des panneaux par temps couvert",
+      "Parc extensible : l'installation est conçue pour pouvoir grandir",
     ],
     deliverables: [
       {
         title: "Analyse du profil de charge",
-        text: "Consommation jour/nuit, pointes, autonomie souhaitée.",
+        text: "Consommation jour/nuit, pointes et autonomie souhaitée.",
       },
       {
-        title: "Comparatif chiffré",
-        text: "Coût total de possession sur 10 ans, par technologie.",
+        title: "Choix du couple stockage/onduleur",
+        text: "Capacité batterie, puissance d'onduleur et calibre du régulateur MPPT.",
       },
       {
         title: "Intégration",
-        text: "Armoire, protections, BMS, communication onduleur-batterie.",
+        text: "Armoire, protections, raccordement et paramétrage des priorités de charge.",
       },
-      { title: "Suivi d'état de santé", text: "Contrôle périodique de la capacité réelle." },
+      {
+        title: "Prise en main",
+        text: "Lecture des indicateurs, bons réflexes d'usage et limites à ne pas dépasser.",
+      },
     ],
     faq: [
       {
-        question: "Lithium ou GEL : qu'est-ce qui revient le moins cher ?",
+        question: "Faut-il forcément des batteries ?",
         answer:
-          "Sur la durée, le lithium. Une batterie LiFePO4 tient 4 000 à 6 000 cycles contre 500 à 1 200 pour du plomb : le coût par kWh restitué est généralement deux fois plus bas, malgré un prix d'achat supérieur.",
+          "Non. Si votre consommation est surtout diurne, l'énergie est utilisée au moment où elle est produite et le stockage n'est pas indispensable. Les batteries deviennent nécessaires dès qu'il faut couvrir la nuit ou sécuriser des équipements sensibles.",
+      },
+      {
+        question: "Combien de temps dure une batterie lithium ?",
+        answer:
+          "Correctement dimensionnée et pas systématiquement vidée à fond, une batterie lithium tient plusieurs milliers de cycles — soit une durée de vie très supérieure à celle d'une batterie au plomb, qui reste la pièce d'usure d'une installation.",
       },
     ],
   },
   {
-    slug: "audit-energetique-dimensionnement",
-    title: "Audit énergétique et dimensionnement solaire",
-    short: "Audit et dimensionnement",
-    icon: "audit",
+    slug: "fourniture-materiel-solaire",
+    title: "Fourniture de matériel solaire",
+    short: "Fourniture de matériel",
+    icon: "factory",
     excerpt:
-      "Un relevé de consommation rigoureux avant tout achat : c'est ce qui évite de payer un système surdimensionné.",
+      "Panneaux, batteries, onduleurs, régulateurs, câbles et protections : du matériel identifié, tracé et disponible.",
     keywords: [
-      "audit énergétique Madagascar",
-      "dimensionnement installation solaire",
-      "calcul consommation électrique foyer",
-      "étude solaire photovoltaïque",
+      "matériel solaire Madagascar",
+      "vente panneau solaire Antananarivo",
+      "câble solaire 6mm2 connecteur MC4",
+      "coffret protection solaire",
     ],
     intro:
-      "Nos ingénieurs réalisent le relevé appareil par appareil (puissance, durée d'usage, quantité) pour établir la consommation mensuelle réelle en kWh, puis en déduisent le nombre de panneaux, la capacité batterie et la puissance d'onduleur nécessaires. Cette méthode, issue de notre outil de terrain EcoCalc, est appliquée sur tous nos projets.",
+      "Nous tenons notre propre stock, ce qui évite les chantiers arrêtés faute d'une pièce. Chaque référence est suivie à l'unité et affectée nominativement au chantier sur lequel elle part : vous savez exactement quel matériel a été posé chez vous.",
     benefits: [
-      "Un besoin réel chiffré, pas une estimation approximative",
-      "Détection des postes énergivores à corriger avant d'investir",
-      "Note de dimensionnement remise même sans commande",
-      "Base solide pour comparer objectivement plusieurs devis",
+      "Références connues et tracées, aucun composant anonyme",
+      "Stock suivi en continu, avec seuils d'alerte pour éviter les ruptures",
+      "Matériel affecté à votre chantier et consigné dans votre dossier",
+      "Accessoires et pièces de rechange disponibles pour les interventions",
     ],
     deliverables: [
       {
-        title: "Relevé sur site",
-        text: "Inventaire complet des usages, mesures de puissance si nécessaire.",
+        title: "Modules photovoltaïques",
+        text: "Panneaux solaires 300 W et 450 W.",
       },
       {
-        title: "Rapport de consommation",
-        text: "kWh/mois par poste, profil jour/nuit, saisonnalité.",
+        title: "Stockage et conversion",
+        text: "Batteries lithium 200 Ah, onduleurs 5 kVA, régulateurs MPPT 60 A.",
       },
       {
-        title: "Scénarios chiffrés",
-        text: "2 à 3 configurations avec coût, production et économies attendues.",
+        title: "Câblage et connectique",
+        text: "Câble solaire 6 mm², connecteurs MC4, disjoncteurs DC, coffrets de protection.",
       },
       {
-        title: "Recommandations d'efficacité",
-        text: "Actions à gain rapide, à mener avant tout investissement solaire.",
+        title: "Fixation",
+        text: "Structures de fixation, supports de toit, visserie inox.",
       },
     ],
     faq: [
       {
-        question: "L'audit est-il payant ?",
+        question: "Vendez-vous du matériel sans installation ?",
         answer:
-          "L'audit initial est offert pour les projets résidentiels dans l'agglomération d'Antananarivo. Pour les sites industriels ou éloignés, il est facturé puis déduit de la commande.",
+          "Nous privilégions les installations complètes, car la sécurité d'un système dépend autant du câblage et des protections que des composants eux-mêmes. Pour un besoin de fourniture seule, contactez-nous : nous examinons la demande au cas par cas.",
+      },
+      {
+        question: "Puis-je ajouter des panneaux plus tard ?",
+        answer:
+          "Oui, à condition que l'installation ait été conçue pour. C'est pourquoi nous choisissons dès le départ un onduleur et un schéma de câblage qui autorisent l'extension sans tout reprendre.",
       },
     ],
   },
   {
-    slug: "maintenance-monitoring-solaire",
-    title: "Maintenance et monitoring d'installations solaires",
-    short: "Maintenance",
+    slug: "suivi-chantier-maintenance",
+    title: "Suivi de chantier et maintenance",
+    short: "Suivi et maintenance",
     icon: "wrench",
     excerpt:
-      "Contrats d'entretien, nettoyage, contrôle des batteries et supervision de la production à distance.",
+      "Un responsable identifié pendant les travaux, puis l'entretien qui maintient la production dans la durée.",
     keywords: [
-      "maintenance panneaux solaires Madagascar",
-      "entretien installation photovoltaïque",
-      "monitoring production solaire",
-      "dépannage solaire Antananarivo",
+      "maintenance panneaux solaires Antananarivo",
+      "entretien installation photovoltaïque Madagascar",
+      "dépannage solaire",
+      "suivi chantier solaire",
     ],
     intro:
-      "Une installation mal entretenue perd 10 à 25 % de production en deux ans : poussière, connexions oxydées, batteries déséquilibrées. Nos contrats couvrent le nettoyage, les contrôles électriques, le test de capacité des batteries et le suivi à distance des alarmes.",
+      "Chaque chantier a un responsable désigné, et tout ce qui s'y passe est consigné : matériel posé, documents, contrats, avancement. Une fois l'installation en service, l'entretien prend le relais — une installation négligée perd de la production année après année, par encrassement des modules, connexions oxydées ou batteries déséquilibrées.",
     benefits: [
-      "Production maintenue au niveau prévu au contrat",
-      "Durée de vie du parc batterie préservée",
-      "Intervention prioritaire en cas de panne",
-      "Rapport annuel de performance",
+      "Un interlocuteur identifié à chaque étape du chantier",
+      "Dossier complet conservé : matériel, documents, contrats, avancement",
+      "Nettoyage et contrôles électriques réguliers pour tenir la production",
+      "Intervention sur les pannes, avec pièces disponibles en stock",
     ],
     deliverables: [
-      { title: "Visite préventive", text: "1 à 4 passages par an selon le contrat." },
       {
-        title: "Contrôle électrique",
-        text: "Serrage, isolement, protections, mise à la terre.",
+        title: "Responsable de chantier",
+        text: "Un technicien désigné, et à tout moment un point clair sur qui doit faire avancer quoi.",
       },
       {
-        title: "Santé des batteries",
-        text: "Tension par élément, capacité restituée, équilibrage.",
+        title: "Dossier de chantier",
+        text: "Matériel posé, documents et contrats rattachés à votre installation.",
       },
       {
-        title: "Supervision",
-        text: "Alertes de production et défauts remontés automatiquement.",
+        title: "Entretien périodique",
+        text: "Nettoyage des modules, serrage, contrôle des protections et de la mise à la terre.",
+      },
+      {
+        title: "Contrôle des batteries",
+        text: "Tension par élément, capacité réelle restituée, équilibrage.",
       },
     ],
     faq: [
       {
         question: "À quelle fréquence faut-il nettoyer les panneaux ?",
         answer:
-          "Deux à quatre fois par an selon l'environnement. En zone poussiéreuse ou proche d'une route en terre, un nettoyage trimestriel est justifié : l'écart de production se voit immédiatement.",
-      },
-    ],
-  },
-  {
-    slug: "eclairage-public-solaire",
-    title: "Éclairage public solaire et lampadaires autonomes",
-    short: "Éclairage public",
-    icon: "streetlight",
-    excerpt:
-      "Lampadaires solaires autonomes pour communes, lotissements, sites industriels et voiries.",
-    keywords: [
-      "lampadaire solaire Madagascar",
-      "éclairage public solaire",
-      "candélabre solaire autonome",
-      "éclairage de sécurité site industriel",
-    ],
-    intro:
-      "Chaque mât est autonome : panneau, batterie lithium, LED et détecteur de présence intégrés. Aucune tranchée, aucun raccordement réseau, aucune facture d'électricité — un coût d'exploitation quasi nul après la pose.",
-    benefits: [
-      "Installation rapide, sans génie civil lourd",
-      "Autonomie de 3 à 5 nuits sans soleil",
-      "Gradation automatique pour économiser la batterie",
-      "Sécurisation des accès et des voiries",
-    ],
-    deliverables: [
-      {
-        title: "Étude photométrique",
-        text: "Hauteur de mât, interdistance et niveau d'éclairement visé.",
+          "Deux à quatre fois par an selon l'environnement. En zone poussiéreuse ou à proximité d'une route en terre, un passage trimestriel se justifie : l'écart de production se voit immédiatement.",
       },
       {
-        title: "Fourniture",
-        text: "Mâts galvanisés, batteries lithium, LED haute efficacité.",
-      },
-      { title: "Pose", text: "Massifs béton, levage, orientation des modules." },
-      { title: "Garantie", text: "2 à 5 ans selon les composants." },
-    ],
-    faq: [
-      {
-        question: "Que se passe-t-il après plusieurs jours de pluie ?",
+        question: "Intervenez-vous sur une installation posée par quelqu'un d'autre ?",
         answer:
-          "Le régulateur réduit progressivement l'intensité lumineuse pour prolonger l'autonomie. Nos mâts sont dimensionnés pour tenir au minimum trois nuits sans recharge significative.",
+          "Oui, après un diagnostic préalable. Nous vérifions le câblage, les protections et l'état des batteries avant de nous engager sur un entretien régulier.",
       },
     ],
   },

@@ -9,14 +9,14 @@ import { absoluteUrl, buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Nos services solaires : installation, stockage, pompage, maintenance",
+  title: "Nos services : installation solaire, stockage, maintenance",
   description:
-    "Découvrez les services de Hazav'Iary à Madagascar : installation de panneaux solaires, solaire professionnel, kits autonomes, pompage solaire, batteries lithium, audit énergétique, maintenance et éclairage public.",
+    "Les prestations Hazav'Iary à Antananarivo : descente technique, dimensionnement et contrat, installation de panneaux solaires, batteries lithium et onduleurs, fourniture de matériel, suivi et maintenance.",
   path: "/services",
   keywords: [
-    "services énergie solaire Madagascar",
-    "installation photovoltaïque",
-    "pompage solaire",
+    "services énergie solaire Antananarivo",
+    "installation photovoltaïque Madagascar",
+    "batterie lithium onduleur",
     "maintenance panneaux solaires",
   ],
 });
@@ -40,8 +40,8 @@ export default function ServicesPage() {
 
       <PageHero
         eyebrow="Nos services"
-        title="Toute la chaîne solaire, de l'étude à la maintenance"
-        lead="Huit expertises complémentaires pour couvrir les besoins des foyers, des entreprises, des exploitations agricoles et des collectivités malgaches."
+        title="Toute la chaîne, de la visite de site à la maintenance"
+        lead="Six prestations complémentaires : nous relevons, nous calculons, nous écrivons, nous posons, puis nous entretenons."
         breadcrumbs={[{ name: "Services", path: "/services" }]}
       />
 
@@ -64,9 +64,6 @@ export default function ServicesPage() {
                         {service.title}
                       </Link>
                     </h2>
-                    {service.priceFrom && (
-                      <p className="mt-1 text-sm font-medium text-sun">{service.priceFrom}</p>
-                    )}
                   </div>
                 </div>
 
@@ -95,7 +92,7 @@ export default function ServicesPage() {
 
       <CtaBand
         title="Un besoin qui ne rentre dans aucune case ?"
-        text="Décrivez votre situation : nos ingénieurs vous répondent avec une proposition adaptée, même pour les configurations atypiques."
+        text="Décrivez votre situation : nos techniciens vous répondent avec une proposition adaptée, même pour les configurations atypiques."
       />
     </>
   );

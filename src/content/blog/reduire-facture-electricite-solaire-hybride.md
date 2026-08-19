@@ -66,6 +66,6 @@ La conclusion est presque toujours la même : **commencez par ce que vous consom
 Deux étapes, dans cet ordre :
 
 1. **Chiffrez votre consommation** avec le [simulateur](/simulateur) — en séparant bien les usages de jour et de nuit.
-2. **Faites vérifier le résultat sur site** : orientation de toiture, ombrages, pointes de démarrage. C'est l'objet de notre [audit énergétique](/services/audit-energetique-dimensionnement), offert pour les projets résidentiels à Antananarivo.
+2. **Faites vérifier le résultat sur site** : orientation de toiture, ombrages, pointes de démarrage. C'est l'objet de notre [descente technique](/services/descente-technique-etude-site).
 
-Vous pouvez aussi nous [décrire votre situation directement](/contact) : une réponse chiffrée sous 48 heures ouvrées.
+Vous pouvez aussi nous [décrire votre situation directement](/contact) : nous convenons alors d'une visite.

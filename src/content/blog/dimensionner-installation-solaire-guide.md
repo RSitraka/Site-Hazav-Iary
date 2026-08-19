@@ -13,7 +13,7 @@ keywords:
 
 Dimensionner, c'est répondre à quatre questions dans l'ordre : combien je consomme, combien il faut produire, combien il faut stocker, et quelle puissance instantanée je dois pouvoir délivrer. Prenez ces étapes dans le désordre et vous obtiendrez un système soit inutilement cher, soit décevant.
 
-Voici la méthode que nos ingénieurs appliquent sur chaque projet.
+Voici la méthode que nos techniciens appliquent sur chaque projet.
 
 ## Étape 1 — Calculer la consommation réelle
 
@@ -55,7 +55,7 @@ Avec nos 2 370 Wh/jour :
 2 370 ÷ (5 × 0,75) = 632 Wc
 ```
 
-Avec des panneaux de 550 Wc, il faut donc **2 panneaux** (arrondi supérieur), soit 1 100 Wc installés. La marge obtenue par l'arrondi n'est pas du gaspillage : elle absorbe les journées couvertes.
+Avec des panneaux de 450 Wc, il faut donc **2 panneaux** (arrondi supérieur), soit 900 Wc installés. La marge obtenue par l'arrondi n'est pas du gaspillage : elle absorbe les journées couvertes.
 
 ## Étape 3 — Dimensionner le parc batterie
 
@@ -107,4 +107,4 @@ Dans notre exemple : `(72 + 150 + 90 + 15) × 0,65 × 1,3 ÷ 1 000 ≈ 0,28 kVA`
 
 Notre [simulateur solaire](/simulateur) applique exactement ces formules : vous listez vos appareils et il affiche instantanément consommation mensuelle, nombre de panneaux, capacité batterie et puissance d'onduleur.
 
-Reste ensuite la partie qu'aucun calcul en ligne ne remplace : l'orientation réelle de la toiture, les ombrages portés, les longueurs de câbles et les pointes de démarrage. C'est l'objet de notre [audit sur site](/services/audit-energetique-dimensionnement).
+Reste ensuite la partie qu'aucun calcul en ligne ne remplace : l'orientation réelle de la toiture, les ombrages portés, les longueurs de câbles et les pointes de démarrage. C'est l'objet de notre [descente technique](/services/descente-technique-etude-site).

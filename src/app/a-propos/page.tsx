@@ -22,18 +22,18 @@ export const metadata: Metadata = buildMetadata({
 const values = [
   {
     icon: SunIcon,
-    title: "Rendre le solaire accessible",
-    text: "Des solutions calibrées pour les budgets malgaches, du kit d'appoint à la centrale industrielle, sans jamais sacrifier la sécurité électrique.",
+    title: "Rendre le solaire atteignable",
+    text: "Le paiement s'étale sur plusieurs mois : une avance, puis des mensualités. L'installation ne dépend pas d'un seul versement.",
   },
   {
     icon: ShieldIcon,
     title: "Tenir dans la durée",
-    text: "Une installation n'a de valeur que si elle produit encore dans dix ans. Nous privilégions les composants réparables et les pièces disponibles localement.",
+    text: "Une installation n'a de valeur que si elle produit encore dans dix ans. Nous tenons notre stock pour que les pièces restent disponibles.",
   },
   {
     icon: LeafIcon,
-    title: "Réduire l'empreinte réelle",
-    text: "Moins de gasoil brûlé, moins de batteries jetées : nous reprenons les batteries usagées et orientons vers les filières de recyclage.",
+    title: "Ne rien laisser au flou",
+    text: "Descente écrite, dimensionnement calculé, contrat signé, matériel tracé : à chaque étape, ce qui est décidé est consigné.",
   },
 ];
 
@@ -43,30 +43,31 @@ export default function AProposPage() {
       <PageHero
         eyebrow="À propos"
         title="Une entreprise malgache au service de l'énergie propre"
-        lead={`${site.name} accompagne foyers, entreprises et collectivités dans leur transition vers le solaire depuis ${site.foundingYear}. Notre différence tient à une chose simple : nous calculons avant de vendre.`}
+        lead={`${site.name} installe des panneaux solaires dans l'agglomération d'Antananarivo. Notre différence tient à une chose simple : nous venons voir avant de chiffrer, et nous écrivons ce qui est convenu.`}
         breadcrumbs={[{ name: "À propos", path: "/a-propos" }]}
       />
 
       <section className="section">
         <div className="container grid gap-12 lg:grid-cols-2 lg:items-start">
           <div>
-            <SectionHeading eyebrow="Notre histoire" title="Née d'un constat de terrain" />
+            <SectionHeading eyebrow="Notre méthode" title="Voir, calculer, écrire, poser" />
             <div className="mt-6 space-y-5 leading-relaxed muted">
               <p>
-                Nos fondateurs ont passé des années à installer des systèmes solaires et à constater
-                le même problème : des équipements achetés à l&rsquo;estime, trop petits pour
-                l&rsquo;usage réel, ou au contraire surdimensionnés et jamais rentabilisés.
+                Un système solaire se rate presque toujours de la même façon : des équipements
+                achetés à l&rsquo;estime, trop petits pour l&rsquo;usage réel, ou au contraire
+                surdimensionnés et payés pour rien.
               </p>
               <p>
-                Nous avons donc commencé par l&rsquo;autre bout : mesurer la consommation avant de
-                proposer quoi que ce soit. Cette méthode, outillée par notre application de terrain
-                EcoCalc, permet un relevé appareil par appareil, y compris dans les zones sans
-                réseau mobile.
+                Nous prenons donc le problème par l&rsquo;autre bout. Une descente technique
+                d&rsquo;abord : nous venons relever la toiture, les ombrages, le tableau électrique
+                et les appareils que vous voulez alimenter. Le dimensionnement vient ensuite, et le
+                prix seulement après.
               </p>
               <p>
-                Depuis, {site.name} a équipé des villas, des unités agroalimentaires, des
-                coopératives agricoles et des villages entiers. Le principe est resté le même :
-                partir du besoin réel, puis dimensionner.
+                Ce qui est convenu est écrit : le contrat fixe le montant et le nombre de mois de
+                paiement. Pendant le chantier, le matériel sorti du stock est rattaché à votre
+                dossier, avec les documents et l&rsquo;avancement — un dossier qui reste consultable
+                une fois les travaux terminés.
               </p>
             </div>
 

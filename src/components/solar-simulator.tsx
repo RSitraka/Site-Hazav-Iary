@@ -54,7 +54,7 @@ const intFr = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
 
 export function SolarSimulator() {
   const [appliances, setAppliances] = useState<Appliance[]>(DEFAULT_APPLIANCES);
-  const [panelWc, setPanelWc] = useState(550);
+  const [panelWc, setPanelWc] = useState(450);
   const [autonomyDays, setAutonomyDays] = useState(1);
   const [battery, setBattery] = useState<keyof typeof DOD>("lithium");
   const [nextId, setNextId] = useState(DEFAULT_APPLIANCES.length + 1);
@@ -297,7 +297,7 @@ export function SolarSimulator() {
               onChange={(e) => setPanelWc(Number(e.target.value))}
               className="mt-1.5 w-full rounded-lg border bg-transparent px-3 py-2 text-sm"
             >
-              {[300, 400, 450, 550, 600].map((w) => (
+              {[300, 450].map((w) => (
                 <option key={w} value={w}>
                   {w} Wc
                 </option>

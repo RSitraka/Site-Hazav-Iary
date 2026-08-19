@@ -81,7 +81,7 @@ export default function SimulateurPage() {
           <SectionHeading
             eyebrow="Méthode de calcul"
             title="Comment lire vos résultats"
-            lead="Les formules utilisées ici sont celles que nos ingénieurs appliquent sur le terrain."
+            lead="Les formules utilisées ici sont celles que nos techniciens appliquent sur le terrain."
           />
           <FaqList items={simulatorFaq} />
         </div>

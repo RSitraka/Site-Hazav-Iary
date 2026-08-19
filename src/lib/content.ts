@@ -1,118 +1,103 @@
 /**
  * Contenu éditorial du site (hors services et blog).
- * Les chiffres et références client sont des exemples réalistes — À VALIDER.
+ *
+ * Règle appliquée ici : rien d'inventé. Les zones d'intervention, le matériel
+ * et le déroulé de chantier proviennent de l'application de gestion
+ * (RSitraka/Hazav-Iary) ; les références client restent vides tant que de vrais
+ * chantiers n'auront pas été fournis.
+ *
+ * Aucun montant n'est publié : le prix se fixe après la descente technique.
  */
+
+/* -------------------------------------------------------------------------- */
+/*  Références client                                                          */
+/* -------------------------------------------------------------------------- */
 
 export type Project = {
   slug: string;
   title: string;
-  client: string;
+  /** Code chantier interne, ex. « IVA-01 » (préfixe de la zone + numéro). */
+  code: string;
   location: string;
   year: number;
-  category: "Résidentiel" | "Entreprise" | "Rural" | "Agricole" | "Collectivité";
-  power: string;
+  category: "Résidentiel" | "Professionnel";
+  /** Matériel réellement posé, sans quantité chiffrée si non confirmée. */
+  equipment: string[];
   summary: string;
   results: string[];
 };
 
-export const projects: Project[] = [
+/**
+ * VIDE VOLONTAIREMENT.
+ *
+ * L'application de gestion ne contient aucun chantier client réel : sa table
+ * `projects` est remplie par un jeu de démonstration aléatoire
+ * (`backend/cmd/seed/main.go`). Publier ces projets reviendrait à inventer des
+ * références.
+ *
+ * Pour les ajouter, reprenez de vrais chantiers depuis l'écran « Projets » et
+ * complétez ce tableau. La page /realisations affichera automatiquement la
+ * section correspondante. Ne publiez ni le nom du bénéficiaire, ni son
+ * téléphone, ni le montant convenu — le code chantier, la zone et le matériel
+ * posé suffisent.
+ */
+export const projects: Project[] = [];
+
+/* -------------------------------------------------------------------------- */
+/*  Zones d'intervention                                                       */
+/* -------------------------------------------------------------------------- */
+
+/** Quartiers et communes suivis dans l'application de gestion. */
+export const interventionZones = [
+  "Nanisana",
+  "Ivato",
+  "Ankorondrano",
+  "Analakely",
+  "Itaosy",
+  "Ambohibao",
+  "Tanjombato",
+  "Andoharanofotsy",
+  "Ambatobe",
+  "Talatamaty",
+];
+
+/* -------------------------------------------------------------------------- */
+/*  Matériel posé                                                              */
+/* -------------------------------------------------------------------------- */
+
+export type EquipmentGroup = {
+  title: string;
+  items: string[];
+};
+
+/** Catalogue réellement tenu en stock par l'entreprise. */
+export const equipmentCatalog: EquipmentGroup[] = [
   {
-    slug: "villa-hybride-ivandry",
-    title: "Villa hybride 5 kVA à Ivandry",
-    client: "Particulier",
-    location: "Ivandry, Antananarivo",
-    year: 2025,
-    category: "Résidentiel",
-    power: "4,4 kWc · 10 kWh",
-    summary:
-      "Installation hybride avec priorité solaire et bascule automatique sur le réseau, pour une famille de six personnes soumise à des délestages quotidiens.",
-    results: [
-      "Autonomie complète en journée et jusqu'à 8 h de nuit",
-      "Facture d'électricité réduite de 68 %",
-      "Zéro coupure ressentie depuis la mise en service",
+    title: "Production",
+    items: ["Panneau solaire 450 W", "Panneau solaire 300 W"],
+  },
+  {
+    title: "Stockage et conversion",
+    items: ["Batterie lithium 200 Ah", "Onduleur 5 kVA", "Régulateur MPPT 60 A"],
+  },
+  {
+    title: "Câblage et protection",
+    items: [
+      "Câble solaire 6 mm²",
+      "Connecteur MC4",
+      "Disjoncteur DC",
+      "Coffret de protection",
     ],
   },
   {
-    slug: "centrale-toiture-agroalimentaire",
-    title: "Centrale en toiture pour une unité agroalimentaire",
-    client: "PME agroalimentaire", // À VALIDER
-    location: "Tanjombato, Antananarivo",
-    year: 2025,
-    category: "Entreprise",
-    power: "120 kWc",
-    summary:
-      "Autoconsommation en journée sur une chaîne de froid fonctionnant en continu, avec supervision de production et maintien du groupe électrogène en secours.",
-    results: [
-      "−72 % de consommation de gasoil",
-      "Retour sur investissement estimé à 3,8 ans",
-      "Supervision temps réel de la production",
-    ],
-  },
-  {
-    slug: "mini-reseau-village-vakinankaratra",
-    title: "Mini-réseau solaire de village",
-    client: "Programme d'électrification rurale", // À VALIDER
-    location: "Région Vakinankaratra",
-    year: 2024,
-    category: "Rural",
-    power: "36 kWc · 90 kWh",
-    summary:
-      "Mini-réseau alimentant 140 foyers, une école et un centre de santé, avec compteurs prépayés et technicien relais formé sur place.",
-    results: [
-      "140 foyers raccordés pour la première fois",
-      "Éclairage nocturne du centre de santé garanti",
-      "Maintenance de premier niveau assurée localement",
-    ],
-  },
-  {
-    slug: "pompage-solaire-maraichage",
-    title: "Pompage solaire pour périmètre maraîcher",
-    client: "Coopérative agricole", // À VALIDER
-    location: "Région Itasy",
-    year: 2024,
-    category: "Agricole",
-    power: "5,5 kWc · 40 m³/jour",
-    summary:
-      "Remplacement d'une motopompe thermique par une pompe immergée solaire avec réservoir tampon de 20 m³ sur 6 hectares irrigués.",
-    results: [
-      "Budget carburant supprimé",
-      "40 m³ d'eau par jour en saison sèche",
-      "Deux cycles de culture supplémentaires par an",
-    ],
-  },
-  {
-    slug: "eclairage-public-commune",
-    title: "Éclairage public solaire d'une commune",
-    client: "Commune urbaine", // À VALIDER
-    location: "Région Atsinanana",
-    year: 2025,
-    category: "Collectivité",
-    power: "48 mâts LED",
-    summary:
-      "Pose de 48 candélabres solaires autonomes sur 3,2 km de voirie, sans tranchée ni raccordement réseau.",
-    results: [
-      "3,2 km de voirie éclairés",
-      "Aucune facture d'électricité pour la commune",
-      "Chantier livré en 5 semaines",
-    ],
-  },
-  {
-    slug: "backup-lithium-clinique",
-    title: "Secours lithium pour une clinique",
-    client: "Établissement de santé privé", // À VALIDER
-    location: "Antananarivo",
-    year: 2023,
-    category: "Entreprise",
-    power: "18 kWc · 45 kWh",
-    summary:
-      "Alimentation sécurisée du bloc technique et de la chaîne du froid vaccinale, avec bascule sans coupure et alarme à distance.",
-    results: [
-      "Bascule sans micro-coupure sur les équipements critiques",
-      "Chaîne du froid maintenue lors de coupures de 6 h",
-      "Alertes automatiques envoyées à l'astreinte",
-    ],
+    title: "Fixation",
+    items: ["Structure de fixation", "Support de toit", "Visserie inox"],
   },
 ];
+
+/* -------------------------------------------------------------------------- */
+/*  Témoignages                                                                */
+/* -------------------------------------------------------------------------- */
 
 export type Testimonial = {
   quote: string;
@@ -120,116 +105,118 @@ export type Testimonial = {
   role: string;
 };
 
-/** Témoignages d'illustration — À REMPLACER par de vrais retours clients. */
-export const testimonials: Testimonial[] = [
-  {
-    quote:
-      "L'étude de dimensionnement nous a évité d'acheter deux panneaux et une batterie de trop. Le devis était le plus détaillé des trois que nous avions reçus.",
-    author: "Hery R.",
-    role: "Propriétaire à Ivandry",
-  },
-  {
-    quote:
-      "Notre chaîne de froid ne s'arrête plus. Le suivi de production nous permet de vérifier chaque mois ce que la centrale a réellement produit.",
-    author: "Directrice d'exploitation",
-    role: "PME agroalimentaire, Tanjombato",
-  },
-  {
-    quote:
-      "Le technicien du village a été formé et sait intervenir seul sur les pannes courantes. C'est ce qui fait tenir l'installation dans la durée.",
-    author: "Chef de projet",
-    role: "Programme d'électrification rurale",
-  },
-];
+/**
+ * VIDE VOLONTAIREMENT — à remplir uniquement avec de vrais retours clients,
+ * recueillis avec leur accord. La section correspondante n'apparaît pas tant
+ * que ce tableau est vide.
+ */
+export const testimonials: Testimonial[] = [];
+
+/* -------------------------------------------------------------------------- */
+/*  Déroulé d'un chantier                                                      */
+/* -------------------------------------------------------------------------- */
 
 export const processSteps = [
   {
     step: "01",
-    title: "Écoute et relevé",
-    text: "Nous notons vos usages réels, appareil par appareil, et vos contraintes (budget, toiture, coupures, évolution prévue).",
+    title: "Prise de contact",
+    text: "Vous décrivez votre besoin et ce que vous souhaitez alimenter. Nous convenons d'une date de visite.",
   },
   {
     step: "02",
-    title: "Dimensionnement chiffré",
-    text: "Consommation en kWh/mois, nombre de panneaux, capacité batterie et puissance d'onduleur : tout est justifié par le calcul.",
+    title: "Descente technique",
+    text: "Une équipe se déplace : relevé de la toiture, des ombrages, du tableau électrique et des appareils à alimenter. La visite est consignée et localisée.",
   },
   {
     step: "03",
-    title: "Devis transparent",
-    text: "Marques, garanties, quantités et prestations détaillées ligne par ligne. Remis sous 48 h après la visite.",
+    title: "Dimensionnement et devis",
+    text: "Panneaux, capacité batterie et puissance d'onduleur sont calculés à partir du relevé, puis chiffrés dans une proposition écrite.",
   },
   {
     step: "04",
-    title: "Installation soignée",
-    text: "Pose par nos équipes salariées, câblage normalisé, protections et mise à la terre, puis tests de charge.",
+    title: "Contrat et avance",
+    text: "Le contrat fixe le montant convenu et la durée de paiement. Une avance déclenche la préparation du matériel.",
   },
   {
     step: "05",
-    title: "Formation et suivi",
-    text: "Prise en main de votre système, puis maintenance préventive et supervision selon le contrat choisi.",
+    title: "Installation",
+    text: "Le matériel est sorti du stock et affecté à votre chantier. Pose, câblage, protections, essais et mise en service.",
+  },
+  {
+    step: "06",
+    title: "Suivi et mensualités",
+    text: "Le dossier de chantier reste tenu à jour, les mensualités se poursuivent jusqu'au solde, et l'entretien prend le relais.",
   },
 ];
 
+/* -------------------------------------------------------------------------- */
+/*  Engagements                                                                */
+/* -------------------------------------------------------------------------- */
+
 export const commitments = [
   {
-    title: "Dimensionner juste",
-    text: "Un système surdimensionné coûte cher et ne se rentabilise jamais. Nous partons toujours du besoin réel mesuré.",
+    title: "Voir avant de chiffrer",
+    text: "Aucun prix n'est annoncé sans descente technique. Un chiffre donné au téléphone est un chiffre faux.",
   },
   {
-    title: "Matériel traçable",
-    text: "Marques, références et garanties écrites sur le devis. Aucun composant anonyme sur nos chantiers.",
+    title: "Écrire ce qui est convenu",
+    text: "Montant, durée de paiement et matériel prévu figurent au contrat avant que le chantier ne démarre.",
   },
   {
-    title: "Compétences locales",
-    text: "Techniciens malgaches formés en interne et relais locaux sur les projets ruraux : la maintenance reste possible sur place.",
+    title: "Tracer chaque chantier",
+    text: "Matériel posé, documents et avancement sont enregistrés : votre dossier reste consultable après les travaux.",
   },
   {
-    title: "Cycle de vie complet",
-    text: "Reprise des batteries usagées et filière de recyclage : l'énergie propre le reste jusqu'au bout.",
+    title: "Étaler le paiement",
+    text: "Une avance puis des mensualités : l'investissement solaire ne doit pas se jouer sur un seul versement.",
   },
 ];
+
+/* -------------------------------------------------------------------------- */
+/*  Questions fréquentes                                                       */
+/* -------------------------------------------------------------------------- */
 
 export type FaqItem = { question: string; answer: string };
 
 export const generalFaq: FaqItem[] = [
   {
-    question: "Combien coûte une installation solaire à Madagascar ?",
+    question: "Combien coûte une installation solaire ?",
     answer:
-      "Le prix dépend surtout de la consommation à couvrir et du stockage. Un kit résidentiel de base démarre autour de 4 500 000 Ar, une installation hybride complète pour une villa se situe fréquemment entre 15 et 40 millions d'Ariary, et une centrale professionnelle se chiffre au kWc installé. Seul un relevé de consommation permet d'annoncer un montant fiable — c'est pourquoi notre audit précède toujours le devis.",
+      "Le prix dépend de ce que vous voulez alimenter, de la durée pendant laquelle vous voulez le faire sans le réseau, et de votre toiture. Ces trois éléments ne se devinent pas à distance : nous les relevons lors de la descente technique, puis nous chiffrons. C'est pourquoi aucun tarif n'est affiché sur ce site.",
   },
   {
-    question: "En combien de temps l'installation est-elle rentabilisée ?",
+    question: "Peut-on payer en plusieurs fois ?",
     answer:
-      "Pour un foyer qui subit des délestages, le retour se compte en confort autant qu'en argent : la facture baisse en général de 50 à 70 %. Pour une entreprise qui remplace du groupe électrogène, le retour sur investissement se situe le plus souvent entre 3 et 5 ans.",
+      "Oui, c'est notre fonctionnement habituel. Le contrat fixe un montant convenu et un nombre de mois : vous versez une avance à la commande, puis des mensualités calculées sur le solde restant, jusqu'au règlement complet.",
+  },
+  {
+    question: "Que se passe-t-il lors de la descente technique ?",
+    answer:
+      "Une équipe se rend sur place pour relever la toiture, son orientation et ses ombrages, l'état du tableau électrique, le cheminement des câbles et la liste des appareils à alimenter. La visite fait l'objet d'une note écrite, qui sert de base au dimensionnement.",
+  },
+  {
+    question: "Faut-il des batteries ?",
+    answer:
+      "Pas systématiquement. Si votre consommation est surtout diurne, l'énergie est utilisée au moment où elle est produite. Les batteries deviennent nécessaires dès qu'il faut couvrir la nuit ou sécuriser des équipements sensibles — et elles pèsent lourd dans le budget, d'où l'importance de ne pas les surdimensionner.",
   },
   {
     question: "Quelle est la durée de vie des équipements ?",
     answer:
-      "Les panneaux photovoltaïques conservent plus de 80 % de leur rendement après 25 ans. Les onduleurs durent 8 à 12 ans. Les batteries sont la pièce d'usure : 3 à 5 ans pour du plomb GEL, 8 à 12 ans pour du lithium LiFePO4 correctement dimensionné.",
+      "Les panneaux photovoltaïques restent productifs pendant des décennies. Les onduleurs se remplacent au bout de plusieurs années d'usage. Les batteries sont la vraie pièce d'usure : le lithium tient plusieurs milliers de cycles, bien plus que le plomb.",
   },
   {
-    question: "Faut-il des batteries pour une installation solaire ?",
+    question: "Dans quelles zones intervenez-vous ?",
     answer:
-      "Pas systématiquement. Si votre consommation est surtout diurne (bureau, atelier, pompage), l'énergie est utilisée au moment où elle est produite et le stockage n'est pas nécessaire. Les batteries deviennent indispensables dès qu'il faut couvrir la nuit ou sécuriser des équipements critiques.",
+      "Nous suivons des chantiers dans l'agglomération d'Antananarivo : Nanisana, Ivato, Ankorondrano, Analakely, Itaosy, Ambohibao, Tanjombato, Andoharanofotsy, Ambatobe et Talatamaty. Pour un site plus éloigné, contactez-nous : les conditions de déplacement sont convenues avant la visite.",
   },
   {
-    question: "Intervenez-vous en dehors d'Antananarivo ?",
+    question: "Quel matériel installez-vous ?",
     answer:
-      "Oui. Nous intervenons sur l'ensemble du territoire malgache. Les frais de déplacement sont annoncés à l'avance dans le devis, et les projets éloignés sont regroupés en campagnes pour limiter leur coût.",
+      "Des panneaux de 300 W et 450 W, des batteries lithium 200 Ah, des onduleurs 5 kVA et des régulateurs MPPT 60 A, avec câble solaire 6 mm², connecteurs MC4, disjoncteurs DC et coffrets de protection. Le matériel posé chez vous est identifié et rattaché à votre dossier de chantier.",
   },
   {
-    question: "Proposez-vous un paiement échelonné ?",
+    question: "Peut-on agrandir l'installation plus tard ?",
     answer:
-      "Le paiement est généralement échelonné selon l'avancement : acompte à la commande, solde à la mise en service. Nous étudions les dossiers de financement avec votre banque ou votre bailleur pour les projets professionnels et institutionnels.",
-  },
-  {
-    question: "Que couvre la garantie ?",
-    answer:
-      "La garantie constructeur s'applique sur chaque composant (25 ans de rendement sur les panneaux, 5 à 10 ans sur les onduleurs, 2 à 10 ans sur les batteries selon la technologie), et notre garantie de pose couvre l'installation pendant 2 ans.",
-  },
-  {
-    question: "Puis-je faire évoluer mon installation plus tard ?",
-    answer:
-      "Oui, à condition de l'avoir prévu dès la conception. Nous choisissons systématiquement des onduleurs et des schémas de câblage qui autorisent l'ajout de panneaux ou de batteries sans repartir de zéro.",
+      "Oui, à condition de l'avoir prévu dès la conception. Nous choisissons un onduleur et un schéma de câblage qui autorisent l'ajout de panneaux ou de batteries sans repartir de zéro.",
   },
 ];

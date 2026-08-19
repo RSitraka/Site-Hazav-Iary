@@ -69,7 +69,7 @@ export function SiteHeader() {
           </a>
           <ThemeToggle />
           <Link href="/contact" className="btn-primary hidden md:inline-flex">
-            Devis gratuit
+            Demander un devis
             <ArrowRightIcon width={15} height={15} />
           </Link>
           <button
@@ -101,7 +101,7 @@ export function SiteHeader() {
             </Link>
           ))}
           <Link href="/contact" className="btn-primary mt-3 w-full">
-            Demander un devis gratuit
+            Demander une visite technique
           </Link>
           <a href={`tel:${site.phoneHref}`} className="btn-secondary mt-2 w-full">
             <PhoneIcon width={15} height={15} />

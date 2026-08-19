@@ -36,7 +36,7 @@ export function ContactForm() {
         `Téléphone : ${data.phone}`,
         `Ville : ${data.city}`,
         `Projet : ${data.subject}`,
-        `Budget estimé : ${data.budget || "non précisé"}`,
+        `Échéance : ${data.deadline || "non précisée"}`,
         "",
         data.message,
       ].join("\n");
@@ -71,8 +71,8 @@ export function ContactForm() {
         </span>
         <h2 className="h3">Demande transmise</h2>
         <p className="max-w-sm muted">
-          Merci ! Nous revenons vers vous sous 48 heures ouvrées avec une première estimation et
-          une proposition de visite technique.
+          Merci ! Nous revenons vers vous rapidement pour convenir d&rsquo;une descente technique
+          sur votre site.
         </p>
         <button type="button" onClick={() => setStatus("idle")} className="btn-secondary">
           Envoyer une autre demande
@@ -114,20 +114,20 @@ export function ContactForm() {
           </select>
         </div>
         <div>
-          <label htmlFor="budget" className="text-sm font-medium">
-            Budget envisagé
+          <label htmlFor="deadline" className="text-sm font-medium">
+            Échéance souhaitée
           </label>
           <select
-            id="budget"
-            name="budget"
+            id="deadline"
+            name="deadline"
             defaultValue=""
             className="mt-1.5 w-full rounded border bg-transparent px-3.5 py-2.5 text-sm"
           >
-            <option value="">Je ne sais pas encore</option>
-            <option value="< 5 M Ar">Moins de 5 millions Ar</option>
-            <option value="5–15 M Ar">5 à 15 millions Ar</option>
-            <option value="15–40 M Ar">15 à 40 millions Ar</option>
-            <option value="> 40 M Ar">Plus de 40 millions Ar</option>
+            <option value="">Pas de date précise</option>
+            <option value="Dès que possible">Dès que possible</option>
+            <option value="Sous 1 à 3 mois">Sous 1 à 3 mois</option>
+            <option value="Sous 3 à 6 mois">Sous 3 à 6 mois</option>
+            <option value="Je me renseigne">Je me renseigne pour l&rsquo;instant</option>
           </select>
         </div>
       </div>

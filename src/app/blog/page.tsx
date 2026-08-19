@@ -46,7 +46,7 @@ export default function BlogPage() {
       <PageHero
         eyebrow="Blog"
         title="Comprendre le solaire avant d'investir"
-        lead="Des guides écrits par nos ingénieurs, avec des chiffres et des ordres de grandeur applicables au contexte malgache."
+        lead="Des guides écrits par nos techniciens, avec des chiffres et des ordres de grandeur applicables au contexte malgache."
         breadcrumbs={[{ name: "Blog", path: "/blog" }]}
       />
 
@@ -118,7 +118,7 @@ export default function BlogPage() {
 
       <CtaBand
         title="Une question que nos articles ne couvrent pas ?"
-        text="Nos ingénieurs répondent volontiers, même si vous n'êtes pas encore prêt à lancer un projet."
+        text="Nos techniciens répondent volontiers, même si vous n'êtes pas encore prêt à lancer un projet."
       />
     </>
   );

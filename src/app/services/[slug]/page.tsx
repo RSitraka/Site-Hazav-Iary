@@ -66,11 +66,6 @@ export default async function ServicePage({ params }: Params) {
           <Link href="/simulateur" className="btn-secondary">
             Estimer mon besoin
           </Link>
-          {service.priceFrom && (
-            <span className="rounded-sm border border-sun-line bg-sun-soft px-4 py-2 text-sm font-semibold text-sun-ink">
-              {service.priceFrom}
-            </span>
-          )}
         </div>
       </PageHero>
 

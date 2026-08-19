@@ -1,7 +1,7 @@
 # Hazav'Iary — site vitrine
 
-Site de présentation de **Hazav'Iary**, entreprise malgache spécialisée dans l'énergie solaire
-et les solutions vertes. Référencement technique complet, simulateur de dimensionnement intégré.
+Site de présentation de **Hazav'Iary**, installateur de panneaux solaires à Antananarivo
+(Madagascar). Référencement technique complet, simulateur de dimensionnement intégré.
 
 Construit avec **Next.js 15 (App Router)**, **React 19**, **TypeScript** et **Tailwind CSS 3**.
 
@@ -17,7 +17,7 @@ statique, ce dont dépend tout le référencement.
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm run build   # build de production (32 pages statiques)
+npm run build   # build de production (29 pages statiques)
 npm start       # sert le build
 npm run lint
 ```
@@ -33,9 +33,9 @@ dans les pages.
 
 | Fichier | Contenu | Priorité |
 | --- | --- | --- |
-| `src/lib/site.ts` | Nom, slogan, **URL du site**, email, téléphone, adresse, horaires, réseaux sociaux, chiffres clés | **Indispensable** |
-| `src/lib/services.ts` | Les 8 services et leurs pages détaillées (textes, bénéfices, FAQ, prix) | Recommandé |
-| `src/lib/content.ts` | Réalisations, témoignages, étapes du process, engagements, FAQ générale | Recommandé |
+| `src/lib/site.ts` | Nom, slogan, **URL du site**, email, téléphone, adresse, horaires, réseaux sociaux, zones d'intervention | **Indispensable** |
+| `src/lib/services.ts` | Les 6 prestations et leurs pages détaillées (textes, bénéfices, FAQ) | Recommandé |
+| `src/lib/content.ts` | Références client, zones, matériel, déroulé de chantier, engagements, FAQ générale | Recommandé |
 | `src/content/blog/*.md` | Articles de blog (Markdown + frontmatter) | Optionnel |
 | `src/app/mentions-legales/page.tsx` | NIF, STAT, RCS, directeur de publication, hébergeur | **Obligation légale** |
 
@@ -43,6 +43,33 @@ Les valeurs provisoires sont signalées par un commentaire `À VALIDER` dans le 
 
 > ⚠️ **`site.url` doit impérativement être l'URL de production.** Elle alimente les balises
 > canoniques, le sitemap, les données structurées et les images de partage.
+
+### D'où vient le contenu
+
+Services, zones d'intervention, matériel et déroulé de chantier sont repris de l'application de
+gestion `RSitraka/Hazav-Iary` : catalogue de stock (`backend/cmd/seed/main.go`), modèle `Project`
+et `Descente` (`backend/models.go`), flux métier décrits dans son README — descente sur site,
+montant convenu, nombre de mois, avance puis mensualités, matériel affecté au chantier.
+
+**Deux tableaux sont volontairement vides** dans `src/lib/content.ts` :
+
+- `projects` — l'application ne contient aucun chantier client réel (sa table `projects` est
+  peuplée par un jeu de démonstration aléatoire). Reprenez de vrais chantiers depuis l'écran
+  *Projets* pour activer la section « Références » de `/realisations`. **Ne publiez ni le nom du
+  bénéficiaire, ni son téléphone, ni le montant convenu** : le code chantier, la zone et le
+  matériel posé suffisent.
+- `testimonials` — à remplir uniquement avec de vrais retours clients, recueillis avec leur
+  accord.
+
+Les sections correspondantes n'apparaissent pas tant que ces tableaux sont vides.
+
+### Politique de prix
+
+**Aucun montant n'est publié sur le site.** Le prix se fixe après la descente technique et figure
+au contrat. Ce choix est appliqué partout : pas de tarif sur les pages de service, pas de
+fourchette dans la FAQ ni dans les articles, pas de champ « budget » dans le formulaire (remplacé
+par une échéance souhaitée), et pas de `priceRange` dans les données structurées. Le paiement
+échelonné — avance puis mensualités — est en revanche mis en avant comme argument.
 
 ### Recevoir les demandes de devis
 
@@ -65,10 +92,10 @@ Le socle SEO est en place et se met à jour automatiquement à partir des donné
 **Technique**
 - Balises `title` / `description` uniques sur chaque page, via `buildMetadata()` (`src/lib/seo.ts`)
 - URL canonique sur toutes les routes
-- `sitemap.xml` généré au build (23 URL) — `src/app/sitemap.ts`
+- `sitemap.xml` généré au build (20 URL) — `src/app/sitemap.ts`
 - `robots.txt` avec référence au sitemap — `src/app/robots.ts`
-- Manifest PWA et favicon SVG
-- 32 pages pré-rendues en statique (HTML complet servi aux robots)
+- Manifest PWA et favicon dérivé du logo officiel
+- 29 pages pré-rendues en statique (HTML complet servi aux robots)
 - En-têtes de sécurité (`next.config.ts`)
 
 **Données structurées (schema.org)**
@@ -87,8 +114,8 @@ Le socle SEO est en place et se met à jour automatiquement à partir des donné
 **Partage social** — image Open Graph 1200×630 générée au build par `next/og`
 (`src/lib/og.tsx`), appliquée à toutes les pages, plus Twitter Card `summary_large_image`.
 
-**Contenu** — architecture pensée pour la longue traîne : 8 pages de service ciblant chacune ses
-mots-clés, 5 articles de fond, une FAQ balisée, un simulateur (page à fort temps de session et
+**Contenu** — architecture pensée pour la longue traîne : 6 pages de service ciblant chacune leurs
+mots-clés, 4 articles de fond, une FAQ balisée, un simulateur (page à fort temps de session et
 générateur de liens entrants naturels).
 
 ### Après la mise en ligne
@@ -98,7 +125,7 @@ générateur de liens entrants naturels).
 3. Créer la fiche **Google Business Profile** avec exactement les mêmes NAP
    (nom, adresse, téléphone) que `src/lib/site.ts` — la cohérence NAP est le premier facteur
    du référencement local.
-4. Remplacer les témoignages et réalisations d'exemple par de vrais retours clients.
+4. Renseigner les vrais chantiers et témoignages dans `src/lib/content.ts` (voir « D'où vient le contenu »).
 5. Publier un article par mois : c'est le levier le plus régulier sur la longue traîne.
 
 ---
@@ -110,13 +137,13 @@ src/
 ├─ app/
 │  ├─ layout.tsx                     en-tête, pied de page, SEO global, thème
 │  ├─ page.tsx                       accueil
-│  ├─ services/                      liste + 8 pages générées (generateStaticParams)
+│  ├─ services/                      liste + 6 pages générées (generateStaticParams)
 │  ├─ blog/                          liste + articles Markdown
 │  ├─ simulateur/                    calculateur de dimensionnement
 │  ├─ realisations/  a-propos/  faq/  contact/
 │  ├─ mentions-legales/  politique-de-confidentialite/
 │  ├─ sitemap.ts  robots.ts  manifest.ts
-│  ├─ opengraph-image.tsx  twitter-image.tsx  icon.svg
+│  ├─ opengraph-image.tsx  twitter-image.tsx  icon.png
 │  └─ globals.css                    jetons de couleur, composants, typographie
 ├─ components/                       header, footer, UI, simulateur, formulaire, icônes
 ├─ lib/                              site, services, contenu, SEO, blog, image OG

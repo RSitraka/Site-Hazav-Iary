@@ -226,12 +226,10 @@ export function QuoteIcon(props: IconProps) {
 
 /** Table de correspondance utilisée par les cartes de service. */
 export const serviceIcons = {
-  sun: SunIcon,
-  home: HomeIcon,
-  factory: FactoryIcon,
-  water: WaterIcon,
-  battery: BatteryIcon,
+  panel: PanelIcon,
+  map: MapPinIcon,
   audit: AuditIcon,
+  battery: BatteryIcon,
+  factory: FactoryIcon,
   wrench: WrenchIcon,
-  streetlight: StreetlightIcon,
 } as const;
