@@ -83,7 +83,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // Le site est sombre par défaut : la barre d'adresse mobile part du noir
   // de fond et n'est éclaircie que si l'internaute choisit le mode clair.
-  themeColor: "#050706",
+  themeColor: "#050708",
   width: "device-width",
   initialScale: 1,
 };
@@ -95,7 +95,7 @@ export const viewport: Viewport = {
  * stockage est celle de l'application (`hazaviary_theme`) : la préférence est
  * partagée entre le site et l'outil de gestion sur un même domaine.
  */
-const themeScript = `(function(){try{var s=localStorage.getItem('hazaviary_theme');var d=s!=='light';document.documentElement.classList.toggle('dark',d);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#050706':'#F1F4F2')}catch(e){document.documentElement.classList.add('dark')}})();`;
+const themeScript = `(function(){try{var s=localStorage.getItem('hazaviary_theme');var d=s!=='light';document.documentElement.classList.toggle('dark',d);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#050708':'#F1F4F5')}catch(e){document.documentElement.classList.add('dark')}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -34,7 +34,7 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    // En haut de page l'en-tête est transparent : il laisse voir le halo vert.
+    // En haut de page l'en-tête est transparent : il laisse voir le halo bleu.
     // Au défilement seulement, un fond translucide et un filet apparaissent.
     <header
       className={`sticky top-0 z-50 transition-colors duration-300 ${

@@ -28,7 +28,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
 
     // Barre d'adresse des navigateurs mobiles assortie au fond de page.
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", next ? "#050706" : "#F1F4F2");
+    if (meta) meta.setAttribute("content", next ? "#050708" : "#F1F4F5");
 
     try {
       localStorage.setItem(KEY, next ? "dark" : "light");

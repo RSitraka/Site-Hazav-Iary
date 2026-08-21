@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Thème « produit sombre » : fond quasi noir, accent vert #2DD881, grandes
+ * Thème « produit sombre » : fond quasi noir, accent bleu #26A6CE (le bleu de l'emblème), grandes
  * cartes arrondies et halos colorés.
  *
  * Toutes les couleurs passent par des variables CSS définies dans
@@ -24,7 +24,7 @@ const config: Config = {
           deep: "rgb(var(--accent-deep) / <alpha-value>)",
           soft: "rgb(var(--accent-soft) / <alpha-value>)",
           line: "rgb(var(--accent-line) / <alpha-value>)",
-          /** #2DD881 tel quel — halos et traits lumineux, quel que soit le mode. */
+          /** #26A6CE tel quel — halos et traits lumineux, quel que soit le mode. */
           pure: "rgb(var(--accent-pure) / <alpha-value>)",
           on: "rgb(var(--on-accent) / <alpha-value>)",
         },

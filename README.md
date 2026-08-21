@@ -5,10 +5,11 @@ Site de présentation de **Hazav'Iary**, installateur de panneaux solaires à An
 
 Construit avec **Next.js 15 (App Router)**, **React 19**, **TypeScript** et **Tailwind CSS 3**.
 
-La charte reprend celle de l'application de gestion `RSitraka/Hazav-Iary` (voir
-[Thème](#thème--repris-de-lapplication-de-gestion)) : mêmes couleurs, mêmes formes, même logo,
-même clé de préférence clair/sombre. La stack diffère volontairement — Next.js rend les pages en
-statique, ce dont dépend tout le référencement.
+La charte est celle du logo Hazav'Iary — bleu `#26A6CE`, orange solaire, gris ardoise — déclinée
+en interface sombre (voir [Thème](#thème--interface-sombre-à-accent-bleu-couleurs-du-logo)). Le
+logo et la clé de préférence clair/sombre restent partagés avec l'application de gestion
+`RSitraka/Hazav-Iary`. La stack diffère volontairement — Next.js rend les pages en statique, ce
+dont dépend tout le référencement.
 
 ---
 
@@ -152,24 +153,27 @@ src/
 
 ---
 
-## Thème — interface sombre à accent vert
+## Thème — interface sombre à accent bleu (couleurs du logo)
 
-Le site est **sombre par défaut** : fond quasi noir, halo d'accent vert diffusé depuis le haut de
+Le site est **sombre par défaut** : fond quasi noir, halo d'accent diffusé depuis le haut de
 page, grandes cartes arrondies posées sur le noir, libellés et numérotations en monospace
-capitales. L'accent unique est **`#2DD881`**.
+capitales. L'accent unique est **`#26A6CE`**, le bleu de l'emblème (rose des vents et lémurien),
+relevé directement dans `public/logo-mark.png` ; l'orange `sun` est celui de ses rayons et le
+gris `slate` (`#465057`) celui de ses aplats.
 
 | Jeton | Sombre (défaut) | Clair | Usage |
 | --- | --- | --- | --- |
-| `accent` | `#2DD881` | `#119E5C` | Interface, liens, boutons primaires, halos |
-| `accent-pure` | `#2DD881` | `#2DD881` | La couleur de marque telle quelle : halos, arc du hero |
+| `accent` | `#26A6CE` | `#1780A2` | Interface, liens, boutons primaires, halos |
+| `accent-pure` | `#26A6CE` | `#26A6CE` | La couleur de marque telle quelle : halos, arc du hero |
 | `sun` | `#EBA54A` | `#D68A20` | Le soleil, la production |
 | `grow` | `#2DD881` | `#119E5C` | Validation, énergie propre |
-| `surface` | `#0B0E0D` | `#FFFFFF` | Cartes, panneaux |
-| `tone` | `#050706` | `#F1F4F2` | Fond de page |
-| `ink` | `#E9F1EC` | `#101613` | Texte courant |
+| `slate` | `#6A7882` | `#465057` | Le gris ardoise du logo |
+| `surface` | `#0B0E10` | `#FFFFFF` | Cartes, panneaux |
+| `tone` | `#050708` | `#F1F4F5` | Fond de page |
+| `ink` | `#E9EFF2` | `#101619` | Texte courant |
 
-Le vert de la charte est repris tel quel en mode sombre ; en mode clair il est assombri
-(`#119E5C`) pour rester lisible sur blanc, `accent-pure` conservant `#2DD881` pour les halos.
+Le bleu du logo est repris tel quel en mode sombre ; en mode clair il est assombri (`#1780A2`)
+pour rester lisible sur blanc, `accent-pure` conservant `#26A6CE` pour les halos.
 
 Toutes les couleurs passent par des variables CSS définies dans `globals.css` et exposées à
 Tailwind : **aucune classe `dark:` n'est nécessaire dans les composants**, le mode clair suit
@@ -190,7 +194,7 @@ Règles de forme :
 - Mode clair porté par l'absence de la classe `dark` sur `<html>`, mémorisé sous la clé
   **`hazaviary_theme`** — la même que l'application de gestion, donc la préférence est partagée
   entre les deux sur un même domaine
-- Fond de page en halo radial fixe, vert au sommet puis noir
+- Fond de page en halo radial fixe, bleu au sommet puis noir
 
 Écart assumé : le corps de texte passe de 14 px à 15 px, un site de lecture n'ayant pas la
 densité d'un outil de gestion.

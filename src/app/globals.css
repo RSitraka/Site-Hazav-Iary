@@ -8,8 +8,11 @@
    de page, grandes cartes arrondies posées sur le noir, pastilles et
    numérotations en monospace.
 
-   Accent unique : #2DD881 (vert). Il remplace l'ancien turquoise et sert
-   partout — halos, bordures actives, boutons, puces, liens.
+   Accent unique : #26A6CE — le bleu de l'emblème Hazav'Iary (rose des vents
+   et lémurien), relevé directement dans `public/logo-mark.png`. Il sert
+   partout : halos, bordures actives, boutons, puces, liens. L'orange
+   (`sun`) est celui des rayons du logo, le vert (`grow`) reste la couleur
+   de sens « énergie propre / validation ».
 
    Règles :
    1. Le fond de page est le noir : les cartes sont ce qui « éclaire ».
@@ -20,31 +23,31 @@
    ===================================================================== */
 @layer base {
   :root {
-    /* Accent principal — vert #2DD881 assombri pour rester lisible sur
-       fond clair ; le ton exact de la charte sert en mode sombre. */
-    --accent: 17 158 92; /* #119E5C */
-    --accent-deep: 12 122 71; /* #0C7A47 */
-    --accent-soft: 228 250 238; /* #E4FAEE */
-    --accent-line: 169 229 198; /* #A9E5C6 */
-    --accent-pure: 45 216 129; /* #2DD881 — couleur de marque, halos */
+    /* Accent principal — le bleu du logo (#26A6CE) assombri pour rester
+       lisible sur fond clair ; le ton exact de l'emblème sert en sombre. */
+    --accent: 23 128 162; /* #1780A2 */
+    --accent-deep: 18 101 127; /* #12657F */
+    --accent-soft: 227 244 250; /* #E3F4FA */
+    --accent-line: 166 217 233; /* #A6D9E9 */
+    --accent-pure: 38 166 206; /* #26A6CE — bleu de l'emblème, halos */
     --on-accent: 255 255 255;
 
-    --slate: 122 143 133; /* #7A8F85 */
+    --slate: 70 80 87; /* #465057 — le gris ardoise du logo */
 
-    --tone: 241 244 242; /* #F1F4F2 */
+    --tone: 241 244 245; /* #F1F4F5 */
     --surface: 255 255 255;
-    --panel-2: 247 249 248; /* #F7F9F8 */
-    --panel-3: 236 240 238; /* #ECF0EE */
-    --border: 224 229 226; /* #E0E5E2 */
-    --border-2: 199 207 203; /* #C7CFCB */
+    --panel-2: 247 249 250; /* #F7F9FA */
+    --panel-3: 236 240 242; /* #ECF0F2 */
+    --border: 224 229 232; /* #E0E5E8 */
+    --border-2: 199 207 211; /* #C7CFD3 */
 
     /* Couleurs de sens */
-    --green: 17 158 92;
+    --green: 17 158 92; /* #119E5C */
     --green-deep: 12 122 71;
     --green-soft: 228 250 238;
     --green-line: 169 229 198;
     --green-ink: 11 107 63;
-    --orange: 214 138 32; /* #D68A20 */
+    --orange: 214 138 32; /* #D68A20 — les rayons du logo */
     --orange-deep: 173 108 18;
     --orange-soft: 252 241 224;
     --orange-line: 238 205 152;
@@ -52,42 +55,42 @@
     --red: 208 62 62;
 
     /* Texte */
-    --text: 16 22 19; /* #101613 */
-    --text-dim: 70 84 77; /* #46544D */
-    --text-mut: 116 130 123; /* #74827B */
+    --text: 16 22 25; /* #101619 */
+    --text-dim: 70 83 90; /* #46535A */
+    --text-mut: 116 130 138; /* #74828A */
 
-    --shadow-sm: 0 1px 3px rgba(10, 24, 18, 0.06);
-    --shadow: 0 6px 20px rgba(10, 24, 18, 0.08);
-    --shadow-lg: 0 24px 60px rgba(10, 24, 18, 0.16);
+    --shadow-sm: 0 1px 3px rgba(10, 20, 26, 0.06);
+    --shadow: 0 6px 20px rgba(10, 20, 26, 0.08);
+    --shadow-lg: 0 24px 60px rgba(10, 20, 26, 0.16);
     /* Halo d'accent : la signature visuelle de l'interface. */
-    --glow-soft: 0 0 40px rgba(45, 216, 129, 0.18);
-    --glow-strong: 0 0 60px rgba(45, 216, 129, 0.32);
+    --glow-soft: 0 0 40px rgba(38, 166, 206, 0.18);
+    --glow-strong: 0 0 60px rgba(38, 166, 206, 0.32);
 
-    --scroll: 200 208 204;
-    --scroll-hover: 170 182 176;
+    --scroll: 200 208 212;
+    --scroll-hover: 170 182 188;
 
     color-scheme: light;
   }
 
   .dark {
     /* Mode par défaut du site : c'est ici que vit la charte. */
-    --accent: 45 216 129; /* #2DD881 */
-    --accent-deep: 32 179 105; /* #20B369 */
-    --accent-soft: 11 34 23; /* #0B2217 */
-    --accent-line: 28 84 56; /* #1C5438 */
-    --accent-pure: 45 216 129;
-    --on-accent: 4 23 13; /* #04170D — texte sombre sur le vert */
+    --accent: 38 166 206; /* #26A6CE — relevé sur l'emblème */
+    --accent-deep: 30 134 168; /* #1E86A8 */
+    --accent-soft: 7 30 38; /* #071E26 */
+    --accent-line: 21 74 92; /* #154A5C */
+    --accent-pure: 38 166 206;
+    --on-accent: 3 20 26; /* #03141A — texte sombre sur le bleu */
 
-    --slate: 106 124 115; /* #6A7C73 */
+    --slate: 106 120 130; /* #6A7882 */
 
-    --tone: 5 7 6; /* #050706 — le noir du fond de page */
-    --surface: 11 14 13; /* #0B0E0D */
-    --panel-2: 16 21 19; /* #101513 */
-    --panel-3: 23 29 26; /* #171D1A */
-    --border: 28 35 32; /* #1C2320 */
-    --border-2: 42 52 47; /* #2A342F */
+    --tone: 5 7 8; /* #050708 — le noir du fond de page */
+    --surface: 11 14 16; /* #0B0E10 */
+    --panel-2: 16 20 23; /* #101417 */
+    --panel-3: 23 28 32; /* #171C20 */
+    --border: 28 34 38; /* #1C2226 */
+    --border-2: 42 51 58; /* #2A333A */
 
-    --green: 45 216 129;
+    --green: 45 216 129; /* #2DD881 */
     --green-deep: 32 179 105;
     --green-soft: 11 34 23;
     --green-line: 28 84 56;
@@ -99,18 +102,18 @@
     --orange-ink: 243 192 126;
     --red: 240 97 111;
 
-    --text: 233 241 236; /* #E9F1EC */
-    --text-dim: 169 182 175; /* #A9B6AF */
-    --text-mut: 113 128 122; /* #71807A */
+    --text: 233 239 242; /* #E9EFF2 */
+    --text-dim: 169 181 188; /* #A9B5BC */
+    --text-mut: 113 128 136; /* #718088 */
 
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
     --shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
     --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.7);
-    --glow-soft: 0 0 40px rgba(45, 216, 129, 0.14);
-    --glow-strong: 0 0 70px rgba(45, 216, 129, 0.3);
+    --glow-soft: 0 0 40px rgba(38, 166, 206, 0.16);
+    --glow-strong: 0 0 70px rgba(38, 166, 206, 0.34);
 
-    --scroll: 38 47 42;
-    --scroll-hover: 58 72 64;
+    --scroll: 38 46 52;
+    --scroll-hover: 58 70 78;
 
     color-scheme: dark;
   }

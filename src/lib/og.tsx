@@ -15,7 +15,7 @@ function markDataUri() {
 
 /**
  * Image de partage générée au build (Open Graph et Twitter Card).
- * Reprend la charte du site : fond noir, halo vert #2DD881 en haut,
+ * Reprend la charte du site : fond noir, halo bleu #26A6CE en haut,
  * pastille et libellés monospace.
  */
 export function renderOgImage() {
@@ -29,21 +29,21 @@ export function renderOgImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "64px 72px",
-          background: "#050706",
+          background: "#050708",
           // Halo d'accent : le même que celui du haut de page.
           backgroundImage:
-            "radial-gradient(900px 480px at 50% -140px, rgba(45,216,129,0.35), rgba(5,7,6,0) 70%)",
-          color: "#E9F1EC",
+            "radial-gradient(900px 480px at 50% -140px, rgba(38,166,206,0.35), rgba(5,7,8,0) 70%)",
+          color: "#E9EFF2",
           fontFamily: "sans-serif",
-          borderTop: "10px solid #2DD881",
+          borderTop: "10px solid #26A6CE",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={markDataUri()} width={76} height={76} alt="" />
           <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: -0.5, display: "flex" }}>
-            <span style={{ color: "#A9B6AF" }}>HAZAV</span>
-            <span style={{ color: "#2DD881" }}>&#8217;IARY</span>
+            <span style={{ color: "#A9B5BC" }}>HAZAV</span>
+            <span style={{ color: "#26A6CE" }}>&#8217;IARY</span>
           </div>
         </div>
 
@@ -55,9 +55,9 @@ export function renderOgImage() {
               fontSize: 20,
               letterSpacing: 3,
               fontWeight: 700,
-              color: "#2DD881",
-              background: "#0B2217",
-              border: "1px solid rgba(45,216,129,0.35)",
+              color: "#26A6CE",
+              background: "#071E26",
+              border: "1px solid rgba(38,166,206,0.35)",
               borderRadius: 999,
               padding: "8px 18px",
               marginBottom: 26,
@@ -76,15 +76,15 @@ export function renderOgImage() {
             alignItems: "center",
             justifyContent: "space-between",
             fontSize: 22,
-            color: "#A9B6AF",
-            borderTop: "1px solid #1C2320",
+            color: "#A9B5BC",
+            borderTop: "1px solid #1C2226",
             paddingTop: 26,
           }}
         >
           <div style={{ display: "flex" }}>
             Installation · Stockage · Pompage · Maintenance
           </div>
-          <div style={{ display: "flex", color: "#2DD881", fontWeight: 700 }}>
+          <div style={{ display: "flex", color: "#26A6CE", fontWeight: 700 }}>
             {site.url.replace(/^https?:\/\//, "")}
           </div>
         </div>

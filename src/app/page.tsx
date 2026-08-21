@@ -49,10 +49,10 @@ export default function HomePage() {
       <JsonLd data={faqSchema(homeFaq)} />
 
       {/* ------------------------------- HERO -------------------------------
-          Composition de la maquette : titre centré au-dessus d'un halo vert,
+          Composition de la maquette : titre centré au-dessus d'un halo bleu,
           puis la « console » d'onglets posée sur l'arc lumineux. */}
       <section className="relative overflow-hidden">
-        {/* Arc lumineux — l'horizon vert derrière le panneau */}
+        {/* Arc lumineux — l'horizon bleu derrière le panneau */}
         <div
           className="glow-arc top-[620px] h-[760px] animate-pulse-glow md:top-[780px]"
           aria-hidden="true"
