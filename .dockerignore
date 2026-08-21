@@ -1,0 +1,17 @@
+# Ce qui n'a rien à faire dans le contexte de build : plus l'image se construit
+# sur un contexte réduit, plus le déploiement est rapide.
+.git
+.github
+node_modules
+.next
+out
+build
+npm-debug.log*
+.env*
+!.env.example
+.vscode
+.idea
+.DS_Store
+README.md
+DEPLOY.md
+note.txt

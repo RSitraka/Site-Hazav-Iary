@@ -1,0 +1,59 @@
+# Mise en ligne automatique : à chaque push sur `main`, le site est vérifié
+# (lint + build), puis le serveur reconstruit son conteneur.
+#
+# Secrets à définir dans GitHub → Settings → Secrets and variables → Actions :
+#   VM_HOST     adresse IP ou nom d'hôte du serveur
+#   VM_USER     utilisateur SSH (ex. ubuntu)
+#   VM_SSH_KEY  clé privée de déploiement (contenu du fichier, pas le chemin)
+#
+# Ce sont les mêmes noms que pour l'application de gestion : si les deux dépôts
+# visent le même serveur, les valeurs sont identiques.
+name: Déploiement
+
+on:
+  push:
+    branches: [main]
+  # Permet aussi de relancer une mise en ligne à la main depuis l'onglet Actions.
+  workflow_dispatch:
+
+# Un seul déploiement à la fois ; un push plus récent annule celui en cours.
+concurrency:
+  group: deploiement-production
+  cancel-in-progress: true
+
+jobs:
+  verifier:
+    name: Vérifier le build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+  deployer:
+    name: Mettre en ligne
+    needs: verifier
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lancer le déploiement sur le serveur
+        env:
+          VM_HOST: ${{ secrets.VM_HOST }}
+          VM_USER: ${{ secrets.VM_USER }}
+          VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+        run: |
+          if [ -z "$VM_HOST" ]; then
+            echo "::error::Secrets VM_HOST / VM_USER / VM_SSH_KEY non définis — voir DEPLOY.md"
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          printf '%s\n' "$VM_SSH_KEY" > ~/.ssh/cle_deploiement
+          chmod 600 ~/.ssh/cle_deploiement
+          ssh -i ~/.ssh/cle_deploiement -o StrictHostKeyChecking=accept-new \
+            "$VM_USER@$VM_HOST" 'bash /var/www/hazaviary-site/deploy.sh'

@@ -1,0 +1,24 @@
+# Production : le site vitrine tourne dans un conteneur qui n'écoute que sur
+# 127.0.0.1:8091. C'est le reverse proxy déjà installé sur le serveur (nginx ou
+# Caddy, celui qui sert déjà l'application de gestion) qui l'expose en HTTPS.
+#
+# Le port 8091 est choisi pour ne pas entrer en conflit avec l'application de
+# gestion, qui occupe 8090 (voir son docker-compose.prod.yml).
+#
+# Le site est entièrement statique : aucun volume, aucune donnée à préserver.
+# Un redéploiement peut donc reconstruire l'image sans précaution particulière.
+
+services:
+  site:
+    build:
+      context: .
+      args:
+        # Endpoint du formulaire de contact — lu au build (variable NEXT_PUBLIC_*).
+        # Défini dans le fichier .env du serveur ; vide = le formulaire ouvre le
+        # client de messagerie du visiteur.
+        NEXT_PUBLIC_CONTACT_ENDPOINT: ${NEXT_PUBLIC_CONTACT_ENDPOINT:-}
+    image: hazaviary-site
+    container_name: hazaviary-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8091:3000"
