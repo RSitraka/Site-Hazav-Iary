@@ -81,31 +81,32 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  // Une seule balise theme-color, mise à jour par la bascule clair/sombre —
-  // même fonctionnement que l'application.
-  themeColor: "#F2F3F5",
+  // Le site est sombre par défaut : la barre d'adresse mobile part du noir
+  // de fond et n'est éclaircie que si l'internaute choisit le mode clair.
+  themeColor: "#050706",
   width: "device-width",
   initialScale: 1,
 };
 
 /**
  * Applique le mode clair/sombre AVANT le rendu, sinon la page clignoterait
- * en clair avant de passer en sombre. La clé de stockage est celle de
- * l'application (`hazaviary_theme`) : la préférence est donc partagée entre
- * le site et l'outil de gestion sur un même domaine.
+ * en clair avant de passer en sombre. La charte est sombre : `dark` est donc
+ * le mode par défaut, seul un choix explicite « light » l'enlève. La clé de
+ * stockage est celle de l'application (`hazaviary_theme`) : la préférence est
+ * partagée entre le site et l'outil de gestion sur un même domaine.
  */
-const themeScript = `(function(){try{var s=localStorage.getItem('hazaviary_theme');var d=s==='dark'||(s!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark');var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#101417')}}catch(e){}})();`;
+const themeScript = `(function(){try{var s=localStorage.getItem('hazaviary_theme');var d=s!=='light';document.documentElement.classList.toggle('dark',d);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#050706':'#F1F4F2')}catch(e){document.documentElement.classList.add('dark')}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="fr" className={`dark ${inter.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="font-sans antialiased">
         <a
           href="#contenu"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2.5 focus:font-bold focus:text-accent-on"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-5 focus:py-2.5 focus:font-bold focus:text-accent-on"
         >
           Aller au contenu principal
         </a>

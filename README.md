@@ -152,35 +152,45 @@ src/
 
 ---
 
-## Thème — repris de l'application de gestion
+## Thème — interface sombre à accent vert
 
-Le système de design vient de `RSitraka/Hazav-Iary` (`frontend/src/theme.css`) : **interface
-claire, plate et contrastée**, accent turquoise pétrole, angles courts, bordures fines.
+Le site est **sombre par défaut** : fond quasi noir, halo d'accent vert diffusé depuis le haut de
+page, grandes cartes arrondies posées sur le noir, libellés et numérotations en monospace
+capitales. L'accent unique est **`#2DD881`**.
 
-| Jeton | Clair | Sombre | Usage |
+| Jeton | Sombre (défaut) | Clair | Usage |
 | --- | --- | --- | --- |
-| `accent` | `#17788A` | `#35AEC4` | Interface, liens, boutons primaires |
-| `sun` | `#DE7A00` | `#F0972E` | Le soleil, la production |
-| `grow` | `#0F9D6B` | `#35C48C` | Validation, énergie propre |
-| `surface` | `#FFFFFF` | `#171C1F` | Cartes, panneaux, en-tête |
-| `tone` | `#F2F3F5` | `#101417` | Fond de page |
-| `ink` | `#14181C` | `#E9EDF0` | Texte courant |
+| `accent` | `#2DD881` | `#119E5C` | Interface, liens, boutons primaires, halos |
+| `accent-pure` | `#2DD881` | `#2DD881` | La couleur de marque telle quelle : halos, arc du hero |
+| `sun` | `#EBA54A` | `#D68A20` | Le soleil, la production |
+| `grow` | `#2DD881` | `#119E5C` | Validation, énergie propre |
+| `surface` | `#0B0E0D` | `#FFFFFF` | Cartes, panneaux |
+| `tone` | `#050706` | `#F1F4F2` | Fond de page |
+| `ink` | `#E9F1EC` | `#101613` | Texte courant |
+
+Le vert de la charte est repris tel quel en mode sombre ; en mode clair il est assombri
+(`#119E5C`) pour rester lisible sur blanc, `accent-pure` conservant `#2DD881` pour les halos.
 
 Toutes les couleurs passent par des variables CSS définies dans `globals.css` et exposées à
-Tailwind : **aucune classe `dark:` n'est nécessaire dans les composants**, le mode sombre suit
+Tailwind : **aucune classe `dark:` n'est nécessaire dans les composants**, le mode clair suit
 automatiquement.
 
-Autres règles héritées :
+Règles de forme :
 
-- Rayons de **3 à 6 px**, bordures de 1 px, ombres discrètes — aucun dégradé, aucun flou
-- **Inter** pour le texte, **JetBrains Mono** pour les libellés, badges et fils d'Ariane
-  (10,5 px, gras, majuscules, interlettrage `.7px`)
-- Titres en graisse 800, interlettrage `-.2px`
-- Tuiles de chiffres avec filet d'accent de 3 px en haut (`.stat`), comme dans l'application
-- Mode sombre porté par la classe `dark` sur `<html>`, mémorisé sous la clé
-  **`hazaviary_theme`** — la même que l'application, donc la préférence est partagée entre les
-  deux sur un même domaine
-- Fond de page en dégradé fixe blanc → gris, repris de `.app::before`
+- Rayons de **14 à 32 px** sur les cartes, **gélules** pour boutons, pastilles et onglets
+- Bordures de 1 px très sombres : c'est le **halo** (`--glow-soft` / `--glow-strong`), pas le
+  trait, qui détache les blocs
+- **Inter** pour le texte, **JetBrains Mono** pour les libellés, badges, numéros et fils
+  d'Ariane (10,5 px, gras, majuscules, interlettrage `.9px`)
+- Titres en graisse 800, interlettrage `-.6px`
+- Tuiles de chiffres avec filet d'accent dégradé en haut (`.stat`) ; pastille d'icône d'angle
+  (`.corner-icon`) sur les cartes mises en avant
+- Arc lumineux du hero : `.glow-arc` — une ellipse débordant de l'écran, dont seule la calotte
+  éclairée est visible
+- Mode clair porté par l'absence de la classe `dark` sur `<html>`, mémorisé sous la clé
+  **`hazaviary_theme`** — la même que l'application de gestion, donc la préférence est partagée
+  entre les deux sur un même domaine
+- Fond de page en halo radial fixe, vert au sommet puis noir
 
 Écart assumé : le corps de texte passe de 14 px à 15 px, un site de lecture n'ayant pas la
 densité d'un outil de gestion.
@@ -193,7 +203,7 @@ rendu transparent par remplissage depuis les bords, ce qui préserve les blancs 
 l'emblème. En mode sombre, la marque est posée sur une pastille claire — même traitement que
 `html.dark .brand-logo` dans l'application.
 
-Hors logo, aucune image bitmap : les illustrations sont des SVG intégrés au HTML, colorés par les
+Hors logo, aucune image bitmap : les icônes et décors sont des SVG intégrés au HTML, colorés par les
 variables du thème — pas de requête réseau, pas de décalage de mise en page.
 
 ---

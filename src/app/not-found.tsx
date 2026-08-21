@@ -36,7 +36,7 @@ export default function NotFound() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-sm border px-4 py-2 text-sm font-medium transition-colors hover:border-accent hover:bg-panel"
+                  className="rounded-full border px-4 py-2 text-sm font-medium transition-colors hover:border-accent hover:bg-panel"
                 >
                   {item.label}
                 </Link>

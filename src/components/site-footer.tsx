@@ -8,7 +8,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-20 border-t bg-surface">
+    <footer className="mt-24 border-t border-line bg-surface/40">
       <div className="container py-14">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
@@ -26,7 +26,7 @@ export function SiteFooter() {
                   href={site.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer me"
-                  className="rounded-sm border px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-label text-ink-dim transition-colors hover:border-accent hover:text-accent"
+                  className="rounded-full border px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-label text-ink-dim transition-colors hover:border-accent hover:text-accent"
                 >
                   Facebook
                 </a>
@@ -36,7 +36,7 @@ export function SiteFooter() {
                   href={site.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer me"
-                  className="rounded-sm border px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-label text-ink-dim transition-colors hover:border-accent hover:text-accent"
+                  className="rounded-full border px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-label text-ink-dim transition-colors hover:border-accent hover:text-accent"
                 >
                   LinkedIn
                 </a>
@@ -115,7 +115,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t pt-6 font-mono text-[11px] uppercase tracking-label muted sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-2 border-t border-line pt-6 font-mono text-[11px] uppercase tracking-label muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {site.legalName} — Tous droits réservés
           </p>

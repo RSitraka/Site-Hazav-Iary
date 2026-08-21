@@ -20,7 +20,7 @@ export function LogoMark({
   // L'emblème comporte des aplats gris foncé : en mode sombre il est posé sur
   // une pastille claire, comme le fait l'application (`html.dark .brand-logo`).
   return (
-    <span className="inline-flex shrink-0 items-center justify-center rounded-sm dark:bg-[#E9EDF0] dark:p-[3px]">
+    <span className="inline-flex shrink-0 items-center justify-center rounded-lg dark:bg-[#E9EDF0] dark:p-[3px]">
       <Image
         src={logoMark}
         alt=""

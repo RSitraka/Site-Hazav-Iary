@@ -62,7 +62,7 @@ export default async function BlogPostPage({ params }: Params) {
             />
 
             <div className="mt-6 flex flex-wrap items-center gap-2 text-sm muted">
-              <span className="rounded-sm bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
+              <span className="rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
                 {post.category}
               </span>
               <time dateTime={post.date}>{formatDate(post.date)}</time>

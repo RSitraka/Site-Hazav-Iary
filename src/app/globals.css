@@ -4,108 +4,113 @@
 
 /* =====================================================================
    HAZAV'IARY — Site vitrine
-   Thème repris de l'application de gestion (frontend/src/theme.css) :
-   fonds blancs / gris clairs, texte noir, accent turquoise vif.
+   Interface sombre « produit » : fond quasi noir, halo d'accent en haut
+   de page, grandes cartes arrondies posées sur le noir, pastilles et
+   numérotations en monospace.
 
-   Règles conservées :
-   1. Texte courant NOIR, secondaires en gris franchement lisibles.
-   2. Fonds blancs et gris clairs ; le fond de page est un gris (--tone).
-   3. Couleurs vives et saturées : accent turquoise pour l'interface,
-      orange et vert comme couleurs de sens — ici aussi couleurs
-      sectorielles (soleil, énergie propre).
-   4. Aspect plat : bordures fines, angles courts, ombres discrètes.
+   Accent unique : #2DD881 (vert). Il remplace l'ancien turquoise et sert
+   partout — halos, bordures actives, boutons, puces, liens.
 
-   Écart assumé par rapport à l'application : le corps de texte passe de
-   14 px à 15 px, un site de lecture n'ayant pas la densité d'un outil
-   de gestion.
+   Règles :
+   1. Le fond de page est le noir : les cartes sont ce qui « éclaire ».
+   2. Bordures très fines et sombres ; c'est le halo, pas le trait, qui
+      détache les blocs.
+   3. Angles généreux (14 → 32 px), pastilles et boutons en gélule.
+   4. Libellés, numéros et éléments d'interface en monospace capitales.
    ===================================================================== */
 @layer base {
   :root {
-    /* Accent principal : turquoise/pétrole vif. */
-    --accent: 23 120 138; /* #17788A */
-    --accent-deep: 15 92 107; /* #0F5C6B */
-    --accent-soft: 226 239 242; /* #E2EFF2 */
-    --accent-line: 168 205 213; /* #A8CDD5 */
+    /* Accent principal — vert #2DD881 assombri pour rester lisible sur
+       fond clair ; le ton exact de la charte sert en mode sombre. */
+    --accent: 17 158 92; /* #119E5C */
+    --accent-deep: 12 122 71; /* #0C7A47 */
+    --accent-soft: 228 250 238; /* #E4FAEE */
+    --accent-line: 169 229 198; /* #A9E5C6 */
+    --accent-pure: 45 216 129; /* #2DD881 — couleur de marque, halos */
     --on-accent: 255 255 255;
 
-    --slate: 126 150 162; /* #7E96A2 */
+    --slate: 122 143 133; /* #7A8F85 */
 
-    /* Fonds : blanc et gris clairs */
-    --tone: 242 243 245; /* #F2F3F5 */
+    --tone: 241 244 242; /* #F1F4F2 */
     --surface: 255 255 255;
-    --panel-2: 247 248 249; /* #F7F8F9 */
-    --panel-3: 237 239 241; /* #EDEFF1 */
-    --border: 227 230 233; /* #E3E6E9 */
-    --border-2: 201 207 213; /* #C9CFD5 */
+    --panel-2: 247 249 248; /* #F7F9F8 */
+    --panel-3: 236 240 238; /* #ECF0EE */
+    --border: 224 229 226; /* #E0E5E2 */
+    --border-2: 199 207 203; /* #C7CFCB */
 
     /* Couleurs de sens */
-    --green: 15 157 107; /* #0F9D6B */
-    --green-deep: 11 128 88; /* #0B8058 */
-    --green-soft: 225 245 236; /* #E1F5EC */
-    --green-line: 166 223 199; /* #A6DFC7 */
-    --green-ink: 10 107 74; /* #0A6B4A */
-    --orange: 222 122 0; /* #DE7A00 */
-    --orange-deep: 178 95 0; /* #B25F00 */
-    --orange-soft: 252 238 218; /* #FCEEDA */
-    --orange-line: 239 197 140; /* #EFC58C */
-    --orange-ink: 154 84 0; /* #9A5400 */
-    --red: 214 40 57; /* #D62839 */
+    --green: 17 158 92;
+    --green-deep: 12 122 71;
+    --green-soft: 228 250 238;
+    --green-line: 169 229 198;
+    --green-ink: 11 107 63;
+    --orange: 214 138 32; /* #D68A20 */
+    --orange-deep: 173 108 18;
+    --orange-soft: 252 241 224;
+    --orange-line: 238 205 152;
+    --orange-ink: 150 94 15;
+    --red: 208 62 62;
 
     /* Texte */
-    --text: 20 24 28; /* #14181C */
-    --text-dim: 75 85 95; /* #4B555F */
-    --text-mut: 119 130 140; /* #77828C */
+    --text: 16 22 19; /* #101613 */
+    --text-dim: 70 84 77; /* #46544D */
+    --text-mut: 116 130 123; /* #74827B */
 
-    /* Formes plates */
-    --shadow: 0 2px 6px rgba(16, 24, 32, 0.08);
-    --shadow-sm: 0 1px 3px rgba(16, 24, 32, 0.06);
-    --shadow-lg: 0 12px 36px rgba(16, 24, 32, 0.2);
+    --shadow-sm: 0 1px 3px rgba(10, 24, 18, 0.06);
+    --shadow: 0 6px 20px rgba(10, 24, 18, 0.08);
+    --shadow-lg: 0 24px 60px rgba(10, 24, 18, 0.16);
+    /* Halo d'accent : la signature visuelle de l'interface. */
+    --glow-soft: 0 0 40px rgba(45, 216, 129, 0.18);
+    --glow-strong: 0 0 60px rgba(45, 216, 129, 0.32);
 
-    --scroll: 195 202 209;
-    --scroll-hover: 167 177 186;
+    --scroll: 200 208 204;
+    --scroll-hover: 170 182 176;
 
     color-scheme: light;
   }
 
   .dark {
-    /* Accent éclairci pour rester lisible sur fond sombre. */
-    --accent: 53 174 196; /* #35AEC4 */
-    --accent-deep: 30 126 145; /* #1E7E91 */
-    --accent-soft: 22 50 58; /* #16323A */
-    --accent-line: 44 95 109; /* #2C5F6D */
-    --on-accent: 8 24 28; /* #08181C */
+    /* Mode par défaut du site : c'est ici que vit la charte. */
+    --accent: 45 216 129; /* #2DD881 */
+    --accent-deep: 32 179 105; /* #20B369 */
+    --accent-soft: 11 34 23; /* #0B2217 */
+    --accent-line: 28 84 56; /* #1C5438 */
+    --accent-pure: 45 216 129;
+    --on-accent: 4 23 13; /* #04170D — texte sombre sur le vert */
 
-    --slate: 110 131 142; /* #6E838E */
+    --slate: 106 124 115; /* #6A7C73 */
 
-    --tone: 16 20 23; /* #101417 */
-    --surface: 23 28 31; /* #171C1F */
-    --panel-2: 30 36 41; /* #1E2429 */
-    --panel-3: 38 45 51; /* #262D33 */
-    --border: 42 50 56; /* #2A3238 */
-    --border-2: 59 69 76; /* #3B454C */
+    --tone: 5 7 6; /* #050706 — le noir du fond de page */
+    --surface: 11 14 13; /* #0B0E0D */
+    --panel-2: 16 21 19; /* #101513 */
+    --panel-3: 23 29 26; /* #171D1A */
+    --border: 28 35 32; /* #1C2320 */
+    --border-2: 42 52 47; /* #2A342F */
 
-    --green: 53 196 140; /* #35C48C */
-    --green-deep: 42 168 118; /* #2AA876 */
-    --green-soft: 16 50 42; /* #10322A */
-    --green-line: 30 92 70; /* #1E5C46 */
-    --green-ink: 111 220 171; /* #6FDCAB */
-    --orange: 240 151 46; /* #F0972E */
-    --orange-deep: 201 122 30; /* #C97A1E */
-    --orange-soft: 51 36 15; /* #33240F */
-    --orange-line: 107 76 30; /* #6B4C1E */
-    --orange-ink: 245 180 99; /* #F5B463 */
-    --red: 240 97 111; /* #F0616F */
+    --green: 45 216 129;
+    --green-deep: 32 179 105;
+    --green-soft: 11 34 23;
+    --green-line: 28 84 56;
+    --green-ink: 122 233 178;
+    --orange: 235 165 74; /* #EBA54A */
+    --orange-deep: 196 132 48;
+    --orange-soft: 40 30 15;
+    --orange-line: 92 68 32;
+    --orange-ink: 243 192 126;
+    --red: 240 97 111;
 
-    --text: 233 237 240; /* #E9EDF0 */
-    --text-dim: 170 181 188; /* #AAB5BC */
-    --text-mut: 126 138 146; /* #7E8A92 */
+    --text: 233 241 236; /* #E9F1EC */
+    --text-dim: 169 182 175; /* #A9B6AF */
+    --text-mut: 113 128 122; /* #71807A */
 
-    --shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.6);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.7);
+    --glow-soft: 0 0 40px rgba(45, 216, 129, 0.14);
+    --glow-strong: 0 0 70px rgba(45, 216, 129, 0.3);
 
-    --scroll: 59 69 76;
-    --scroll-hover: 78 90 98;
+    --scroll: 38 47 42;
+    --scroll-hover: 58 72 64;
 
     color-scheme: dark;
   }
@@ -134,15 +139,17 @@
   }
 
   body {
-    /* Fond de page fixe : blanc en haut, gris de base ensuite — comme .app
-       dans l'application. */
+    /* Halo d'accent diffusé depuis le haut de la page : le contenu semble
+       éclairé par la couleur de marque. */
     background-color: rgb(var(--tone));
-    background-image: linear-gradient(
-      180deg,
-      rgb(var(--surface)) 0%,
-      rgb(var(--tone)) 42%,
-      rgb(var(--tone)) 100%
-    );
+    background-image:
+      radial-gradient(
+        1500px 700px at 50% -170px,
+        rgb(var(--accent-pure) / 0.40),
+        transparent 70%
+      ),
+      radial-gradient(760px 460px at 88% 2%, rgb(var(--accent-pure) / 0.12), transparent 72%);
+    background-repeat: no-repeat;
     background-attachment: fixed;
     color: rgb(var(--text));
     font-size: 15px;
@@ -150,14 +157,14 @@
   }
 
   ::selection {
-    background: rgb(var(--accent) / 0.25);
+    background: rgb(var(--accent) / 0.28);
     color: rgb(var(--text));
   }
 
   :focus-visible {
     outline: 2px solid rgb(var(--accent));
     outline-offset: 2px;
-    border-radius: 3px;
+    border-radius: 999px;
   }
 
   h1,
@@ -165,7 +172,7 @@
   h3,
   h4 {
     font-weight: 800;
-    letter-spacing: -0.2px;
+    letter-spacing: -0.6px;
     color: rgb(var(--text));
     text-wrap: balance;
   }
@@ -195,7 +202,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Composants — mêmes formes que l'application
+   Composants
    -------------------------------------------------------------------------- */
 @layer components {
   .muted {
@@ -206,17 +213,17 @@
     color: rgb(var(--text-dim));
   }
 
-  /* ---------- Boutons ---------- */
+  /* ---------- Boutons : gélules ---------- */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm border
-      px-4 py-2.5 text-sm font-semibold transition-colors duration-150;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border
+      px-5 py-2.5 text-sm font-semibold transition-all duration-200;
     border-color: rgb(var(--border-2));
-    background: rgb(var(--surface));
+    background: rgb(var(--panel-2));
     color: rgb(var(--text));
   }
 
   .btn:hover {
-    border-color: rgb(var(--accent));
+    border-color: rgb(var(--accent) / 0.6);
     color: rgb(var(--accent));
   }
 
@@ -225,26 +232,28 @@
     background: rgb(var(--accent));
     border-color: rgb(var(--accent));
     color: rgb(var(--on-accent));
+    box-shadow: var(--glow-soft);
   }
 
   .btn-primary:hover {
     background: rgb(var(--accent-deep));
     border-color: rgb(var(--accent-deep));
     color: rgb(var(--on-accent));
+    box-shadow: var(--glow-strong);
   }
 
-  /* Bouton d'appel secondaire : orange, la couleur « soleil » de la charte. */
+  /* Appel secondaire : contour d'accent sur fond sombre. */
   .btn-accent {
     @apply btn font-bold;
-    background: rgb(var(--orange));
-    border-color: rgb(var(--orange));
-    color: #fff;
+    background: rgb(var(--accent-soft));
+    border-color: rgb(var(--accent) / 0.45);
+    color: rgb(var(--accent));
   }
 
   .btn-accent:hover {
-    background: rgb(var(--orange-deep));
-    border-color: rgb(var(--orange-deep));
-    color: #fff;
+    background: rgb(var(--accent) / 0.16);
+    border-color: rgb(var(--accent));
+    color: rgb(var(--accent));
   }
 
   .btn-secondary {
@@ -252,40 +261,71 @@
   }
 
   .btn-ghost {
-    @apply btn border-transparent bg-transparent px-2.5 py-2;
+    @apply btn border-transparent bg-transparent px-3 py-2;
     color: rgb(var(--text-dim));
   }
 
   .btn-ghost:hover {
     color: rgb(var(--accent));
-    border-color: rgb(var(--border));
+    border-color: rgb(var(--border-2));
   }
 
   .btn-lg {
-    @apply px-5 py-3 text-[0.95rem];
+    @apply px-6 py-3 text-[0.95rem];
   }
 
-  /* ---------- Panneaux ---------- */
+  /* ---------- Surfaces arrondies ---------- */
   .panel {
-    @apply relative rounded border p-6 shadow-sm;
-    background: rgb(var(--surface));
-    animation: rise 0.3s ease both;
+    @apply relative rounded-2xl border p-6 md:p-8;
+    background: linear-gradient(180deg, rgb(var(--panel-2)), rgb(var(--surface)));
+    box-shadow: var(--shadow);
+    animation: rise 0.35s ease both;
   }
 
   .card {
-    @apply relative rounded border p-5 shadow-sm transition-colors duration-150;
-    background: rgb(var(--surface));
+    @apply relative rounded-2xl border p-6 transition-all duration-200;
+    background: linear-gradient(180deg, rgb(var(--panel-2)), rgb(var(--surface)));
+    box-shadow: var(--shadow-sm);
   }
 
   .card-hover:hover {
-    border-color: rgb(var(--accent));
+    border-color: rgb(var(--accent) / 0.45);
+    box-shadow: var(--shadow-sm), var(--glow-soft);
   }
 
-  /* Tuile de chiffre clé : filet d'accent de 3 px en haut, comme .stat. */
+  /* Carte « mise en avant » : halo d'accent permanent. */
+  .card-glow {
+    @apply card;
+    border-color: rgb(var(--accent) / 0.3);
+    box-shadow: var(--shadow), var(--glow-soft);
+  }
+
+  /* Tuile interne d'un tableau de bord (posée sur une carte). */
+  .tile {
+    @apply relative rounded-xl border p-5;
+    background: rgb(var(--panel-3) / 0.7);
+  }
+
+  /* Tuile de chiffre clé : liseré d'accent sur le bord supérieur. */
   .stat {
-    @apply relative overflow-hidden rounded border p-5 shadow-sm;
-    background: rgb(var(--surface));
-    border-top: 3px solid rgb(var(--accent));
+    @apply relative overflow-hidden rounded-2xl border p-6;
+    background: linear-gradient(180deg, rgb(var(--panel-2)), rgb(var(--surface)));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stat::before {
+    content: "";
+    @apply absolute inset-x-6 top-0 h-px;
+    background: linear-gradient(90deg, transparent, rgb(var(--accent) / 0.9), transparent);
+  }
+
+  /* Pastille d'icône d'angle, reprise de la maquette. */
+  .corner-icon {
+    @apply grid h-8 w-8 place-items-center rounded-lg border;
+    background: rgb(var(--accent-soft));
+    border-color: rgb(var(--accent) / 0.35);
+    color: rgb(var(--accent));
+    box-shadow: var(--glow-soft);
   }
 
   /* ---------- Libellés monospace ---------- */
@@ -294,40 +334,47 @@
     color: rgb(var(--text-mut));
   }
 
+  /* Numérotation « 01 / 02 / 03 » des étapes et onglets. */
+  .num {
+    @apply font-mono text-[10.5px] font-bold tracking-label;
+    color: rgb(var(--accent) / 0.75);
+  }
+
   .eyebrow {
-    @apply inline-flex items-center gap-1.5 rounded-[2px] border px-2 py-[3px] font-mono text-[10.5px] font-bold uppercase tracking-label;
+    @apply inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[10.5px] font-bold uppercase tracking-label;
     background: rgb(var(--accent-soft));
-    border-color: rgb(var(--accent-line));
+    border-color: rgb(var(--accent) / 0.35);
     color: rgb(var(--accent));
+    box-shadow: var(--glow-soft);
   }
 
   .badge {
-    @apply inline-flex items-center gap-1.5 rounded-[2px] border px-2 py-[3px] font-mono text-[10.5px] font-bold uppercase tracking-label;
+    @apply inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[10.5px] font-bold uppercase tracking-label;
   }
 
   .badge-sun {
     background: rgb(var(--orange-soft));
-    border-color: rgb(var(--orange-line));
+    border-color: rgb(var(--orange) / 0.35);
     color: rgb(var(--orange));
   }
 
   .badge-grow {
     background: rgb(var(--green-soft));
-    border-color: rgb(var(--green-line));
+    border-color: rgb(var(--green) / 0.35);
     color: rgb(var(--green));
   }
 
   /* ---------- Rythme et titres ---------- */
   .section {
-    @apply py-16 md:py-20;
+    @apply py-20 md:py-28;
   }
 
   .h1 {
-    @apply text-[2.1rem] font-extrabold leading-[1.12] tracking-title sm:text-[2.6rem] lg:text-[3rem];
+    @apply text-[2.4rem] font-extrabold leading-[1.06] tracking-title sm:text-[3.1rem] lg:text-[3.6rem];
   }
 
   .h2 {
-    @apply text-[1.6rem] font-extrabold leading-tight tracking-title sm:text-[1.95rem];
+    @apply text-[1.8rem] font-extrabold leading-[1.12] tracking-title sm:text-[2.35rem];
   }
 
   .h3 {
@@ -343,6 +390,33 @@
     color: rgb(var(--accent));
     @apply font-semibold hover:underline;
   }
+
+  /* Séparateur lumineux entre sections. */
+  .rule {
+    @apply h-px w-full border-0;
+    background: linear-gradient(90deg, transparent, rgb(var(--border-2)), transparent);
+  }
+
+  /* Arc lumineux du hero : l'horizon vert de la maquette. */
+  .glow-arc {
+    @apply pointer-events-none absolute inset-x-0 -z-10 overflow-hidden;
+  }
+
+  /* L'ellipse dépasse largement de l'écran : seule sa calotte est visible,
+     ce qui donne l'horizon courbe et lumineux de la maquette. */
+  .glow-arc::after {
+    content: "";
+    @apply absolute left-1/2 h-[760px] w-[135%] -translate-x-1/2 rounded-[50%] border-t-2;
+    border-color: rgb(var(--accent-pure) / 0.85);
+    background: radial-gradient(
+      58% 22% at 50% 0%,
+      rgb(var(--accent-pure) / 0.24),
+      transparent 70%
+    );
+    box-shadow:
+      0 -8px 60px rgb(var(--accent-pure) / 0.55),
+      0 -30px 160px rgb(var(--accent-pure) / 0.35);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -355,7 +429,7 @@
   }
 
   .prose-solar h2 {
-    @apply mt-11 mb-4 scroll-mt-24 text-[1.45rem] font-extrabold tracking-title;
+    @apply mt-11 mb-4 scroll-mt-24 text-[1.5rem] font-extrabold tracking-title;
     color: rgb(var(--text));
   }
 
@@ -396,8 +470,9 @@
   }
 
   .prose-solar blockquote {
-    @apply my-7 rounded-sm border-l-[3px] py-1 pl-5;
-    border-color: rgb(var(--orange));
+    @apply my-7 rounded-xl border-l-[3px] py-2 pl-5;
+    border-color: rgb(var(--accent));
+    background: rgb(var(--accent-soft) / 0.6);
     color: rgb(var(--text-dim));
   }
 
@@ -417,13 +492,13 @@
   }
 
   .prose-solar code {
-    @apply rounded-[2px] px-1.5 py-0.5 font-mono text-[0.85em];
+    @apply rounded-md px-1.5 py-0.5 font-mono text-[0.85em];
     background: rgb(var(--panel-3));
-    color: rgb(var(--text));
+    color: rgb(var(--accent));
   }
 
   .prose-solar pre {
-    @apply my-6 overflow-x-auto rounded-sm border p-4;
+    @apply my-6 overflow-x-auto rounded-xl border p-4;
     background: rgb(var(--panel-2));
   }
 

@@ -28,7 +28,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
 
     // Barre d'adresse des navigateurs mobiles assortie au fond de page.
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", next ? "#101417" : "#F2F3F5");
+    if (meta) meta.setAttribute("content", next ? "#050706" : "#F1F4F2");
 
     try {
       localStorage.setItem(KEY, next ? "dark" : "light");
@@ -43,7 +43,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       onClick={toggle}
       aria-label={dark ? "Activer le thème clair" : "Activer le thème sombre"}
       aria-pressed={mounted ? dark : undefined}
-      className={`grid h-[38px] w-[38px] place-items-center rounded-sm border border-line-strong bg-surface text-ink transition-colors hover:border-accent hover:text-accent ${className}`}
+      className={`grid h-[38px] w-[38px] place-items-center rounded-full border border-line-strong bg-panel text-ink transition-colors hover:border-accent hover:text-accent ${className}`}
     >
       {dark ? <MoonIcon width={17} height={17} /> : <SunIcon width={17} height={17} />}
     </button>

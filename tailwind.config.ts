@@ -1,12 +1,11 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Le thème reprend celui de l'application de gestion Hazav'Iary
- * (frontend/src/theme.css) : interface claire, plate et contrastée, accent
- * turquoise pétrole, angles courts, bordures fines.
+ * Thème « produit sombre » : fond quasi noir, accent vert #2DD881, grandes
+ * cartes arrondies et halos colorés.
  *
  * Toutes les couleurs passent par des variables CSS définies dans
- * globals.css, ce qui rend le mode sombre automatique : aucune classe
+ * globals.css, ce qui rend le mode clair automatique : aucune classe
  * `dark:` n'est nécessaire dans les composants.
  */
 const config: Config = {
@@ -16,7 +15,7 @@ const config: Config = {
     container: {
       center: true,
       padding: { DEFAULT: "1.25rem", lg: "2rem" },
-      screens: { "2xl": "1200px" },
+      screens: { "2xl": "1240px" },
     },
     extend: {
       colors: {
@@ -25,9 +24,11 @@ const config: Config = {
           deep: "rgb(var(--accent-deep) / <alpha-value>)",
           soft: "rgb(var(--accent-soft) / <alpha-value>)",
           line: "rgb(var(--accent-line) / <alpha-value>)",
+          /** #2DD881 tel quel — halos et traits lumineux, quel que soit le mode. */
+          pure: "rgb(var(--accent-pure) / <alpha-value>)",
           on: "rgb(var(--on-accent) / <alpha-value>)",
         },
-        // Couleurs de sens, reprises telles quelles de l'application.
+        // Couleurs de sens.
         sun: {
           DEFAULT: "rgb(var(--orange) / <alpha-value>)",
           deep: "rgb(var(--orange-deep) / <alpha-value>)",
@@ -60,28 +61,38 @@ const config: Config = {
         sans: ["var(--font-sans)", "Inter", "Segoe UI", "Roboto", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "SFMono-Regular", "ui-monospace", "monospace"],
       },
-      // Angles courts : l'application est volontairement plate.
+      // Angles généreux : l'interface est faite de cartes posées sur le noir.
       borderRadius: {
-        DEFAULT: "4px",
-        sm: "3px",
-        md: "4px",
-        lg: "4px",
-        xl: "6px",
-        "2xl": "6px",
+        DEFAULT: "12px",
+        sm: "8px",
+        md: "10px",
+        lg: "14px",
+        xl: "18px",
+        "2xl": "24px",
+        "3xl": "32px",
       },
       boxShadow: {
         sm: "var(--shadow-sm)",
         DEFAULT: "var(--shadow)",
         lg: "var(--shadow-lg)",
+        glow: "var(--glow-soft)",
+        "glow-lg": "var(--glow-strong)",
       },
-      letterSpacing: { title: "-.2px", label: ".7px" },
+      letterSpacing: { title: "-.6px", label: ".9px" },
       keyframes: {
         rise: {
-          from: { opacity: "0", transform: "translateY(6px)" },
+          from: { opacity: "0", transform: "translateY(10px)" },
           to: { opacity: "1", transform: "none" },
         },
+        pulseGlow: {
+          "0%, 100%": { opacity: "0.55" },
+          "50%": { opacity: "1" },
+        },
       },
-      animation: { rise: "rise .3s ease both" },
+      animation: {
+        rise: "rise .4s ease both",
+        "pulse-glow": "pulseGlow 4s ease-in-out infinite",
+      },
     },
   },
   plugins: [],

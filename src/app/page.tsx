@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
-import { HeroArt } from "@/components/hero-art";
+import { HeroPanel } from "@/components/hero-panel";
 import { JsonLd } from "@/components/json-ld";
 import { CheckList, CtaBand, FaqList, SectionHeading, TestimonialCard } from "@/components/ui";
 import {
@@ -48,82 +48,85 @@ export default function HomePage() {
     <>
       <JsonLd data={faqSchema(homeFaq)} />
 
-      {/* ------------------------------- HERO ------------------------------- */}
-      <section className="border-b bg-surface">
-        <div className="container grid items-center gap-12 py-14 lg:grid-cols-[1.05fr_.95fr] lg:py-20">
-          <div className="animate-rise">
+      {/* ------------------------------- HERO -------------------------------
+          Composition de la maquette : titre centré au-dessus d'un halo vert,
+          puis la « console » d'onglets posée sur l'arc lumineux. */}
+      <section className="relative overflow-hidden">
+        {/* Arc lumineux — l'horizon vert derrière le panneau */}
+        <div
+          className="glow-arc top-[620px] h-[760px] animate-pulse-glow md:top-[780px]"
+          aria-hidden="true"
+        />
+
+        <div className="container relative pt-14 text-center md:pt-20">
+          <div className="mx-auto max-w-4xl animate-rise">
             <p className="eyebrow">
-              <SunIcon width={14} height={14} />
+              <SunIcon width={13} height={13} />
               Énergie solaire &amp; solutions vertes
             </p>
 
-            <h1 className="h1 mt-6">
-              L&rsquo;énergie solaire qui{" "}
-              <span className="text-accent">
-                éclaire durablement
-              </span>{" "}
+            <h1 className="h1 mt-7">
+              L&rsquo;énergie solaire qui <span className="text-accent">éclaire durablement</span>{" "}
               Madagascar
             </h1>
 
-            <p className="lead mt-6 max-w-xl">
-              {site.name} installe des panneaux solaires dans l&rsquo;agglomération
-              d&rsquo;Antananarivo. Nous venons voir votre site avant de chiffrer, nous inscrivons
-              le montant et la durée dans un contrat, et le paiement s&rsquo;étale sur plusieurs
-              mois.
+            <p className="mx-auto mt-7 max-w-2xl font-mono text-[11.5px] font-bold uppercase leading-relaxed tracking-label muted">
+              Descente technique avant tout devis — dimensionnement écrit —
+              <br className="hidden sm:block" /> contrat à montant et durée fixés — paiement
+              échelonné sur plusieurs mois
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/contact" className="btn-primary">
+            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link href="/contact" className="btn-primary btn-lg">
                 Demander une visite technique
                 <ArrowRightIcon width={16} height={16} />
               </Link>
-              <Link href="/simulateur" className="btn-secondary">
+              <Link href="/simulateur" className="btn-secondary btn-lg">
                 Simuler mon installation
               </Link>
             </div>
+          </div>
 
-            <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm muted">
-              <li className="flex items-center gap-2">
-                <ShieldIcon width={18} height={18} className="text-accent" />
-                Descente technique avant tout devis
-              </li>
-              <li className="flex items-center gap-2">
-                <BoltIcon width={18} height={18} className="text-sun" />
-                Contrat écrit : montant et durée fixés
-              </li>
-              <li className="flex items-center gap-2">
-                <LeafIcon width={18} height={18} className="text-accent" />
-                Paiement échelonné sur plusieurs mois
-              </li>
+          {/* Console : les quatre temps d'un chantier */}
+          <HeroPanel className="mx-auto mt-14 max-w-5xl text-left" />
+
+          {/* Bandeau des zones suivies — équivalent de la barre de logos */}
+          <div className="mt-14 pb-16">
+            <p className="label">Chantiers suivis dans l&rsquo;agglomération d&rsquo;Antananarivo</p>
+            <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+              {interventionZones.map((zone) => (
+                <li
+                  key={zone}
+                  className="font-mono text-[12.5px] font-bold uppercase tracking-label text-ink-mut transition-colors hover:text-accent"
+                >
+                  {zone}
+                </li>
+              ))}
             </ul>
           </div>
-
-          <div className="relative">
-            <HeroArt className="mx-auto w-full max-w-lg" />
-          </div>
-        </div>
-
-        {/* Chiffres clés */}
-        <div className="container pb-14">
-          <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {keyFigures.map((figure) => (
-              <div key={figure.label} className="stat">
-                <dt className="sr-only">{figure.label}</dt>
-                <dd>
-                  <span className="text-[2rem] font-extrabold tracking-title text-accent">
-                    {figure.value}
-                  </span>
-                  <span className="mt-1 block font-semibold">{figure.label}</span>
-                  <span className="mt-1 block text-sm muted">{figure.hint}</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
 
+      {/* ---------------------------- CHIFFRES CLÉS ------------------------- */}
+      <section className="container">
+        <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {keyFigures.map((figure) => (
+            <div key={figure.label} className="stat">
+              <dt className="sr-only">{figure.label}</dt>
+              <dd>
+                <span className="text-[2rem] font-extrabold tracking-title text-accent">
+                  {figure.value}
+                </span>
+                <span className="mt-1 block font-semibold">{figure.label}</span>
+                <span className="mt-1 block text-sm muted">{figure.hint}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
       {/* ------------------------------ SERVICES ---------------------------- */}
-      <section className="section border-t" id="services">
+      <section className="section" id="services">
         <div className="container">
           <SectionHeading
             eyebrow="Nos services"
@@ -132,7 +135,7 @@ export default function HomePage() {
           />
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => {
+            {services.map((service, i) => {
               const Icon = serviceIcons[service.icon];
               return (
                 <Link
@@ -140,16 +143,20 @@ export default function HomePage() {
                   href={`/services/${service.slug}`}
                   className="card card-hover group flex flex-col"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded border border-accent-line bg-accent-soft text-accent">
-                    <Icon width={22} height={22} />
-                  </span>
-                  <h3 className="h3 mt-5 text-lg">{service.short}</h3>
+                  {/* Pastille d'icône en angle, comme sur la maquette */}
+                  <div className="flex items-start justify-between">
+                    <span className="num">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="corner-icon">
+                      <Icon width={16} height={16} />
+                    </span>
+                  </div>
+                  <h3 className="h3 mt-6 text-lg">{service.short}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed muted">{service.excerpt}</p>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+                  <span className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10.5px] font-bold uppercase tracking-label text-accent">
                     En savoir plus
                     <ArrowRightIcon
-                      width={15}
-                      height={15}
+                      width={14}
+                      height={14}
                       className="transition-transform group-hover:translate-x-1"
                     />
                   </span>
@@ -161,7 +168,7 @@ export default function HomePage() {
       </section>
 
       {/* --------------------------- POURQUOI NOUS -------------------------- */}
-      <section className="section border-t bg-surface">
+      <section className="section">
         <div className="container grid gap-14 lg:grid-cols-2 lg:items-center">
           <div>
             <SectionHeading
@@ -192,29 +199,44 @@ export default function HomePage() {
           </div>
 
           <ul className="grid gap-4 sm:grid-cols-2">
-            {commitments.map((item) => (
-              <li key={item.title} className="card">
-                <h3 className="h3 text-base">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed muted">{item.text}</p>
-              </li>
-            ))}
+            {commitments.map((item, i) => {
+              const Icon = [ShieldIcon, BoltIcon, LeafIcon, SunIcon][i % 4];
+              return (
+                <li key={item.title} className="card card-hover">
+                  <span className="corner-icon">
+                    <Icon width={16} height={16} />
+                  </span>
+                  <h3 className="h3 mt-5 text-base">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed muted">{item.text}</p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
 
-      {/* ------------------------------ PROCESSUS --------------------------- */}
-      <section className="section border-t">
+      {/* ------------------------------ PROCESSUS ---------------------------
+          Étapes numérotées reliées par un filet lumineux, comme la section
+          « How it works » de la maquette. */}
+      <section className="section">
         <div className="container">
           <SectionHeading
             eyebrow="Comment ça se passe"
             title="Six étapes, du premier appel au dernier versement"
             align="center"
           />
-          <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {processSteps.map((step) => (
-              <li key={step.step} className="card card-hover">
-                <span className="text-3xl font-bold text-sun">{step.step}</span>
-                <h3 className="h3 mt-3 text-base">{step.title}</h3>
+              <li key={step.step} className="card card-hover pt-8">
+                {/* Filet lumineux + numéro en tête de carte */}
+                <div className="absolute inset-x-6 top-0 flex items-center gap-3">
+                  <span className="h-px flex-1 bg-gradient-to-r from-transparent to-accent/60" />
+                  <span className="num rounded-full border border-accent/30 bg-accent-soft px-2.5 py-1">
+                    {step.step}
+                  </span>
+                  <span className="h-px flex-1 bg-gradient-to-l from-transparent to-accent/60" />
+                </div>
+                <h3 className="h3 mt-6 text-base">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed muted">{step.text}</p>
               </li>
             ))}
@@ -223,22 +245,22 @@ export default function HomePage() {
       </section>
 
       {/* ----------------------------- SIMULATEUR --------------------------- */}
-      <section className="section border-t bg-surface">
+      <section className="section">
         <div className="container">
-          <div className="card grid items-center gap-8 border-sun-line p-8 md:grid-cols-[1.3fr_1fr] md:p-12">
+          <div className="card-glow grid items-center gap-10 p-8 md:grid-cols-[1.3fr_1fr] md:p-12">
             <div>
               <p className="eyebrow">
-                <BoltIcon width={14} height={14} />
+                <BoltIcon width={13} height={13} />
                 Outil gratuit
               </p>
-              <h2 className="h2 mt-4">Combien de panneaux vous faut-il ?</h2>
+              <h2 className="h2 mt-5">Combien de panneaux vous faut-il ?</h2>
               <p className="lead mt-4">
                 Listez vos appareils, ajustez les hypothèses : le simulateur estime votre
                 consommation mensuelle, le nombre de panneaux, la capacité de batterie et la
                 puissance d&rsquo;onduleur nécessaires. La même méthode que nos ingénieurs sur le
                 terrain.
               </p>
-              <Link href="/simulateur" className="btn-primary mt-8">
+              <Link href="/simulateur" className="btn-primary btn-lg mt-8">
                 Lancer le simulateur
                 <ArrowRightIcon width={16} height={16} />
               </Link>
@@ -252,10 +274,12 @@ export default function HomePage() {
               ].map((row) => (
                 <div
                   key={row.label}
-                  className="flex items-center justify-between rounded border bg-surface px-4 py-3"
+                  className="flex items-center justify-between rounded-xl border border-line bg-panel-3/60 px-4 py-3"
                 >
                   <span className="font-medium">{row.label}</span>
-                  <span className="muted">{row.value}</span>
+                  <span className="font-mono text-[12px] font-bold uppercase tracking-label text-accent">
+                    {row.value}
+                  </span>
                 </div>
               ))}
             </div>
@@ -264,7 +288,7 @@ export default function HomePage() {
       </section>
 
       {/* -------------------------- ZONES ET MATÉRIEL ----------------------- */}
-      <section className="section border-t">
+      <section className="section">
         <div className="container">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
@@ -280,7 +304,7 @@ export default function HomePage() {
           <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_1.2fr]">
             <div className="card">
               <h3 className="label">Zones d&rsquo;intervention</h3>
-              <ul className="mt-4 flex flex-wrap gap-2">
+              <ul className="mt-5 flex flex-wrap gap-2">
                 {interventionZones.map((zone) => (
                   <li key={zone} className="badge badge-grow">
                     {zone}
@@ -293,9 +317,12 @@ export default function HomePage() {
               {equipmentCatalog.map((group) => (
                 <article key={group.title} className="card">
                   <h3 className="label">{group.title}</h3>
-                  <ul className="mt-3 space-y-1.5 text-sm dim">
+                  <ul className="mt-4 space-y-1.5 text-sm dim">
                     {group.items.map((item) => (
-                      <li key={item}>{item}</li>
+                      <li key={item} className="flex items-center gap-2">
+                        <span className="h-1 w-1 shrink-0 rounded-full bg-accent" />
+                        {item}
+                      </li>
                     ))}
                   </ul>
                 </article>
@@ -307,7 +334,7 @@ export default function HomePage() {
 
       {/* ---------------------------- TÉMOIGNAGES --------------------------- */}
       {testimonials.length > 0 && (
-        <section className="section border-t bg-surface">
+        <section className="section">
           <div className="container">
             <SectionHeading
               eyebrow="Témoignages"
@@ -325,7 +352,7 @@ export default function HomePage() {
 
       {/* -------------------------------- BLOG ------------------------------ */}
       {posts.length > 0 && (
-        <section className="section border-t">
+        <section className="section">
           <div className="container">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <SectionHeading
@@ -341,20 +368,20 @@ export default function HomePage() {
             <div className="mt-12 grid gap-5 md:grid-cols-3">
               {posts.map((post) => (
                 <article key={post.slug} className="card card-hover relative flex flex-col">
-                  <div className="flex items-center gap-2 text-xs muted">
-                    <span className="font-semibold uppercase tracking-wider text-accent">
-                      {post.category}
-                    </span>
-                    <span aria-hidden="true">·</span>
+                  <div className="flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-label muted">
+                    <span className="font-bold text-accent">{post.category}</span>
+                    <span aria-hidden="true">/</span>
                     <time dateTime={post.date}>{formatDate(post.date)}</time>
                   </div>
-                  <h3 className="h3 mt-3 text-lg">
+                  <h3 className="h3 mt-4 text-lg">
                     <Link href={`/blog/${post.slug}`} className="after:absolute after:inset-0">
                       {post.title}
                     </Link>
                   </h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed muted">{post.description}</p>
-                  <p className="mt-4 text-sm muted">{post.readingTime} min de lecture</p>
+                  <p className="mt-5 font-mono text-[10.5px] uppercase tracking-label muted">
+                    {post.readingTime} min de lecture
+                  </p>
                 </article>
               ))}
             </div>
@@ -363,7 +390,7 @@ export default function HomePage() {
       )}
 
       {/* --------------------------------- FAQ ------------------------------ */}
-      <section className="section border-t bg-surface">
+      <section className="section">
         <div className="container grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
           <SectionHeading
             eyebrow="Questions fréquentes"
@@ -372,7 +399,7 @@ export default function HomePage() {
           />
           <div>
             <FaqList items={homeFaq} />
-            <Link href="/faq" className="btn-ghost mt-4">
+            <Link href="/faq" className="btn-ghost mt-5">
               Voir toutes les questions
               <ArrowRightIcon width={15} height={15} />
             </Link>

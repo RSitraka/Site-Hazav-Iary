@@ -73,7 +73,7 @@ export default function ServicesPage() {
                   {service.benefits.slice(0, 2).map((benefit) => (
                     <li
                       key={benefit}
-                      className="rounded-sm border px-3 py-1 text-xs font-medium muted"
+                      className="rounded-full border px-3 py-1 text-xs font-medium muted"
                     >
                       {benefit}
                     </li>

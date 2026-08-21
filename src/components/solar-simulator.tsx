@@ -275,7 +275,7 @@ export function SolarSimulator() {
                 key={p.name}
                 type="button"
                 onClick={() => addPreset(p)}
-                className="rounded-sm border px-3 py-1.5 text-xs font-medium transition-colors hover:border-accent hover:bg-panel"
+                className="rounded-full border px-3 py-1.5 text-xs font-medium transition-colors hover:border-accent hover:bg-panel"
               >
                 + {p.name}
                 <span className="muted"> · {p.watts} W</span>

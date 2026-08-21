@@ -97,7 +97,7 @@ export default function ContactPage() {
               </p>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {site.areaServed.map((area) => (
-                  <li key={area} className="rounded-sm border px-3 py-1 text-xs font-medium muted">
+                  <li key={area} className="rounded-full border px-3 py-1 text-xs font-medium muted">
                     {area}
                   </li>
                 ))}

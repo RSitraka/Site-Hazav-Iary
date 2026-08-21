@@ -63,7 +63,7 @@ export default function BlogPage() {
             <article className="card card-hover relative grid gap-8 p-8 md:grid-cols-[1.3fr_1fr] md:items-center md:p-10">
               <div>
                 <div className="flex flex-wrap items-center gap-2 text-xs muted">
-                  <span className="rounded-sm bg-accent-soft px-3 py-1 font-semibold uppercase tracking-wider text-accent">
+                  <span className="rounded-full bg-accent-soft px-3 py-1 font-semibold uppercase tracking-wider text-accent">
                     {featured.category}
                   </span>
                   <time dateTime={featured.date}>{formatDate(featured.date)}</time>
@@ -83,7 +83,7 @@ export default function BlogPage() {
               </div>
               <ul className="flex flex-wrap gap-2 md:justify-end">
                 {featured.keywords.slice(0, 4).map((keyword) => (
-                  <li key={keyword} className="rounded-sm border px-3 py-1 text-xs muted">
+                  <li key={keyword} className="rounded-full border px-3 py-1 text-xs muted">
                     {keyword}
                   </li>
                 ))}
