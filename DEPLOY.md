@@ -53,19 +53,20 @@ En SSH sur le serveur :
 # Le dépôt du site, à côté de celui de l'application
 sudo mkdir -p /var/www/hazaviary-site
 sudo chown "$USER":"$USER" /var/www/hazaviary-site
-git clone git@github.com:RSitraka/Site-Hazav-Iary.git /var/www/hazaviary-site
+git clone https://github.com/RSitraka/Site-Hazav-Iary.git /var/www/hazaviary-site
 cd /var/www/hazaviary-site
 
-# Optionnel : réception des demandes de devis par un service de formulaire
-echo 'NEXT_PUBLIC_CONTACT_ENDPOINT=' > .env
-
-chmod +x deploy.sh
-docker compose -f docker-compose.prod.yml up -d --build
-curl -I http://127.0.0.1:8091/     # doit répondre 200
+# Construit le conteneur, prépare le reverse proxy, demande le certificat
+bash ops/installer.sh --domaine hazaviary.mg --email VOTRE@EMAIL
 ```
 
-> Le clone se fait en SSH : la clé publique du serveur doit être ajoutée au dépôt GitHub
-> (Settings → Deploy keys, lecture seule suffit).
+`ops/installer.sh` est relançable sans risque : il vérifie Docker, refuse de démarrer si le
+port 8091 est pris, attend que le site réponde, détecte nginx ou Caddy et n'ajoute que la
+configuration du site vitrine — il ne touche jamais aux conteneurs, volumes ou vhosts de
+l'application de gestion. Sans `--email`, il affiche la commande `certbot` au lieu de la lancer.
+
+Les sections 3 et 4 ci-dessous détaillent ce que fait le script, pour le faire à la main ou
+pour comprendre ce qu'il a écrit.
 
 ---
 

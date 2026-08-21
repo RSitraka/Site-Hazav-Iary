@@ -16,7 +16,7 @@ export const site = {
   tagline: "L'énergie solaire qui éclaire durablement Madagascar",
   description:
     "Hazav'Iary installe des panneaux solaires partout à Madagascar : descente technique sur site, dimensionnement, contrat écrit, pose et suivi de chantier, avec paiement échelonné sur plusieurs mois.",
-  /** URL canonique de production. À VALIDER avant mise en ligne. */
+  /** URL canonique de production : le site vitrine occupe le domaine principal. */
   url: "https://www.hazaviary.mg",
   locale: "fr_MG",
   lang: "fr",
