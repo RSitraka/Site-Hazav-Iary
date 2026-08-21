@@ -1,0 +1,41 @@
+"Nous posons des panneaux de 300 W et 450 W", "
+Modules photovoltaïques
+Panneaux solaires 300 W et 450 W."
+==> Nous posons toutes sorte de panneaux
+"Continuité de service pendant les coupures du réseau"
+==> pendant le delai de garantie
+"Ce que nous livrons
+1
+Modules photovoltaïques
+Panneaux solaires 300 W et 450 W.
+2
+Stockage et conversion
+Batteries lithium 200 Ah, onduleurs 5 kVA, régulateurs MPPT 60 A.
+3
+Câblage et connectique
+Câble solaire 6 mm², connecteurs MC4, disjoncteurs DC, coffrets de protection.
+4
+Fixation
+Structures de fixation, supports de toit, visserie inox."
+==> ne precise pas les Wattages ou kva mais liste de facon generale et liste seulement ex:plaque solaire, disjoncteurs
+"Chantiers suivis dans l’agglomération d’Antananarivo
+
+Nanisana
+Ivato
+Ankorondrano
+Analakely
+Itaosy
+Ambohibao
+Tanjombato
+Andoharanofotsy
+Ambatobe
+Talatamaty"
+==>partout a madagascar
+"Onglet realisation"
+==>utilise les vrais donnees de notre application de suivi en ligne "git@github.com:RSitraka/Hazav-Iary.git" tu as tous les acces
+"Zones d’intervention"
+==>les zones ou on a installe les panneaux
+enleve l'onglet BLOG
+
+Dans l'accueil en dessus  de "De la visite de site au suivi de l'installation"
+fais defiler nos photos en caroussel, toujours suivant le theme

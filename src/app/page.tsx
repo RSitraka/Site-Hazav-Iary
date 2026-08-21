@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { HeroPanel } from "@/components/hero-panel";
+import { PhotoCarousel } from "@/components/photo-carousel";
 import { JsonLd } from "@/components/json-ld";
 import { CheckList, CtaBand, FaqList, SectionHeading, TestimonialCard } from "@/components/ui";
 import {
@@ -19,17 +20,17 @@ import {
   commitments,
   equipmentCatalog,
   generalFaq,
-  interventionZones,
   processSteps,
+  provinces,
   testimonials,
 } from "@/lib/content";
-import { getAllPosts, formatDate } from "@/lib/posts";
+import { photos } from "@/lib/gallery";
 import { buildMetadata, faqSchema } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: `${site.name} — Installateur de panneaux solaires à Antananarivo`,
+  title: `${site.name} — Installateur de panneaux solaires à Madagascar`,
   description:
-    "Installateur de panneaux solaires à Antananarivo : descente technique sur site, dimensionnement, contrat écrit, pose et suivi de chantier, avec paiement échelonné sur plusieurs mois.",
+    "Installateur de panneaux solaires partout à Madagascar, basé à Antananarivo : descente technique sur site, dimensionnement, contrat écrit, pose et suivi de chantier, avec paiement échelonné sur plusieurs mois.",
   path: "/",
   keywords: [
     "installateur panneaux solaires Antananarivo",
@@ -42,7 +43,6 @@ export const metadata: Metadata = buildMetadata({
 
 export default function HomePage() {
   const homeFaq = generalFaq.slice(0, 5);
-  const posts = getAllPosts().slice(0, 3);
 
   return (
     <>
@@ -90,16 +90,16 @@ export default function HomePage() {
           {/* Console : les quatre temps d'un chantier */}
           <HeroPanel className="mx-auto mt-14 max-w-5xl text-left" />
 
-          {/* Bandeau des zones suivies — équivalent de la barre de logos */}
+          {/* Bandeau de couverture — équivalent de la barre de logos */}
           <div className="mt-14 pb-16">
-            <p className="label">Chantiers suivis dans l&rsquo;agglomération d&rsquo;Antananarivo</p>
+            <p className="label">Nous intervenons partout à Madagascar</p>
             <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
-              {interventionZones.map((zone) => (
+              {provinces.map((province) => (
                 <li
-                  key={zone}
+                  key={province}
                   className="font-mono text-[12.5px] font-bold uppercase tracking-label text-ink-mut transition-colors hover:text-accent"
                 >
-                  {zone}
+                  {province}
                 </li>
               ))}
             </ul>
@@ -124,6 +124,25 @@ export default function HomePage() {
           ))}
         </dl>
       </section>
+
+      {/* ------------------------------ TERRAIN -----------------------------
+          Carrousel de photos réelles des équipes, juste avant les services. */}
+      {photos.length > 0 && (
+        <section className="section pb-0">
+          <div className="container">
+            <SectionHeading
+              eyebrow="Sur le terrain"
+              title="Nos équipes, chez nos clients"
+              lead="Démonstrations, prises en main et poses : nos interventions telles qu'elles se passent, dans les villages comme en ville."
+              align="center"
+            />
+          </div>
+          {/* Hors conteneur : la bande de photos déborde jusqu'aux bords. */}
+          <div className="mt-12">
+            <PhotoCarousel photos={photos} />
+          </div>
+        </section>
+      )}
 
       {/* ------------------------------ SERVICES ---------------------------- */}
       <section className="section" id="services">
@@ -268,7 +287,7 @@ export default function HomePage() {
             <div className="grid gap-3 text-sm">
               {[
                 { label: "Consommation mensuelle", value: "kWh/mois" },
-                { label: "Nombre de panneaux", value: "× 450 Wc" },
+                { label: "Nombre de panneaux", value: "unités" },
                 { label: "Capacité batterie", value: "kWh / Ah" },
                 { label: "Puissance onduleur", value: "kVA" },
               ].map((row) => (
@@ -293,8 +312,8 @@ export default function HomePage() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="Réalisations"
-              title="Nos chantiers autour d'Antananarivo"
-              lead="Dix quartiers et communes suivis, et un matériel identifié chantier par chantier."
+              title="Nos chantiers, partout à Madagascar"
+              lead="Des installations suivies d'un bout à l'autre de l'île, et un matériel identifié chantier par chantier."
             />
             <Link href="/realisations" className="btn-secondary">
               Voir les réalisations
@@ -304,10 +323,15 @@ export default function HomePage() {
           <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_1.2fr]">
             <div className="card">
               <h3 className="label">Zones d&rsquo;intervention</h3>
+              <p className="mt-4 leading-relaxed dim">
+                Nous intervenons dans toute {site.address.countryName}. Nos équipes partent
+                d&rsquo;{site.address.city} ; pour un site éloigné, les conditions de déplacement
+                sont convenues avant la visite et chiffrées dans le devis.
+              </p>
               <ul className="mt-5 flex flex-wrap gap-2">
-                {interventionZones.map((zone) => (
-                  <li key={zone} className="badge badge-grow">
-                    {zone}
+                {provinces.map((province) => (
+                  <li key={province} className="badge badge-grow">
+                    {province}
                   </li>
                 ))}
               </ul>
@@ -344,45 +368,6 @@ export default function HomePage() {
             <div className="mt-12 grid gap-5 md:grid-cols-3">
               {testimonials.map((item) => (
                 <TestimonialCard key={item.author} item={item} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* -------------------------------- BLOG ------------------------------ */}
-      {posts.length > 0 && (
-        <section className="section">
-          <div className="container">
-            <div className="flex flex-wrap items-end justify-between gap-6">
-              <SectionHeading
-                eyebrow="Blog"
-                title="Comprendre le solaire avant d'investir"
-                lead="Nos guides pratiques pour choisir, dimensionner et entretenir une installation photovoltaïque."
-              />
-              <Link href="/blog" className="btn-secondary">
-                Tous les articles
-              </Link>
-            </div>
-
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {posts.map((post) => (
-                <article key={post.slug} className="card card-hover relative flex flex-col">
-                  <div className="flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-label muted">
-                    <span className="font-bold text-accent">{post.category}</span>
-                    <span aria-hidden="true">/</span>
-                    <time dateTime={post.date}>{formatDate(post.date)}</time>
-                  </div>
-                  <h3 className="h3 mt-4 text-lg">
-                    <Link href={`/blog/${post.slug}`} className="after:absolute after:inset-0">
-                      {post.title}
-                    </Link>
-                  </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed muted">{post.description}</p>
-                  <p className="mt-5 font-mono text-[10.5px] uppercase tracking-label muted">
-                    {post.readingTime} min de lecture
-                  </p>
-                </article>
               ))}
             </div>
           </div>

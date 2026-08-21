@@ -43,7 +43,7 @@ export default function AProposPage() {
       <PageHero
         eyebrow="À propos"
         title="Une entreprise malgache au service de l'énergie propre"
-        lead={`${site.name} installe des panneaux solaires dans l'agglomération d'Antananarivo. Notre différence tient à une chose simple : nous venons voir avant de chiffrer, et nous écrivons ce qui est convenu.`}
+        lead={`${site.name} installe des panneaux solaires partout à Madagascar, depuis sa base d'Antananarivo. Notre différence tient à une chose simple : nous venons voir avant de chiffrer, et nous écrivons ce qui est convenu.`}
         breadcrumbs={[{ name: "À propos", path: "/a-propos" }]}
       />
 

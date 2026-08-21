@@ -5,22 +5,23 @@ import { CtaBand, PageHero, SectionHeading, TestimonialCard } from "@/components
 import { CheckIcon, MapPinIcon } from "@/components/icons";
 import {
   equipmentCatalog,
-  interventionZones,
+  installedZones,
   processSteps,
   projects,
+  provinces,
   testimonials,
 } from "@/lib/content";
 import { site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Réalisations : nos chantiers solaires à Antananarivo",
+  title: "Réalisations : nos chantiers solaires à Madagascar",
   description:
-    "Zones d'intervention, matériel installé et déroulé d'un chantier solaire Hazav'Iary dans l'agglomération d'Antananarivo : descente technique, contrat, pose et suivi.",
+    "Zones d'intervention, matériel installé et déroulé d'un chantier solaire Hazav'Iary, partout à Madagascar : descente technique, contrat, pose et suivi.",
   path: "/realisations",
   keywords: [
-    "chantier solaire Antananarivo",
-    "installation photovoltaïque Nanisana",
+    "chantier solaire Madagascar",
+    "installation photovoltaïque Antananarivo",
     "zones intervention solaire Madagascar",
     "matériel solaire installé",
   ],
@@ -41,22 +42,26 @@ export default function RealisationsPage() {
 
       <PageHero
         eyebrow="Réalisations"
-        title="Nos chantiers dans l'agglomération d'Antananarivo"
+        title="Nos chantiers, partout à Madagascar"
         lead="Chaque installation part d'une descente sur site et se termine par un dossier complet : matériel posé, documents et avancement conservés."
         breadcrumbs={[{ name: "Réalisations", path: "/realisations" }]}
       />
 
-      {/* -------------------------- Zones d'intervention -------------------- */}
+      {/* -------------------------- Zones d'intervention --------------------
+          Les zones affichées sont celles où des panneaux ont réellement été
+          posés (`installedZones`). Tant que la liste n'est pas renseignée
+          depuis l'application de suivi, la page se contente d'annoncer la
+          couverture nationale — aucune zone n'est inventée. */}
       <section className="section">
         <div className="container grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-start">
           <SectionHeading
             eyebrow="Où nous intervenons"
-            title="Dix zones suivies autour d'Antananarivo"
-            lead="Nos équipes se déplacent dans ces quartiers et communes. Pour un site plus éloigné, les conditions de déplacement sont convenues avant la visite."
+            title="Toute l'île, d'Antananarivo aux zones hors réseau"
+            lead="Nos équipes partent d'Antananarivo et se déplacent dans les six provinces. Pour un site éloigné, les conditions de déplacement sont convenues avant la visite et chiffrées dans le devis."
           />
 
           <ul className="grid gap-3 sm:grid-cols-2">
-            {interventionZones.map((zone) => (
+            {(installedZones.length > 0 ? installedZones : provinces).map((zone) => (
               <li key={zone} className="card flex items-center gap-3 py-3.5">
                 <MapPinIcon width={18} height={18} className="shrink-0 text-accent" />
                 <span className="font-semibold">{zone}</span>

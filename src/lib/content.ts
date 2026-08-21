@@ -47,19 +47,29 @@ export const projects: Project[] = [];
 /*  Zones d'intervention                                                       */
 /* -------------------------------------------------------------------------- */
 
-/** Quartiers et communes suivis dans l'application de gestion. */
-export const interventionZones = [
-  "Nanisana",
-  "Ivato",
-  "Ankorondrano",
-  "Analakely",
-  "Itaosy",
-  "Ambohibao",
-  "Tanjombato",
-  "Andoharanofotsy",
-  "Ambatobe",
-  "Talatamaty",
+/**
+ * L'entreprise intervient dans toute l'île. Les six provinces servent à dire
+ * cette couverture ; ce ne sont pas des chantiers déclarés.
+ */
+export const provinces = [
+  "Antananarivo",
+  "Antsiranana",
+  "Fianarantsoa",
+  "Mahajanga",
+  "Toamasina",
+  "Toliara",
 ];
+
+/**
+ * Zones où des panneaux ont réellement été installés.
+ *
+ * VIDE VOLONTAIREMENT : la liste précédente venait du jeu de démonstration de
+ * l'application de suivi (`backend/cmd/seed/main.go`), pas de vrais chantiers.
+ * À remplir depuis l'écran « Emplacements » de l'application, ou par un export
+ * de sa base — les sections concernées n'apparaissent pas tant que ce tableau
+ * est vide.
+ */
+export const installedZones: string[] = [];
 
 /* -------------------------------------------------------------------------- */
 /*  Matériel posé                                                              */
@@ -70,28 +80,27 @@ export type EquipmentGroup = {
   items: string[];
 };
 
-/** Catalogue réellement tenu en stock par l'entreprise. */
+/**
+ * Catégories de matériel posé. Volontairement sans puissances ni capacités :
+ * les caractéristiques se fixent après la descente technique, à partir du
+ * relevé — les annoncer d'avance reviendrait à dimensionner à l'aveugle.
+ */
 export const equipmentCatalog: EquipmentGroup[] = [
   {
     title: "Production",
-    items: ["Panneau solaire 450 W", "Panneau solaire 300 W"],
+    items: ["Plaques solaires", "Kits solaires complets", "Ampoules LED"],
   },
   {
     title: "Stockage et conversion",
-    items: ["Batterie lithium 200 Ah", "Onduleur 5 kVA", "Régulateur MPPT 60 A"],
+    items: ["Batteries", "Générateurs solaires", "Onduleurs", "Régulateurs de charge"],
   },
   {
     title: "Câblage et protection",
-    items: [
-      "Câble solaire 6 mm²",
-      "Connecteur MC4",
-      "Disjoncteur DC",
-      "Coffret de protection",
-    ],
+    items: ["Câble solaire", "Connecteurs", "Disjoncteurs", "Coffrets de protection"],
   },
   {
     title: "Fixation",
-    items: ["Structure de fixation", "Support de toit", "Visserie inox"],
+    items: ["Structures de fixation", "Supports de toit", "Visserie inox"],
   },
 ];
 
@@ -207,12 +216,12 @@ export const generalFaq: FaqItem[] = [
   {
     question: "Dans quelles zones intervenez-vous ?",
     answer:
-      "Nous suivons des chantiers dans l'agglomération d'Antananarivo : Nanisana, Ivato, Ankorondrano, Analakely, Itaosy, Ambohibao, Tanjombato, Andoharanofotsy, Ambatobe et Talatamaty. Pour un site plus éloigné, contactez-nous : les conditions de déplacement sont convenues avant la visite.",
+      "Partout à Madagascar. Notre base est à Antananarivo, mais nos équipes se déplacent dans les autres provinces, y compris pour des sites hors réseau. Pour un site éloigné, contactez-nous : les conditions de déplacement sont convenues avant la visite et chiffrées dans le devis.",
   },
   {
     question: "Quel matériel installez-vous ?",
     answer:
-      "Des panneaux de 300 W et 450 W, des batteries lithium 200 Ah, des onduleurs 5 kVA et des régulateurs MPPT 60 A, avec câble solaire 6 mm², connecteurs MC4, disjoncteurs DC et coffrets de protection. Le matériel posé chez vous est identifié et rattaché à votre dossier de chantier.",
+      "Toutes sortes de plaques solaires, ainsi que batteries, générateurs solaires, onduleurs et régulateurs de charge, avec le câblage, les connecteurs, les disjoncteurs et les coffrets de protection qui vont avec. Les références et les puissances sont choisies après la descente technique, selon ce que vous avez à alimenter. Le matériel posé chez vous est identifié et rattaché à votre dossier de chantier.",
   },
   {
     question: "Peut-on agrandir l'installation plus tard ?",

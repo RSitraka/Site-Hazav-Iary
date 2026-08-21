@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 
 import { services } from "@/lib/services";
-import { getAllPosts } from "@/lib/posts";
 import { site } from "@/lib/site";
 
 /**
@@ -21,7 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/simulateur", priority: 0.9, changeFrequency: "monthly" },
     { path: "/realisations", priority: 0.8, changeFrequency: "monthly" },
     { path: "/a-propos", priority: 0.7, changeFrequency: "yearly" },
-    { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
     { path: "/faq", priority: 0.7, changeFrequency: "monthly" },
     { path: "/contact", priority: 0.9, changeFrequency: "yearly" },
     { path: "/mentions-legales", priority: 0.2, changeFrequency: "yearly" },
@@ -35,12 +33,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const postRoutes = getAllPosts().map((post) => ({
-    url: `${site.url}/blog/${post.slug}`,
-    lastModified: new Date(post.updated ?? post.date),
-    changeFrequency: "yearly" as const,
-    priority: 0.6,
-  }));
 
   return [
     ...staticRoutes.map((route) => ({
@@ -50,6 +42,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: route.priority,
     })),
     ...serviceRoutes,
-    ...postRoutes,
   ];
 }

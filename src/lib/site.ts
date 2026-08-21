@@ -15,7 +15,7 @@ export const site = {
   /** Slogan affiché dans le hero et les partages sociaux. */
   tagline: "L'énergie solaire qui éclaire durablement Madagascar",
   description:
-    "Hazav'Iary installe des panneaux solaires à Antananarivo : descente technique sur site, dimensionnement, contrat écrit, pose et suivi de chantier, avec paiement échelonné sur plusieurs mois.",
+    "Hazav'Iary installe des panneaux solaires partout à Madagascar : descente technique sur site, dimensionnement, contrat écrit, pose et suivi de chantier, avec paiement échelonné sur plusieurs mois.",
   /** URL canonique de production. À VALIDER avant mise en ligne. */
   url: "https://www.hazaviary.mg",
   locale: "fr_MG",
@@ -42,21 +42,18 @@ export const site = {
     { days: ["Saturday"], opens: "08:00", closes: "12:00" },
   ],
   /**
-   * Zones d'intervention : quartiers et communes de l'agglomération
-   * d'Antananarivo où l'entreprise suit des chantiers.
+   * Zone desservie : l'entreprise intervient dans toute l'île. Les provinces
+   * sont listées pour les données structurées (`areaServed`) ; la base reste
+   * Antananarivo, d'où partent les équipes.
    */
   areaServed: [
+    "Madagascar",
     "Antananarivo",
-    "Nanisana",
-    "Ivato",
-    "Ankorondrano",
-    "Analakely",
-    "Itaosy",
-    "Ambohibao",
-    "Tanjombato",
-    "Andoharanofotsy",
-    "Ambatobe",
-    "Talatamaty",
+    "Antsiranana",
+    "Fianarantsoa",
+    "Mahajanga",
+    "Toamasina",
+    "Toliara",
   ],
   social: {
     facebook: "", // À COMPLÉTER
@@ -77,7 +74,6 @@ export const mainNav: NavItem[] = [
   { href: "/realisations", label: "Réalisations", description: "Zones et matériel installés" },
   { href: "/simulateur", label: "Simulateur", description: "Dimensionnez votre installation" },
   { href: "/a-propos", label: "À propos", description: "L'équipe et notre méthode" },
-  { href: "/blog", label: "Blog", description: "Conseils énergie solaire" },
   { href: "/contact", label: "Contact", description: "Devis après visite technique" },
 ];
 
@@ -85,7 +81,6 @@ export const footerNav = {
   entreprise: [
     { href: "/a-propos", label: "À propos" },
     { href: "/realisations", label: "Réalisations" },
-    { href: "/blog", label: "Blog" },
     { href: "/contact", label: "Contact" },
   ],
   ressources: [

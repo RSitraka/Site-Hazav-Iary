@@ -35,12 +35,12 @@ export const services: Service[] = [
       "installation panneaux solaires Antananarivo",
       "installateur solaire Madagascar",
       "pose plaque solaire",
-      "panneau solaire 450W Madagascar",
+      "plaque solaire Madagascar",
     ],
     intro:
-      "C'est notre cœur de métier : installer des plaques solaires chez des particuliers et des professionnels de l'agglomération d'Antananarivo. Nous posons des panneaux de 300 W et 450 W selon la place disponible en toiture et le besoin relevé lors de la descente, avec structure de fixation, supports de toit, câble solaire 6 mm² et connecteurs MC4.",
+      "C'est notre cœur de métier : installer des plaques solaires chez des particuliers et des professionnels, à Antananarivo comme ailleurs à Madagascar. Nous posons toutes sortes de panneaux, choisis selon la place disponible en toiture et le besoin relevé lors de la descente, avec structure de fixation, supports de toit, câble solaire et connecteurs.",
     benefits: [
-      "Continuité de service pendant les coupures du réseau",
+      "Continuité de service assurée pendant le délai de garantie",
       "Pose réalisée par nos propres techniciens, jamais sous-traitée à l'aveugle",
       "Câblage normalisé, coffret de protection et disjoncteur DC systématiques",
       "Chaque matériel posé est enregistré et rattaché à votre dossier de chantier",
@@ -56,7 +56,7 @@ export const services: Service[] = [
       },
       {
         title: "Câblage et protections",
-        text: "Câble solaire 6 mm², connecteurs MC4, disjoncteur DC, coffret de protection et mise à la terre.",
+        text: "Câble solaire, connecteurs, disjoncteur, coffret de protection et mise à la terre.",
       },
       {
         title: "Mise en service",
@@ -191,15 +191,15 @@ export const services: Service[] = [
     short: "Stockage et batteries",
     icon: "battery",
     excerpt:
-      "Batteries lithium 200 Ah, onduleurs 5 kVA et régulateurs MPPT : le couple stockage/conversion adapté à votre usage.",
+      "Batteries, générateurs solaires, onduleurs et régulateurs de charge : le couple stockage/conversion adapté à votre usage.",
     keywords: [
-      "batterie lithium 200Ah Madagascar",
-      "onduleur 5kVA solaire",
-      "régulateur MPPT 60A",
+      "batterie solaire Madagascar",
+      "onduleur solaire Madagascar",
+      "régulateur de charge MPPT",
       "stockage énergie solaire Antananarivo",
     ],
     intro:
-      "Le stockage détermine ce que vous pourrez faire fonctionner la nuit et pendant les coupures. Nous installons des batteries lithium 200 Ah, des onduleurs 5 kVA et des régulateurs de charge MPPT 60 A, dimensionnés selon votre consommation nocturne et l'autonomie que vous souhaitez réellement couvrir.",
+      "Le stockage détermine ce que vous pourrez faire fonctionner la nuit. Nous installons batteries, générateurs solaires, onduleurs et régulateurs de charge MPPT, dont les capacités sont arrêtées après le relevé, selon votre consommation nocturne et l'autonomie que vous souhaitez réellement couvrir.",
     benefits: [
       "Capacité calculée sur votre consommation de nuit, pas sur une moyenne",
       "Lithium : décharge profonde admissible et durée de vie très supérieure au plomb",
@@ -247,7 +247,7 @@ export const services: Service[] = [
     keywords: [
       "matériel solaire Madagascar",
       "vente panneau solaire Antananarivo",
-      "câble solaire 6mm2 connecteur MC4",
+      "câble solaire connecteur MC4",
       "coffret protection solaire",
     ],
     intro:
@@ -261,15 +261,15 @@ export const services: Service[] = [
     deliverables: [
       {
         title: "Modules photovoltaïques",
-        text: "Panneaux solaires 300 W et 450 W.",
+        text: "Plaques solaires, kits solaires complets et ampoules LED.",
       },
       {
         title: "Stockage et conversion",
-        text: "Batteries lithium 200 Ah, onduleurs 5 kVA, régulateurs MPPT 60 A.",
+        text: "Batteries, générateurs solaires, onduleurs, régulateurs de charge.",
       },
       {
         title: "Câblage et connectique",
-        text: "Câble solaire 6 mm², connecteurs MC4, disjoncteurs DC, coffrets de protection.",
+        text: "Câble solaire, connecteurs, disjoncteurs, coffrets de protection.",
       },
       {
         title: "Fixation",

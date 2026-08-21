@@ -1,7 +1,8 @@
 # Hazav'Iary — site vitrine
 
-Site de présentation de **Hazav'Iary**, installateur de panneaux solaires à Antananarivo
-(Madagascar). Référencement technique complet, simulateur de dimensionnement intégré.
+Site de présentation de **Hazav'Iary**, installateur de panneaux solaires **partout à
+Madagascar**, basé à Antananarivo. Référencement technique complet, simulateur de
+dimensionnement intégré.
 
 Construit avec **Next.js 15 (App Router)**, **React 19**, **TypeScript** et **Tailwind CSS 3**.
 
@@ -18,7 +19,7 @@ dont dépend tout le référencement.
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm run build   # build de production (29 pages statiques)
+npm run build   # build de production (24 pages statiques)
 npm start       # sert le build
 npm run lint
 ```
@@ -34,10 +35,10 @@ dans les pages.
 
 | Fichier | Contenu | Priorité |
 | --- | --- | --- |
-| `src/lib/site.ts` | Nom, slogan, **URL du site**, email, téléphone, adresse, horaires, réseaux sociaux, zones d'intervention | **Indispensable** |
+| `src/lib/site.ts` | Nom, slogan, **URL du site**, email, téléphone, adresse, horaires, réseaux sociaux, zone desservie | **Indispensable** |
 | `src/lib/services.ts` | Les 6 prestations et leurs pages détaillées (textes, bénéfices, FAQ) | Recommandé |
 | `src/lib/content.ts` | Références client, zones, matériel, déroulé de chantier, engagements, FAQ générale | Recommandé |
-| `src/content/blog/*.md` | Articles de blog (Markdown + frontmatter) | Optionnel |
+| `src/lib/gallery.ts` | Photos de terrain du carrousel d'accueil (fichiers dans `public/photos/`) | Recommandé |
 | `src/app/mentions-legales/page.tsx` | NIF, STAT, RCS, directeur de publication, hébergeur | **Obligation légale** |
 
 Les valeurs provisoires sont signalées par un commentaire `À VALIDER` dans le code.
@@ -47,22 +48,49 @@ Les valeurs provisoires sont signalées par un commentaire `À VALIDER` dans le 
 
 ### D'où vient le contenu
 
-Services, zones d'intervention, matériel et déroulé de chantier sont repris de l'application de
-gestion `RSitraka/Hazav-Iary` : catalogue de stock (`backend/cmd/seed/main.go`), modèle `Project`
-et `Descente` (`backend/models.go`), flux métier décrits dans son README — descente sur site,
-montant convenu, nombre de mois, avance puis mensualités, matériel affecté au chantier.
+Services, matériel et déroulé de chantier viennent des flux métier de l'application de gestion
+`RSitraka/Hazav-Iary` (`backend/models.go`, son README) : descente sur site, montant convenu,
+nombre de mois, avance puis mensualités, matériel affecté au chantier.
 
-**Deux tableaux sont volontairement vides** dans `src/lib/content.ts` :
+**Trois tableaux sont volontairement vides** dans `src/lib/content.ts` :
 
-- `projects` — l'application ne contient aucun chantier client réel (sa table `projects` est
-  peuplée par un jeu de démonstration aléatoire). Reprenez de vrais chantiers depuis l'écran
-  *Projets* pour activer la section « Références » de `/realisations`. **Ne publiez ni le nom du
-  bénéficiaire, ni son téléphone, ni le montant convenu** : le code chantier, la zone et le
-  matériel posé suffisent.
+- `projects` — le dépôt de l'application ne contient aucun chantier client réel : sa table
+  `projects` n'est peuplée que par un jeu de démonstration aléatoire (`backend/cmd/seed/main.go`),
+  les vraies données vivent dans la base SQLite de production, sur la VM. Reprenez de vrais
+  chantiers depuis l'écran *Projets* pour activer la section « Références » de `/realisations`.
+  **Ne publiez ni le nom du bénéficiaire, ni son téléphone, ni le montant convenu** : le code
+  chantier, la zone et le matériel posé suffisent.
+- `installedZones` — les zones où des panneaux ont réellement été posés, à reprendre depuis
+  l'écran *Emplacements*. Tant qu'il est vide, `/realisations` annonce la couverture nationale
+  (les six provinces) sans afficher de zone inventée. L'ancienne liste de quartiers
+  d'Antananarivo a été retirée : elle venait du jeu de démonstration.
 - `testimonials` — à remplir uniquement avec de vrais retours clients, recueillis avec leur
   accord.
 
 Les sections correspondantes n'apparaissent pas tant que ces tableaux sont vides.
+
+### Politique de description du matériel
+
+**Aucune caractéristique chiffrée n'est publiée** : ni wattage de panneau, ni ampère-heure de
+batterie, ni kVA d'onduleur. Le matériel est listé par catégories (`equipmentCatalog` dans
+`src/lib/content.ts`) — plaques solaires, batteries, générateurs solaires, onduleurs,
+régulateurs, câblage, protections, fixation. Les puissances se fixent après la descente
+technique, à partir du relevé ; les annoncer d'avance reviendrait à dimensionner à l'aveugle.
+Seul le simulateur manipule des puissances, parce que c'est l'internaute qui les choisit.
+
+### Photos de terrain
+
+Les photos affichées dans le carrousel de l'accueil sont dans `public/photos/`, décrites dans
+`src/lib/gallery.ts` (chemin, texte alternatif, légende, dimensions réelles). Pour en ajouter :
+déposez le fichier, ajoutez une entrée — l'ordre du tableau est l'ordre d'affichage, et la
+section disparaît si le tableau est vide.
+
+### Blog
+
+Le blog a été retiré du site : plus d'onglet, plus de routes `/blog`, plus d'entrées dans le
+sitemap. Les quatre articles restent dans `src/content/blog/` et leur bibliothèque de lecture
+dans `src/lib/posts.ts` — pour le réactiver, il suffit de restaurer le dossier `src/app/blog/`
+depuis l'historique Git et de remettre les entrées de navigation dans `src/lib/site.ts`.
 
 ### Politique de prix
 
@@ -93,10 +121,10 @@ Le socle SEO est en place et se met à jour automatiquement à partir des donné
 **Technique**
 - Balises `title` / `description` uniques sur chaque page, via `buildMetadata()` (`src/lib/seo.ts`)
 - URL canonique sur toutes les routes
-- `sitemap.xml` généré au build (20 URL) — `src/app/sitemap.ts`
+- `sitemap.xml` généré au build (15 URL) — `src/app/sitemap.ts`
 - `robots.txt` avec référence au sitemap — `src/app/robots.ts`
 - Manifest PWA et favicon dérivé du logo officiel
-- 29 pages pré-rendues en statique (HTML complet servi aux robots)
+- 24 pages pré-rendues en statique (HTML complet servi aux robots)
 - En-têtes de sécurité (`next.config.ts`)
 
 **Données structurées (schema.org)**
@@ -108,7 +136,6 @@ Le socle SEO est en place et se met à jour automatiquement à partir des donné
 | `BreadcrumbList` | Toutes les pages internes |
 | `Service` | Chaque page de service |
 | `FAQPage` | Accueil, FAQ, pages de service, simulateur |
-| `BlogPosting` | Chaque article |
 | `ItemList` / `CollectionPage` | Services, réalisations |
 | `WebApplication` | Simulateur |
 
@@ -116,7 +143,7 @@ Le socle SEO est en place et se met à jour automatiquement à partir des donné
 (`src/lib/og.tsx`), appliquée à toutes les pages, plus Twitter Card `summary_large_image`.
 
 **Contenu** — architecture pensée pour la longue traîne : 6 pages de service ciblant chacune leurs
-mots-clés, 4 articles de fond, une FAQ balisée, un simulateur (page à fort temps de session et
+mots-clés, une FAQ balisée, un simulateur (page à fort temps de session et
 générateur de liens entrants naturels).
 
 ### Après la mise en ligne
@@ -127,7 +154,8 @@ générateur de liens entrants naturels).
    (nom, adresse, téléphone) que `src/lib/site.ts` — la cohérence NAP est le premier facteur
    du référencement local.
 4. Renseigner les vrais chantiers et témoignages dans `src/lib/content.ts` (voir « D'où vient le contenu »).
-5. Publier un article par mois : c'est le levier le plus régulier sur la longue traîne.
+5. Alimenter `installedZones` et le carrousel photos au fil des chantiers : ce sont les deux
+   signaux les plus concrets pour les visiteurs comme pour le référencement local.
 
 ---
 
@@ -139,7 +167,6 @@ src/
 │  ├─ layout.tsx                     en-tête, pied de page, SEO global, thème
 │  ├─ page.tsx                       accueil
 │  ├─ services/                      liste + 6 pages générées (generateStaticParams)
-│  ├─ blog/                          liste + articles Markdown
 │  ├─ simulateur/                    calculateur de dimensionnement
 │  ├─ realisations/  a-propos/  faq/  contact/
 │  ├─ mentions-legales/  politique-de-confidentialite/
@@ -147,8 +174,8 @@ src/
 │  ├─ opengraph-image.tsx  twitter-image.tsx  icon.png
 │  └─ globals.css                    jetons de couleur, composants, typographie
 ├─ components/                       header, footer, UI, simulateur, formulaire, icônes
-├─ lib/                              site, services, contenu, SEO, blog, image OG
-└─ content/blog/                     articles Markdown
+├─ lib/                              site, services, contenu, galerie photos, SEO
+└─ content/blog/                     articles Markdown (blog désactivé, voir « Blog »)
 ```
 
 ---

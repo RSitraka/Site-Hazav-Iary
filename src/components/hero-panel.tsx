@@ -41,11 +41,12 @@ const tabs: Tab[] = [
     title: "Le bon système, ni plus gros, ni plus petit",
     text: "Panneaux, capacité de batterie et puissance d'onduleur sont calculés appareil par appareil, à partir du relevé.",
     href: "/simulateur",
+    // Aucune puissance affichée : elle se fixe après le relevé, pas avant.
     tiles: [
-      { label: "Panneaux", value: "450 Wc" },
-      { label: "Batterie lithium", value: "200 Ah" },
-      { label: "Onduleur", value: "5 kVA" },
-      { label: "Régulateur MPPT", value: "60 A" },
+      { label: "Panneaux", value: "Selon toiture" },
+      { label: "Batteries", value: "Selon autonomie" },
+      { label: "Onduleur", value: "Selon charge" },
+      { label: "Calcul", value: "Écrit" },
     ],
   },
   {
