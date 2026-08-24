@@ -31,17 +31,23 @@ Ce qui est fourni dans le dépôt :
 
 ## 1) Choisir l'adresse du site
 
-Le site vitrine est la porte d'entrée du public : il a vocation à occuper le **domaine
-principal**, l'application de gestion passant sur un sous-domaine.
+Le site s'installe **à côté** de l'application de gestion, sans rien lui changer : son propre
+conteneur, son propre port, son propre vhost, son propre certificat. L'application garde son
+adresse, sa configuration et ses données.
 
-| | Adresse | Conteneur |
-| --- | --- | --- |
-| Site vitrine | `hazaviary.mg` + `www.hazaviary.mg` | `hazaviary-site` (8091) |
-| Application de gestion | `app.hazaviary.mg` | `hazaviary-app` (8090) |
+| | Adresse | Conteneur | Port |
+| --- | --- | --- | --- |
+| Site vitrine | `hazaviary.mg` + `www.hazaviary.mg` | `hazaviary-site` | 8091 |
+| Application de gestion | *inchangée* | `hazaviary-app` | 8090 |
 
-Enregistrements DNS à créer chez le registrar : un `A` pour `@`, `www` et `app` vers l'IP du
-serveur. Puis mettre à jour `site.url` dans `src/lib/site.ts` avec l'adresse retenue — elle
-alimente les balises canoniques, le sitemap, les données structurées et les images de partage.
+**Le nom choisi doit être libre.** Si l'application répond déjà sur le domaine racine, donnez au
+site un nom d'hôte distinct (`www.hazaviary.mg`, `site.hazaviary.mg`…) : `ops/installer.sh`
+refuse de démarrer si le nom demandé est déjà servi par une autre configuration, plutôt que de
+détourner son trafic.
+
+Enregistrements DNS à créer chez le registrar : un `A` par nom d'hôte servi, vers l'IP du
+serveur. Puis mettre `site.url` (`src/lib/site.ts`) à l'adresse retenue — elle alimente les
+balises canoniques, le sitemap, les données structurées et les images de partage.
 
 ---
 
@@ -111,8 +117,9 @@ hazaviary.mg, www.hazaviary.mg {
 
 Puis `docker compose restart caddy`. Caddy obtient le certificat tout seul.
 
-> Si l'application occupait le domaine racine, c'est le moment de la basculer sur
-> `app.hazaviary.mg` dans son propre `Caddyfile` / vhost nginx.
+> Le bloc existant de l'application n'est pas modifié : on en **ajoute** un second. C'est la
+> seule situation où un fichier de l'application est touché — parce que son Caddy occupe les
+> ports 80 et 443. Avec nginx, rien de tel : le site a son propre fichier de vhost.
 
 ---
 

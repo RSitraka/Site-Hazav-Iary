@@ -19,7 +19,7 @@ docker compose -f docker-compose.prod.yml up -d --build
 
 echo "▶ Attente de la mise en service…"
 for i in $(seq 1 30); do
-  if curl -fsS -o /dev/null http://127.0.0.1:8091/; then
+  if curl -fs -o /dev/null http://127.0.0.1:8091/; then
     echo "✅ Déployé : $(git rev-parse --short HEAD)"
     docker image prune -f >/dev/null 2>&1 || true
     exit 0
