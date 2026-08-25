@@ -52,22 +52,23 @@ Services, matériel et déroulé de chantier viennent des flux métier de l'appl
 `RSitraka/Hazav-Iary` (`backend/models.go`, son README) : descente sur site, montant convenu,
 nombre de mois, avance puis mensualités, matériel affecté au chantier.
 
-**Trois tableaux sont volontairement vides** dans `src/lib/content.ts` :
+**`projects` et `installedZones` sont synchronisés, pas saisis à la main.** Le script
+`ops/sync-realisations.sh`, lancé une fois par jour sur le serveur, lit une copie de la base de
+l'application (`sqlite3 .backup`, en lecture seule) et réécrit `src/data/realisations.json` :
+chantiers **terminés** (code, zone, année, matériel posé) et zones réellement équipées. Le
+fichier est poussé s'il a changé, ce qui redéclenche la mise en ligne. Détails et mise en place
+dans [DEPLOY.md](DEPLOY.md).
 
-- `projects` — le dépôt de l'application ne contient aucun chantier client réel : sa table
-  `projects` n'est peuplée que par un jeu de démonstration aléatoire (`backend/cmd/seed/main.go`),
-  les vraies données vivent dans la base SQLite de production, sur la VM. Reprenez de vrais
-  chantiers depuis l'écran *Projets* pour activer la section « Références » de `/realisations`.
-  **Ne publiez ni le nom du bénéficiaire, ni son téléphone, ni le montant convenu** : le code
-  chantier, la zone et le matériel posé suffisent.
-- `installedZones` — les zones où des panneaux ont réellement été posés, à reprendre depuis
-  l'écran *Emplacements*. Tant qu'il est vide, `/realisations` annonce la couverture nationale
-  (les six provinces) sans afficher de zone inventée. L'ancienne liste de quartiers
-  d'Antananarivo a été retirée : elle venait du jeu de démonstration.
-- `testimonials` — à remplir uniquement avec de vrais retours clients, recueillis avec leur
-  accord.
+**Ne sortent jamais de l'application** : le nom du bénéficiaire, son téléphone, le montant
+convenu, les notes et les descriptions — la requête ne lit même pas ces colonnes.
 
-Les sections correspondantes n'apparaissent pas tant que ces tableaux sont vides.
+Tant que l'application ne contient aucun chantier terminé, le fichier reste vide : la section
+« Références » de `/realisations` n'apparaît pas et la page annonce la couverture nationale (les
+six provinces) plutôt que des zones inventées. L'ancienne liste de quartiers d'Antananarivo a été
+retirée : elle venait du jeu de démonstration (`backend/cmd/seed/main.go`).
+
+`testimonials` reste vide dans `src/lib/content.ts` : à remplir uniquement avec de vrais retours
+clients, recueillis avec leur accord. La section correspondante n'apparaît pas tant qu'il l'est.
 
 ### Politique de description du matériel
 

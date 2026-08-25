@@ -213,16 +213,38 @@ Un site statique fige ses données au moment du build : pour qu'une nouvelle ré
 apparaisse, il faut **redéclencher un build**. Deux montages possibles, sans jamais modifier
 l'application.
 
-**A. Depuis le serveur (recommandé)** — un script en tâche planifiée lit l'application *en
-lecture seule* (son API sur `127.0.0.1:8090`, ou une copie de sa base par `sqlite3 .backup`),
-écrit un fichier de données assaini dans le dépôt du site, et le pousse s'il a changé. Le push
-déclenche le déploiement, comme n'importe quelle modification. L'application n'est ni exposée à
-internet, ni touchée ; le site n'a besoin d'aucun accès à sa base au moment du build.
+C'est le rôle de **`ops/sync-realisations.sh`**, à lancer une fois par jour sur le serveur :
 
-**B. Depuis GitHub Actions** — un déclenchement programmé (`schedule:`) va chercher les données
-par l'API publique de l'application avec un compte en lecture seule, puis reconstruit. Suppose
-que l'application soit joignable depuis internet, ce qui n'est pas le cas aujourd'hui.
+1. il prend un instantané **cohérent** de la base de l'application — `sqlite3 .backup` ouvert en
+   lecture seule, jamais un `cp` : la même méthode que son propre `ops/backup.sh` ;
+2. il en extrait les chantiers **terminés** (code, zone, année, matériel posé) et les zones où du
+   matériel a réellement été installé ;
+3. il écrit `src/data/realisations.json` et le pousse **s'il a changé** — ce qui redéclenche la
+   mise en ligne comme n'importe quel commit.
 
-Dans les deux cas, la règle de publication reste celle du README : **seuls le code chantier, la
-zone, l'année et le matériel posé sortent** — jamais le nom du bénéficiaire, son téléphone ni le
-montant convenu.
+```bash
+cd /var/www/hazaviary-site
+bash ops/sync-realisations.sh --sans-push   # essai : écrit le fichier, ne pousse rien
+bash ops/sync-realisations.sh               # écrit et pousse
+bash ops/sync-realisations.sh --deployer    # + relance deploy.sh (si le site tourne ici)
+
+# Une fois par jour, à 2 h :
+crontab -e
+0 2 * * * cd /var/www/hazaviary-site && bash ops/sync-realisations.sh >> /var/log/hazaviary-sync.log 2>&1
+```
+
+**L'application n'est jamais modifiée** : le script lit une copie de sa base, prise sans
+l'arrêter, ne s'y connecte pas et n'écrit rien dans son volume. Il refuse d'écrire quoi que ce
+soit si l'instantané est corrompu, si la table `projects` est illisible ou si l'extraction est
+vide : mieux vaut une synchronisation en erreur qu'un site vidé de ses références.
+
+**Ce qui sort, et rien d'autre** : code chantier, zone, année, matériel. Le nom du bénéficiaire,
+son téléphone, les montants et les notes ne sont même pas lus par la requête.
+
+Le fichier `src/data/realisations.json` alimente `projects` et `installedZones`
+(`src/lib/content.ts`). Tant qu'il est vide, la section « Références » n'apparaît pas et la page
+annonce la couverture nationale.
+
+> Pour pousser depuis le serveur, le dépôt doit y être cloné avec une clé de déploiement **en
+> écriture** (GitHub → Settings → Deploy keys → *Allow write access*). Sans elle, utilisez
+> `--sans-push --deployer` : le site se met à jour sur le serveur, sans passer par GitHub.

@@ -126,16 +126,24 @@ export default function RealisationsPage() {
             <SectionHeading eyebrow="Références" title="Chantiers livrés" />
             <div className="mt-10 grid gap-5 md:grid-cols-2">
               {projects.map((project) => (
-                <article key={project.slug} className="card flex flex-col">
+                <article key={project.code} className="card flex flex-col">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="badge badge-grow">{project.category}</span>
+                    {project.category && (
+                      <span className="badge badge-grow">{project.category}</span>
+                    )}
                     <span className="label">{project.code}</span>
                     <span className="label">{project.year}</span>
                   </div>
 
-                  <h3 className="h3 mt-4 text-lg">{project.title}</h3>
-                  <p className="mt-1 text-sm muted">{project.location}</p>
-                  <p className="mt-4 leading-relaxed dim">{project.summary}</p>
+                  {/* Sans titre rédigé à la main, la zone fait le titre : rien
+                      n'est inventé à partir des données de l'application. */}
+                  <h3 className="h3 mt-4 text-lg">
+                    {project.title ?? `Installation solaire — ${project.location}`}
+                  </h3>
+                  {project.title && <p className="mt-1 text-sm muted">{project.location}</p>}
+                  {project.summary && (
+                    <p className="mt-4 leading-relaxed dim">{project.summary}</p>
+                  )}
 
                   {project.equipment.length > 0 && (
                     <ul className="mt-4 flex flex-wrap gap-2">
@@ -147,19 +155,21 @@ export default function RealisationsPage() {
                     </ul>
                   )}
 
-                  <ul className="mt-5 space-y-2 border-t pt-5">
-                    {project.results.map((result) => (
-                      <li key={result} className="flex gap-2.5 text-sm">
-                        <CheckIcon
-                          width={15}
-                          height={15}
-                          strokeWidth={2.4}
-                          className="mt-1 shrink-0 text-grow"
-                        />
-                        <span className="dim">{result}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {project.results && project.results.length > 0 && (
+                    <ul className="mt-5 space-y-2 border-t pt-5">
+                      {project.results.map((result) => (
+                        <li key={result} className="flex gap-2.5 text-sm">
+                          <CheckIcon
+                            width={15}
+                            height={15}
+                            strokeWidth={2.4}
+                            className="mt-1 shrink-0 text-grow"
+                          />
+                          <span className="dim">{result}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </article>
               ))}
             </div>

@@ -1,47 +1,64 @@
 /**
- * Contenu éditorial du site (hors services et blog).
+ * Contenu éditorial du site (hors services et offres).
  *
- * Règle appliquée ici : rien d'inventé. Les zones d'intervention, le matériel
- * et le déroulé de chantier proviennent de l'application de gestion
- * (RSitraka/Hazav-Iary) ; les références client restent vides tant que de vrais
- * chantiers n'auront pas été fournis.
+ * Règle appliquée ici : rien d'inventé. Le matériel et le déroulé de chantier
+ * proviennent de l'application de gestion (RSitraka/Hazav-Iary) ; les chantiers
+ * livrés et les zones d'installation sont synchronisés chaque nuit depuis sa
+ * base, via `ops/sync-realisations.sh`.
  *
  * Aucun montant n'est publié : le prix se fixe après la descente technique.
  */
+import realisationsBrut from "@/data/realisations.json";
+
+/**
+ * Forme du fichier écrit par `ops/sync-realisations.sh`. Le typage est déclaré
+ * ici : quand le fichier est vide, TypeScript déduirait sinon des tableaux de
+ * `never` et le site ne compilerait plus.
+ */
+type FichierRealisations = {
+  /** Horodatage de la dernière synchronisation, `null` si jamais lancée. */
+  genere_le: string | null;
+  chantiers: { code: string; zone: string; annee: number; materiel: string[] }[];
+  zones: string[];
+};
+
+const realisations = realisationsBrut as FichierRealisations;
 
 /* -------------------------------------------------------------------------- */
 /*  Références client                                                          */
 /* -------------------------------------------------------------------------- */
 
 export type Project = {
-  slug: string;
-  title: string;
   /** Code chantier interne, ex. « IVA-01 » (préfixe de la zone + numéro). */
   code: string;
   location: string;
   year: number;
-  category: "Résidentiel" | "Professionnel";
-  /** Matériel réellement posé, sans quantité chiffrée si non confirmée. */
+  /** Matériel réellement posé, sans quantité chiffrée. */
   equipment: string[];
-  summary: string;
-  results: string[];
+  /** Champs facultatifs : uniquement si quelqu'un les rédige à la main. */
+  title?: string;
+  summary?: string;
+  results?: string[];
+  category?: "Résidentiel" | "Professionnel";
 };
 
 /**
- * VIDE VOLONTAIREMENT.
+ * Chantiers livrés, repris de l'application de gestion.
  *
- * L'application de gestion ne contient aucun chantier client réel : sa table
- * `projects` est remplie par un jeu de démonstration aléatoire
- * (`backend/cmd/seed/main.go`). Publier ces projets reviendrait à inventer des
- * références.
+ * Le fichier `src/data/realisations.json` est réécrit chaque nuit par
+ * `ops/sync-realisations.sh`, qui lit une copie de la base de l'application et
+ * n'en extrait que ce qui est publiable : code chantier, zone, année et
+ * matériel posé. Ni nom de bénéficiaire, ni téléphone, ni montant.
  *
- * Pour les ajouter, reprenez de vrais chantiers depuis l'écran « Projets » et
- * complétez ce tableau. La page /realisations affichera automatiquement la
- * section correspondante. Ne publiez ni le nom du bénéficiaire, ni son
- * téléphone, ni le montant convenu — le code chantier, la zone et le matériel
- * posé suffisent.
+ * Tant que l'application ne contient aucun chantier terminé, le tableau reste
+ * vide et la section « Références » de /realisations n'apparaît pas.
  */
-export const projects: Project[] = [];
+export const projects: Project[] = realisations.chantiers.map((chantier) => ({
+  code: chantier.code,
+  location: chantier.zone,
+  year: chantier.annee,
+  equipment: chantier.materiel,
+}));
 
 /* -------------------------------------------------------------------------- */
 /*  Zones d'intervention                                                       */
@@ -61,15 +78,14 @@ export const provinces = [
 ];
 
 /**
- * Zones où des panneaux ont réellement été installés.
+ * Zones où des panneaux ont réellement été installés — les emplacements de
+ * l'application rattachés à au moins un chantier terminé.
  *
- * VIDE VOLONTAIREMENT : la liste précédente venait du jeu de démonstration de
- * l'application de suivi (`backend/cmd/seed/main.go`), pas de vrais chantiers.
- * À remplir depuis l'écran « Emplacements » de l'application, ou par un export
- * de sa base — les sections concernées n'apparaissent pas tant que ce tableau
- * est vide.
+ * Synchronisées chaque nuit avec les chantiers (même fichier, même script).
+ * Tant que la liste est vide, /realisations annonce la couverture nationale
+ * plutôt que d'afficher des zones inventées.
  */
-export const installedZones: string[] = [];
+export const installedZones: string[] = realisations.zones;
 
 /* -------------------------------------------------------------------------- */
 /*  Matériel posé                                                              */
