@@ -5,7 +5,11 @@
 #
 #   STATIC_EXPORT=1 BASE_PATH=/Site-Hazav-Iary npm run build
 #
-# Deux ajustements, et rien d'autre : le contenu du site n'est pas modifié.
+# Le script ne touche à AUCUN fichier de contenu : il ajoute un fichier vide et
+# copie deux images. Les pages exportées contiennent le rendu React sérialisé,
+# précédé de sa longueur en octets — la moindre réécriture de texte, même
+# correcte en apparence, décale cette longueur et le site se vide de lui-même
+# au chargement. Ce qui doit changer se décide donc à la génération, pas ici.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -23,21 +27,14 @@ touch out/.nojekyll
 # 2) Next exporte les images de partage sans extension (`out/opengraph-image`).
 #    Un hébergeur statique déduit le type MIME de l'extension : sans elle, le
 #    fichier est servi en `application/octet-stream` et Facebook, WhatsApp ou
-#    LinkedIn refusent l'aperçu. On renomme, puis on corrige les liens qui les
-#    désignent (balises Open Graph, Twitter Card et données structurées).
+#    LinkedIn refusent l'aperçu. On dépose une copie `.png` à côté — c'est elle
+#    que désignent les balises (voir `ogImagePath` dans `src/lib/seo.ts`).
+#    L'original est conservé : les rares liens sans extension restent valides.
 for nom in opengraph-image twitter-image; do
-  if [ -f "out/$nom" ] && [ ! -f "out/$nom.png" ]; then
-    mv "out/$nom" "out/$nom.png"
-    echo "→ out/$nom → out/$nom.png"
+  if [ -f "out/$nom" ]; then
+    cp "out/$nom" "out/$nom.png"
+    echo "→ out/$nom.png"
   fi
 done
-
-# La classe de caractères exclut « . » et « / » : un lien déjà corrigé
-# (`…-image.png`) et les morceaux de chemin interne (`chunks/app/…-image/…`)
-# ne sont donc pas touchés, même si le script est relancé.
-find out -type f \( -name '*.html' -o -name '*.txt' -o -name '*.xml' -o -name '*.webmanifest' \) \
-  -exec sed -i \
-    -e 's|/opengraph-image\([^./a-zA-Z0-9]\)|/opengraph-image.png\1|g' \
-    -e 's|/twitter-image\([^./a-zA-Z0-9]\)|/twitter-image.png\1|g' {} +
 
 echo "✅ out/ prêt à être publié"

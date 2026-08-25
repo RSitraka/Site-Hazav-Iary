@@ -15,6 +15,23 @@ export function absoluteUrl(path = "/") {
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+/**
+ * Chemins des images de partage.
+ *
+ * Next expose ces images sous une route sans extension (`/opengraph-image`).
+ * Un serveur Node annonce alors le bon type MIME, mais un hébergeur de fichiers
+ * statiques le déduit de l'extension : sans elle, l'image part en
+ * `application/octet-stream` et Facebook, WhatsApp ou LinkedIn refusent
+ * l'aperçu. En export statique, `ops/preparer-pages.sh` dépose donc une copie
+ * `.png` à côté — et c'est cette copie que les balises désignent.
+ *
+ * Le choix se fait ici, à la génération : réécrire les fichiers exportés après
+ * coup casserait le contenu React inline, qui est précédé de sa longueur.
+ */
+const partageStatique = process.env.NEXT_PUBLIC_STATIC_EXPORT === "1";
+const ogImagePath = partageStatique ? "/opengraph-image.png" : "/opengraph-image";
+const twitterImagePath = partageStatique ? "/twitter-image.png" : "/twitter-image";
+
 type PageSeo = {
   title: string;
   description: string;
@@ -48,8 +65,8 @@ export function buildMetadata({
   // Dès qu'une route définit son propre bloc openGraph, Next cesse d'hériter
   // du fichier opengraph-image de la racine : on référence donc l'image
   // générée explicitement pour que chaque page en dispose.
-  const ogImage = absoluteUrl(image ?? "/opengraph-image");
-  const twitterImage = absoluteUrl(image ?? "/twitter-image");
+  const ogImage = absoluteUrl(image ?? ogImagePath);
+  const twitterImage = absoluteUrl(image ?? twitterImagePath);
 
   return {
     title,
@@ -105,7 +122,7 @@ export function organizationSchema() {
     legalName: site.legalName,
     url: site.url,
     logo: absoluteUrl("/logo.png"),
-    image: absoluteUrl("/opengraph-image"),
+    image: absoluteUrl(ogImagePath),
     description: site.description,
     email: site.email,
     telephone: site.phone,
@@ -220,7 +237,7 @@ export function articleSchema(input: {
     datePublished: input.date,
     dateModified: input.updated ?? input.date,
     inLanguage: "fr-MG",
-    image: absoluteUrl("/opengraph-image"),
+    image: absoluteUrl(ogImagePath),
     author: { "@type": "Organization", name: input.author, url: site.url },
     publisher: { "@id": orgId },
   };

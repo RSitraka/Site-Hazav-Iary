@@ -42,7 +42,12 @@ const nextConfig: NextConfig = {
   output: exportStatique ? "export" : "standalone",
   images: exportStatique ? { unoptimized: true } : undefined,
   ...(basePath ? { basePath } : {}),
-  env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  // Réexportées pour que le code — serveur comme navigateur — lise exactement
+  // les mêmes valeurs, sans quoi l'hydratation divergerait.
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+    NEXT_PUBLIC_STATIC_EXPORT: exportStatique ? "1" : "",
+  },
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
