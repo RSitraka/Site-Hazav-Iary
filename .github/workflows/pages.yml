@@ -1,12 +1,14 @@
 # Mise en ligne gratuite sur GitHub Pages.
 #
 # À chaque push sur `main`, le site est vérifié (lint + build), exporté en HTML
-# pur, puis publié sur https://<compte>.github.io/<dépôt>/ — aucun secret, aucun
-# serveur, aucun domaine à acheter.
+# pur, puis poussé tel quel sur la branche `gh-pages`, que GitHub publie sur
+# https://<compte>.github.io/<dépôt>/ — aucun secret, aucun serveur, aucun
+# domaine à acheter.
 #
-# L'adresse n'est pas écrite en dur : `actions/configure-pages` la fournit
-# (`base_url`), ainsi que le sous-chemin du dépôt (`base_path`). Le jour où un
-# domaine propre est branché, ces deux valeurs suivent toutes seules.
+# Pourquoi une branche plutôt que `actions/deploy-pages` : activer Pages par
+# l'API demande un droit d'administration que le jeton d'Actions n'a pas
+# (« Resource not accessible by integration »). Pousser une branche `gh-pages`,
+# lui, ne demande que `contents: write`.
 name: GitHub Pages
 
 on:
@@ -15,11 +17,8 @@ on:
   # Permet aussi de relancer une publication à la main depuis l'onglet Actions.
   workflow_dispatch:
 
-# Droits minimaux nécessaires à la publication Pages.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # Une publication à la fois ; on ne coupe pas celle en cours, pour ne jamais
 # laisser le site à moitié déployé.
@@ -28,19 +27,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  construire:
-    name: Construire le site
+  publier:
+    name: Construire et publier
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # `enablement: true` active GitHub Pages sur le dépôt si ce n'est pas
-      # déjà fait : rien à cliquer dans les réglages.
-      - name: Préparer Pages
-        id: pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/setup-node@v4
         with:
@@ -53,27 +44,31 @@ jobs:
       - name: Exporter le site en HTML
         env:
           STATIC_EXPORT: "1"
-          # Le site est servi dans un sous-dossier (/<dépôt>) : liens, images et
-          # canoniques doivent en tenir compte.
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          # Le site est servi dans un sous-dossier portant le nom du dépôt :
+          # liens, images et canoniques doivent en tenir compte. Les deux
+          # valeurs se déduisent du dépôt, rien n'est écrit en dur.
+          BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
         run: npm run build
 
       - name: Adapter la sortie à Pages
         run: bash ops/preparer-pages.sh
 
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
+      - name: Publier sur la branche gh-pages
+        run: |
+          cd out
+          git init -q -b gh-pages
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Site publié depuis ${GITHUB_SHA::7}"
+          # Historique volontairement écrasé : `gh-pages` ne contient que la
+          # dernière version du site, jamais du code source.
+          git push -q --force \
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
+            gh-pages
 
-  publier:
-    name: Publier
-    needs: construire
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploiement.outputs.page_url }}
-    steps:
-      - name: Mettre en ligne
-        id: deploiement
-        uses: actions/deploy-pages@v4
+      - name: Adresse du site
+        run: |
+          echo "### Site publié" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> "$GITHUB_STEP_SUMMARY"
