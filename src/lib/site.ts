@@ -30,7 +30,11 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.hazaviary.mg",
   locale: "fr_MG",
   lang: "fr",
-  email: "sitrakahers@gmail.com",
+  /**
+   * Adresse de contact affichée sur le site, et destinataire du formulaire de
+   * devis (voir `src/components/contact-form.tsx`).
+   */
+  email: "hazaviary.contact@gmail.com",
   phone: "038 59 440 87",
   phoneHref: "+261385944087",
   whatsapp: "261385944087",

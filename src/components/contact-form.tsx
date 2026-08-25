@@ -8,13 +8,21 @@ import { services } from "@/lib/services";
 /**
  * Formulaire de demande de devis.
  *
- * Aucun backend n'est requis par défaut : la demande est ouverte dans le
- * client de messagerie du visiteur. Pour recevoir les demandes directement
- * (Formspree, Getform, API interne...), renseignez la variable
- * NEXT_PUBLIC_CONTACT_ENDPOINT dans .env.local : le formulaire enverra alors
- * un POST JSON vers cette URL.
+ * Le site est un ensemble de fichiers statiques : il n'a aucun serveur pour
+ * envoyer un courriel. La demande part donc vers un service de relais, qui la
+ * transmet à l'adresse de contact.
+ *
+ * Par défaut : FormSubmit, choisi parce qu'il ne demande aucun compte — la
+ * première demande déclenche un courriel d'activation à l'adresse visée, et
+ * tout arrive ensuite directement. L'adresse n'est pas plus exposée qu'ailleurs :
+ * elle figure déjà en clair sur la page de contact.
+ *
+ * Pour passer à un autre service (Formspree, Getform, Web3Forms, une route
+ * interne…), il suffit de renseigner NEXT_PUBLIC_CONTACT_ENDPOINT : n'importe
+ * quelle URL acceptant un POST JSON convient.
  */
-const ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
+const ENDPOINT =
+  process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || `https://formsubmit.co/ajax/${site.email}`;
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -29,33 +37,36 @@ export function ContactForm() {
     // Piège à robots : rempli uniquement par les automates.
     if (data.website) return;
 
-    if (!ENDPOINT) {
-      const body = [
-        `Nom : ${data.name}`,
-        `Email : ${data.email}`,
-        `Téléphone : ${data.phone}`,
-        `Ville : ${data.city}`,
-        `Projet : ${data.subject}`,
-        `Échéance : ${data.deadline || "non précisée"}`,
-        "",
-        data.message,
-      ].join("\n");
-
-      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
-        `Demande de devis — ${data.subject}`,
-      )}&body=${encodeURIComponent(body)}`;
-      setStatus("sent");
-      return;
-    }
-
     setStatus("sending");
     try {
       const res = await fetch(ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(data),
+        // Les clés servent d'intitulés dans le courriel reçu : elles sont donc
+        // écrites en toutes lettres. Les champs préfixés d'un souligné sont des
+        // consignes pour le relais, jamais du contenu.
+        body: JSON.stringify({
+          _subject: `Demande de devis — ${data.subject}`,
+          _template: "table",
+          _captcha: "false",
+          _replyto: data.email,
+          Nom: data.name,
+          Email: data.email,
+          Téléphone: data.phone,
+          Ville: data.city || "non précisée",
+          Projet: data.subject,
+          Échéance: data.deadline || "non précisée",
+          Message: data.message,
+        }),
       });
-      if (!res.ok) throw new Error(String(res.status));
+
+      // Tant que l'adresse de réception n'est pas confirmée, le relais répond
+      // « success: false » avec un code 200 : afficher « transmise » ici
+      // laisserait croire à un envoi qui n'a pas eu lieu.
+      const reponse = (await res.json().catch(() => null)) as { success?: string | boolean } | null;
+      const accepte = res.ok && String(reponse?.success ?? "true") === "true";
+      if (!accepte) throw new Error("relais");
+
       form.reset();
       setStatus("sent");
     } catch {
