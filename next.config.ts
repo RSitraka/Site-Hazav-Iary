@@ -17,7 +17,7 @@ const securityHeaders = [
  *
  *   STATIC_EXPORT=1   → `output: "export"` : `next build` écrit un dossier
  *                       `out/` de pages HTML pures, hébergeable gratuitement
- *                       (Cloudflare Pages, GitHub Pages, Netlify…).
+ *                       (GitHub Pages, Cloudflare Pages, Netlify…).
  *
  * En export statique, deux limites tenues par l'hébergeur et non par Next :
  *   - les images ne sont plus optimisées à la volée (`unoptimized`) ;
@@ -26,9 +26,23 @@ const securityHeaders = [
  */
 const exportStatique = process.env.STATIC_EXPORT === "1";
 
+/**
+ * Sous-chemin de publication, ex. `/Site-Hazav-Iary` sur GitHub Pages, où le
+ * site n'est pas servi à la racine d'un domaine mais dans un dossier portant le
+ * nom du dépôt. Vide partout ailleurs (domaine propre, Cloudflare Pages…).
+ *
+ * Next préfixe alors tout seul les liens `next/link`, les images `next/image`
+ * et les fichiers `/_next/…`. Restent à notre charge les chemins écrits à la
+ * main (manifeste, données structurées) : ils lisent `NEXT_PUBLIC_BASE_PATH`,
+ * réexporté ici pour qu'une seule variable pilote les deux.
+ */
+const basePath = (process.env.BASE_PATH || "").replace(/\/+$/, "");
+
 const nextConfig: NextConfig = {
   output: exportStatique ? "export" : "standalone",
   images: exportStatique ? { unoptimized: true } : undefined,
+  ...(basePath ? { basePath } : {}),
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,

@@ -1,0 +1,79 @@
+# Mise en ligne gratuite sur GitHub Pages.
+#
+# À chaque push sur `main`, le site est vérifié (lint + build), exporté en HTML
+# pur, puis publié sur https://<compte>.github.io/<dépôt>/ — aucun secret, aucun
+# serveur, aucun domaine à acheter.
+#
+# L'adresse n'est pas écrite en dur : `actions/configure-pages` la fournit
+# (`base_url`), ainsi que le sous-chemin du dépôt (`base_path`). Le jour où un
+# domaine propre est branché, ces deux valeurs suivent toutes seules.
+name: GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Permet aussi de relancer une publication à la main depuis l'onglet Actions.
+  workflow_dispatch:
+
+# Droits minimaux nécessaires à la publication Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Une publication à la fois ; on ne coupe pas celle en cours, pour ne jamais
+# laisser le site à moitié déployé.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construire:
+    name: Construire le site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # `enablement: true` active GitHub Pages sur le dépôt si ce n'est pas
+      # déjà fait : rien à cliquer dans les réglages.
+      - name: Préparer Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+
+      - name: Exporter le site en HTML
+        env:
+          STATIC_EXPORT: "1"
+          # Le site est servi dans un sous-dossier (/<dépôt>) : liens, images et
+          # canoniques doivent en tenir compte.
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+        run: npm run build
+
+      - name: Adapter la sortie à Pages
+        run: bash ops/preparer-pages.sh
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  publier:
+    name: Publier
+    needs: construire
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - name: Mettre en ligne
+        id: deploiement
+        uses: actions/deploy-pages@v4

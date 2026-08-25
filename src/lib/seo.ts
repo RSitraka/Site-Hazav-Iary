@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
 import { site } from "@/lib/site";
 
-/** Construit une URL absolue à partir d'un chemin interne. */
+/**
+ * Construit une URL absolue à partir d'un chemin interne.
+ *
+ * La concaténation est volontaire : `new URL("/contact", base)` ramènerait à la
+ * racine du domaine et perdrait le sous-chemin quand le site est publié dans un
+ * dossier (GitHub Pages sert `https://…github.io/Site-Hazav-Iary/`). Toutes les
+ * canoniques, le sitemap et les données structurées passent par ici.
+ */
 export function absoluteUrl(path = "/") {
-  return new URL(path, site.url).toString();
+  const base = site.url.replace(/\/+$/, "");
+  if (!path || path === "/") return `${base}/`;
+  return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 type PageSeo = {

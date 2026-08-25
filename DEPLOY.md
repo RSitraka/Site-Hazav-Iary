@@ -31,16 +31,49 @@ Ce qui est fourni dans le dépôt :
 
 ---
 
-## 0) Variante : hébergement gratuit, sans domaine
+## 0) En production aujourd'hui : GitHub Pages (gratuit, sans domaine)
 
-Le site n'a **aucune page dynamique** : il peut être exporté en HTML pur et hébergé
-gratuitement, le temps d'acquérir le domaine.
+Le site n'a **aucune page dynamique** : il est exporté en HTML pur et publié gratuitement par
+GitHub, à chaque push, en attendant l'achat du domaine.
 
-```bash
-STATIC_EXPORT=1 npm run build   # écrit un dossier out/ (~4,7 Mo, tout compris)
+```
+git push origin main
+      │
+      ▼
+GitHub Actions (.github/workflows/pages.yml)
+      ├─ npm ci + lint
+      ├─ STATIC_EXPORT=1 npm run build   → dossier out/
+      ├─ ops/preparer-pages.sh           → .nojekyll + images de partage
+      └─ publication ──▶ https://rsitraka.github.io/Site-Hazav-Iary/
 ```
 
-**Cloudflare Pages** (gratuit, sans carte bancaire, adresse `*.pages.dev` fournie) :
+Rien à configurer : le workflow active Pages tout seul (`actions/configure-pages`,
+`enablement: true`) et récupère l'adresse de publication auprès de GitHub. Aucun secret,
+aucun serveur, aucune carte bancaire.
+
+**Le site est servi dans un sous-dossier** (`/Site-Hazav-Iary`), pas à la racine d'un domaine.
+D'où la variable `BASE_PATH` : Next préfixe alors les liens, les images et les fichiers
+`/_next/…`, et `NEXT_PUBLIC_SITE_URL` fait de même pour les canoniques, le sitemap et les
+données structurées. Deux points que Next ne couvre pas et que le code prend en charge :
+
+- les photos du carrousel (`src/lib/gallery.ts`) — en images non optimisées, Next laisse le
+  `src` tel quel ;
+- les chemins écrits à la main du manifeste (`src/app/manifest.ts`).
+
+`ops/preparer-pages.sh` termine le travail côté fichiers : `.nojekyll` (sans lui, Pages passe
+le site par Jekyll, qui supprime `_next/` et donc tout le CSS) et l'extension `.png` sur les
+images de partage, faute de quoi Facebook et WhatsApp refusent l'aperçu.
+
+Le jour où `hazaviary.mg` est acheté : le brancher dans Settings → Pages → Custom domain.
+`BASE_PATH` devient vide et le sous-dossier disparaît, sans autre changement.
+
+> Le workflow `deploy.yml` (mise en ligne sur votre serveur) est passé en déclenchement
+> **manuel** : sans secrets SSH, il ferait échouer chaque push pour rien. Il reste prêt pour le
+> jour où le site retourne à côté de l'application de gestion.
+
+### Autre option : Cloudflare Pages
+
+Adresse à la racine (`*.pages.dev`), donc pas de sous-chemin — mais il faut créer un compte :
 
 1. Cloudflare → Workers & Pages → Create → Pages → Connect to Git → dépôt `Site-Hazav-Iary`
 2. Build command : `STATIC_EXPORT=1 npm run build` — Output directory : `out`
@@ -49,8 +82,7 @@ STATIC_EXPORT=1 npm run build   # écrit un dossier out/ (~4,7 Mo, tout compris)
 
 C'est tout : **chaque push sur `main` redéploie le site automatiquement**, sans secret à
 configurer. Netlify fonctionne à l'identique (le fichier `public/_headers` est compris par les
-deux). GitHub Pages marche aussi, mais sert le site sous `/Site-Hazav-Iary/`, ce qui impose un
-`basePath` — à éviter tant qu'une autre option existe.
+deux).
 
 Deux différences avec le conteneur Docker, tenues par l'hébergeur :
 

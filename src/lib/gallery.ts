@@ -20,7 +20,15 @@ export type Photo = {
   height: number;
 };
 
-export const photos: Photo[] = [
+/**
+ * Sous-chemin de publication (`/Site-Hazav-Iary` sur GitHub Pages, vide sur un
+ * domaine propre). En export statique les images ne sont pas optimisées, et
+ * Next laisse alors le `src` tel quel : le préfixe est ajouté ici, une fois
+ * pour toutes, sinon les photos pointeraient à côté du site.
+ */
+const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+const fichiers: Photo[] = [
   {
     src: "/photos/equipe-hazaviary.jpg",
     alt: "L'équipe Hazav'Iary sur le terrain avec un panneau solaire et un générateur portable",
@@ -64,3 +72,8 @@ export const photos: Photo[] = [
     height: 1280,
   },
 ];
+
+export const photos: Photo[] = fichiers.map((photo) => ({
+  ...photo,
+  src: `${base}${photo.src}`,
+}));

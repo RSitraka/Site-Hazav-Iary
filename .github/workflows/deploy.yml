@@ -8,12 +8,13 @@
 #
 # Ce sont les mêmes noms que pour l'application de gestion : si les deux dépôts
 # visent le même serveur, les valeurs sont identiques.
-name: Déploiement
+name: Déploiement serveur
 
 on:
-  push:
-    branches: [main]
-  # Permet aussi de relancer une mise en ligne à la main depuis l'onglet Actions.
+  # Déclenchement manuel uniquement : la mise en ligne automatique passe
+  # désormais par GitHub Pages (`pages.yml`). Ce workflow reste disponible pour
+  # le jour où le site retourne sur le serveur, à côté de l'application de
+  # gestion — sans quoi chaque push échouerait faute de secrets SSH.
   workflow_dispatch:
 
 # Un seul déploiement à la fois ; un push plus récent annule celui en cours.
