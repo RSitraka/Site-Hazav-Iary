@@ -82,6 +82,7 @@ export type NavItem = { href: string; label: string; description?: string };
 export const mainNav: NavItem[] = [
   { href: "/services", label: "Services", description: "De la descente au suivi de chantier" },
   { href: "/realisations", label: "Réalisations", description: "Zones et matériel installés" },
+  { href: "/offres", label: "Offres", description: "Nos kits, leurs prix et le paiement en plusieurs fois" },
   { href: "/simulateur", label: "Simulateur", description: "Dimensionnez votre installation" },
   { href: "/a-propos", label: "À propos", description: "L'équipe et notre méthode" },
   { href: "/contact", label: "Contact", description: "Devis après visite technique" },
@@ -89,6 +90,7 @@ export const mainNav: NavItem[] = [
 
 export const footerNav = {
   entreprise: [
+    { href: "/offres", label: "Nos offres" },
     { href: "/a-propos", label: "À propos" },
     { href: "/realisations", label: "Réalisations" },
     { href: "/contact", label: "Contact" },
