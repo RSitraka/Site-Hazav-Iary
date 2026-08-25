@@ -103,15 +103,26 @@ par une échéance souhaitée), et pas de `priceRange` dans les données structu
 
 ### Recevoir les demandes de devis
 
-Par défaut, le formulaire de contact ouvre le client de messagerie du visiteur (aucun backend
-requis). Pour recevoir les demandes automatiquement, créez un fichier `.env.local` :
+Le site est fait de fichiers statiques : il n'a aucun serveur pour envoyer un courriel. Le
+formulaire transmet donc la demande à un relais, qui la fait suivre à l'adresse de contact
+(`site.email`, aujourd'hui `hazaviary.contact@gmail.com`).
+
+Par défaut : **FormSubmit**, retenu parce qu'il ne demande aucun compte. La toute première
+demande envoyée depuis le site déclenche un courriel d'activation à l'adresse de contact ; tant
+que le lien qu'il contient n'est pas cliqué, rien n'est transmis. Le site le sait et affiche
+l'échec : le relais répond `success: false` avec un code 200, cas explicitement vérifié dans
+[contact-form.tsx](src/components/contact-form.tsx) plutôt que d'annoncer un envoi qui n'a pas
+eu lieu.
+
+Pour passer à un autre service, une variable suffit — le code ne change pas :
 
 ```bash
 NEXT_PUBLIC_CONTACT_ENDPOINT=https://formspree.io/f/VOTRE_ID
 ```
 
-Le formulaire enverra alors un `POST` JSON vers cette URL. Tout service acceptant du JSON
-convient (Formspree, Getform, Basin, ou votre propre route API).
+Tout service acceptant un `POST` JSON convient (Formspree, Getform, Basin, Web3Forms, ou votre
+propre route API). Sur GitHub Pages, la variable se déclare dans le workflow
+[pages.yml](.github/workflows/pages.yml), à côté des autres.
 
 ---
 
