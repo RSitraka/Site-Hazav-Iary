@@ -41,14 +41,24 @@ jobs:
       - run: npm ci
       - run: npm run lint
 
+      # Le site est servi dans un sous-dossier portant le nom du dépôt : liens,
+      # images et canoniques doivent en tenir compte. Les deux valeurs se
+      # déduisent du dépôt, rien n'est écrit en dur. Le nom du compte est mis en
+      # minuscules : GitHub sert bien `RSitraka.github.io`, mais Next normalise
+      # l'hôte des canoniques — sitemap et canoniques annonceraient sinon deux
+      # graphies de la même adresse.
+      - name: Adresse de publication
+        run: |
+          proprietaire=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          depot="${{ github.event.repository.name }}"
+          {
+            echo "BASE_PATH=/$depot"
+            echo "NEXT_PUBLIC_SITE_URL=https://$proprietaire.github.io/$depot"
+          } >> "$GITHUB_ENV"
+
       - name: Exporter le site en HTML
         env:
           STATIC_EXPORT: "1"
-          # Le site est servi dans un sous-dossier portant le nom du dépôt :
-          # liens, images et canoniques doivent en tenir compte. Les deux
-          # valeurs se déduisent du dépôt, rien n'est écrit en dur.
-          BASE_PATH: /${{ github.event.repository.name }}
-          NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
         run: npm run build
 
       - name: Adapter la sortie à Pages
