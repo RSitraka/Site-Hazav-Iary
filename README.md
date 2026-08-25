@@ -260,10 +260,23 @@ en lithium ou 50 % en plomb, parc en 48 V. Tout le calcul s'exécute dans le nav
 
 ## Déploiement
 
-**Vercel** (le plus direct) — importer le dépôt, aucune configuration nécessaire.
+**En place aujourd'hui : GitHub Pages**, gratuit et sans domaine. Chaque push sur `main`
+déclenche `.github/workflows/pages.yml`, qui vérifie le build, exporte le site en HTML pur et le
+publie sur la branche `gh-pages` :
 
-**Serveur Node** — `npm run build && npm start` derrière un reverse proxy.
+```bash
+# Reproduire la publication en local
+STATIC_EXPORT=1 BASE_PATH=/Site-Hazav-Iary npm run build
+bash ops/preparer-pages.sh
+npx serve out          # ou n'importe quel serveur de fichiers statiques
+```
 
-**Hébergement statique** (GitHub Pages, Netlify…) — ajouter `output: "export"` dans
-`next.config.ts`. Les pages sont déjà toutes statiques ; seul le formulaire nécessitera alors un
-service externe via `NEXT_PUBLIC_CONTACT_ENDPOINT`.
+**Serveur Node** — `npm run build && npm start` derrière un reverse proxy, ou le conteneur
+Docker fourni. C'est le montage décrit dans [DEPLOY.md](DEPLOY.md), à côté de l'application de
+gestion.
+
+**Autres hébergeurs statiques** (Cloudflare Pages, Netlify, Vercel) — `STATIC_EXPORT=1` suffit,
+sans `BASE_PATH` puisqu'ils servent le site à la racine.
+
+Le formulaire de contact n'a pas de serveur : en statique, il passe par le service externe
+défini dans `NEXT_PUBLIC_CONTACT_ENDPOINT`.

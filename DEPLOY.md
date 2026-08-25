@@ -44,12 +44,21 @@ GitHub Actions (.github/workflows/pages.yml)
       ├─ npm ci + lint
       ├─ STATIC_EXPORT=1 npm run build   → dossier out/
       ├─ ops/preparer-pages.sh           → .nojekyll + images de partage
-      └─ publication ──▶ https://rsitraka.github.io/Site-Hazav-Iary/
+      └─ push sur la branche gh-pages ──▶ https://rsitraka.github.io/Site-Hazav-Iary/
 ```
 
-Rien à configurer : le workflow active Pages tout seul (`actions/configure-pages`,
-`enablement: true`) et récupère l'adresse de publication auprès de GitHub. Aucun secret,
-aucun serveur, aucune carte bancaire.
+Aucun secret, aucun serveur, aucune carte bancaire : le workflow n'utilise que le jeton
+fourni par GitHub à chaque exécution.
+
+> **Pourquoi une branche et non `actions/deploy-pages`** : *activer* Pages par l'API réclame un
+> droit d'administration du dépôt que le jeton d'Actions n'a pas — l'essai s'est terminé sur
+> `Resource not accessible by integration`. Pousser une branche `gh-pages` ne demande que
+> `contents: write`. La branche ne contient que la dernière version du site, jamais de code
+> source, et son historique est écrasé à chaque publication.
+>
+> Si le site ne répond pas après la première exécution, c'est que Pages n'est pas activé sur le
+> dépôt : **Settings → Pages → Build and deployment → Source : *Deploy from a branch*, branche
+> `gh-pages`, dossier `/ (root)`**. Une seule fois, puis plus jamais.
 
 **Le site est servi dans un sous-dossier** (`/Site-Hazav-Iary`), pas à la racine d'un domaine.
 D'où la variable `BASE_PATH` : Next préfixe alors les liens, les images et les fichiers
