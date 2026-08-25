@@ -1,5 +1,8 @@
 import { ogAlt, ogContentType, ogSize, renderOgImage } from "@/lib/og";
 
+// Générée au build, jamais à la volée : nécessaire pour l'export statique.
+export const dynamic = "force-static";
+
 export const alt = ogAlt;
 export const size = ogSize;
 export const contentType = ogContentType;

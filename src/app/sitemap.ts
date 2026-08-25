@@ -3,6 +3,9 @@ import type { MetadataRoute } from "next";
 import { services } from "@/lib/services";
 import { site } from "@/lib/site";
 
+// Générés au build : nécessaire pour l'export statique.
+export const dynamic = "force-static";
+
 /**
  * Sitemap XML généré au build — exposé sur /sitemap.xml et référencé
  * par robots.txt.
@@ -16,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   }[] = [
     { path: "/", priority: 1, changeFrequency: "weekly" },
+    { path: "/offres", priority: 0.9, changeFrequency: "monthly" },
     { path: "/services", priority: 0.9, changeFrequency: "monthly" },
     { path: "/simulateur", priority: 0.9, changeFrequency: "monthly" },
     { path: "/realisations", priority: 0.8, changeFrequency: "monthly" },

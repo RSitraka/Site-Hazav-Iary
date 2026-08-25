@@ -29,6 +29,41 @@ Ce qui est fourni dans le dépôt :
 
 ---
 
+---
+
+## 0) Variante : hébergement gratuit, sans domaine
+
+Le site n'a **aucune page dynamique** : il peut être exporté en HTML pur et hébergé
+gratuitement, le temps d'acquérir le domaine.
+
+```bash
+STATIC_EXPORT=1 npm run build   # écrit un dossier out/ (~4,7 Mo, tout compris)
+```
+
+**Cloudflare Pages** (gratuit, sans carte bancaire, adresse `*.pages.dev` fournie) :
+
+1. Cloudflare → Workers & Pages → Create → Pages → Connect to Git → dépôt `Site-Hazav-Iary`
+2. Build command : `STATIC_EXPORT=1 npm run build` — Output directory : `out`
+3. Variables d'environnement : `STATIC_EXPORT=1`, `NODE_VERSION=20`, et
+   `NEXT_PUBLIC_SITE_URL=https://<votre-projet>.pages.dev`
+
+C'est tout : **chaque push sur `main` redéploie le site automatiquement**, sans secret à
+configurer. Netlify fonctionne à l'identique (le fichier `public/_headers` est compris par les
+deux). GitHub Pages marche aussi, mais sert le site sous `/Site-Hazav-Iary/`, ce qui impose un
+`basePath` — à éviter tant qu'une autre option existe.
+
+Deux différences avec le conteneur Docker, tenues par l'hébergeur :
+
+- les images ne sont plus redimensionnées à la volée — elles sont servies telles quelles ;
+- les en-têtes de sécurité viennent de `public/_headers` et non de `next.config.ts`.
+
+`NEXT_PUBLIC_SITE_URL` remplace `site.url` pour les balises canoniques, le sitemap et les images
+de partage : sans elle, le site s'annoncerait sous un domaine qui n'existe pas encore. Le jour
+où `hazaviary.mg` est acheté, il suffit de le rattacher au projet Pages (Custom domain) et de
+retirer la variable — ou de revenir à l'installation ci-dessous, sur votre serveur.
+
+---
+
 ## 1) Choisir l'adresse du site
 
 Le site s'installe **à côté** de l'application de gestion, sans rien lui changer : son propre
@@ -169,3 +204,25 @@ git reset --hard HEAD~1 && docker compose -f docker-compose.prod.yml up -d --bui
 Le site est entièrement statique : aucun volume, aucune base, rien à sauvegarder. Un
 redéploiement ne peut donc rien perdre — contrairement à l'application de gestion, dont le
 volume `hazaviary-data` ne doit jamais être supprimé.
+
+---
+
+## Alimenter le site depuis l'application de gestion
+
+Un site statique fige ses données au moment du build : pour qu'une nouvelle réalisation
+apparaisse, il faut **redéclencher un build**. Deux montages possibles, sans jamais modifier
+l'application.
+
+**A. Depuis le serveur (recommandé)** — un script en tâche planifiée lit l'application *en
+lecture seule* (son API sur `127.0.0.1:8090`, ou une copie de sa base par `sqlite3 .backup`),
+écrit un fichier de données assaini dans le dépôt du site, et le pousse s'il a changé. Le push
+déclenche le déploiement, comme n'importe quelle modification. L'application n'est ni exposée à
+internet, ni touchée ; le site n'a besoin d'aucun accès à sa base au moment du build.
+
+**B. Depuis GitHub Actions** — un déclenchement programmé (`schedule:`) va chercher les données
+par l'API publique de l'application avec un compte en lecture seule, puis reconstruit. Suppose
+que l'application soit joignable depuis internet, ce qui n'est pas le cas aujourd'hui.
+
+Dans les deux cas, la règle de publication reste celle du README : **seuls le code chantier, la
+zone, l'année et le matériel posé sortent** — jamais le nom du bénéficiaire, son téléphone ni le
+montant convenu.

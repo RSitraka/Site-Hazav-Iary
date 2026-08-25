@@ -16,8 +16,18 @@ export const site = {
   tagline: "L'énergie solaire qui éclaire durablement Madagascar",
   description:
     "Hazav'Iary installe des panneaux solaires partout à Madagascar : descente technique sur site, dimensionnement, contrat écrit, pose et suivi de chantier, avec paiement échelonné sur plusieurs mois.",
-  /** URL canonique de production : le site vitrine occupe le domaine principal. */
-  url: "https://www.hazaviary.mg",
+  /**
+   * URL canonique de production. Elle alimente les balises canoniques, le
+   * sitemap, les données structurées et les images de partage : elle doit
+   * correspondre à l'adresse réellement servie.
+   *
+   * Tant que le domaine n'est pas acheté, le site est publié sur une adresse
+   * d'hébergeur (ex. https://hazav-iary.pages.dev) : définissez alors la
+   * variable d'environnement `NEXT_PUBLIC_SITE_URL` au moment du build, sans
+   * toucher à ce fichier. Le jour où le domaine existe, il suffit de retirer
+   * la variable.
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.hazaviary.mg",
   locale: "fr_MG",
   lang: "fr",
   email: "sitrakahers@gmail.com",
