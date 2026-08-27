@@ -71,6 +71,27 @@ const fichiers: Photo[] = [
     width: 963,
     height: 1280,
   },
+  {
+    src: "/photos/remise-kit-quartier-urbain.jpg",
+    alt: "Remise d'un générateur solaire 300 W et du contrat signé à un client, devant sa maison dans un quartier d'Antananarivo",
+    caption: "Remise du kit en quartier urbain",
+    width: 1204,
+    height: 1600,
+  },
+  {
+    src: "/photos/montee-toiture-installation.jpg",
+    alt: "Un technicien Hazav'Iary monte à l'échelle vers la toiture d'une maison en briques de terre pour poser un panneau",
+    caption: "Montée en toiture",
+    width: 1204,
+    height: 1600,
+  },
+  {
+    src: "/photos/remise-generateur-cliente.jpg",
+    alt: "Remise d'un générateur solaire à une cliente devant sa maison, l'affiche Hazav'Iary posée sur le volet",
+    caption: "Livraison chez une cliente",
+    width: 1204,
+    height: 1600,
+  },
 ];
 
 export const photos: Photo[] = fichiers.map((photo) => ({
