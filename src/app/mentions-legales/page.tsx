@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/ui";
 import { site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 
 export const metadata: Metadata = buildMetadata({
   title: "Mentions légales",
@@ -11,6 +12,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function MentionsLegalesPage() {
+  const fonds = backdrops.legal;
   return (
     <>
       <PageHero
@@ -18,6 +20,7 @@ export default function MentionsLegalesPage() {
         title="Mentions légales"
         lead="Informations relatives à l'éditeur, à l'hébergement et à la propriété intellectuelle du présent site."
         breadcrumbs={[{ name: "Mentions légales", path: "/mentions-legales" }]}
+        backdrop={fonds[0]}
       />
 
       <section className="section">

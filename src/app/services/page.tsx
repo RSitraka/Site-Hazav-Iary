@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
 import { CtaBand, PageHero } from "@/components/ui";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import { ArrowRightIcon, serviceIcons } from "@/components/icons";
 import { services } from "@/lib/services";
 import { absoluteUrl, buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { backdrops } from "@/lib/backdrops";
 
 export const metadata: Metadata = buildMetadata({
   title: "Nos services : installation solaire, stockage, maintenance",
@@ -22,6 +24,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function ServicesPage() {
+  const fonds = backdrops.services;
   return (
     <>
       <JsonLd
@@ -43,9 +46,11 @@ export default function ServicesPage() {
         title="Toute la chaîne, de la visite de site à la maintenance"
         lead="Six prestations complémentaires : nous relevons, nous calculons, nous écrivons, nous posons, puis nous entretenons."
         breadcrumbs={[{ name: "Services", path: "/services" }]}
+        backdrop={fonds[0]}
       />
 
-      <section className="section">
+      <section className="section relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container grid gap-5 md:grid-cols-2">
           {services.map((service) => {
             const Icon = serviceIcons[service.icon];
@@ -91,6 +96,7 @@ export default function ServicesPage() {
       </section>
 
       <CtaBand
+        backdrop={fonds[2]}
         title="Un besoin qui ne rentre dans aucune case ?"
         text="Décrivez votre situation : nos techniciens vous répondent avec une proposition adaptée, même pour les configurations atypiques."
       />

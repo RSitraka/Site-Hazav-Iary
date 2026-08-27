@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
 import { CtaBand, PageHero, SectionHeading, TestimonialCard } from "@/components/ui";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import { CheckIcon, MapPinIcon } from "@/components/icons";
 import {
   equipmentCatalog,
@@ -13,6 +14,7 @@ import {
 } from "@/lib/content";
 import { site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 
 export const metadata: Metadata = buildMetadata({
   title: "Réalisations : nos chantiers solaires à Madagascar",
@@ -28,6 +30,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function RealisationsPage() {
+  const fonds = backdrops.realisations;
   return (
     <>
       <JsonLd
@@ -45,6 +48,7 @@ export default function RealisationsPage() {
         title="Nos chantiers, partout à Madagascar"
         lead="Chaque installation part d'une descente sur site et se termine par un dossier complet : matériel posé, documents et avancement conservés."
         breadcrumbs={[{ name: "Réalisations", path: "/realisations" }]}
+        backdrop={fonds[0]}
       />
 
       {/* -------------------------- Zones d'intervention --------------------
@@ -72,7 +76,8 @@ export default function RealisationsPage() {
       </section>
 
       {/* ----------------------------- Matériel ----------------------------- */}
-      <section className="section border-t bg-surface">
+      <section className="section border-t bg-surface relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container">
           <SectionHeading
             eyebrow="Ce que nous posons"
@@ -104,7 +109,8 @@ export default function RealisationsPage() {
       </section>
 
       {/* ------------------------- Déroulé d'un chantier -------------------- */}
-      <section className="section border-t">
+      <section className="section border-t relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[2]} />
         <div className="container">
           <SectionHeading eyebrow="Déroulé" title="Comment se passe un chantier" align="center" />
           <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

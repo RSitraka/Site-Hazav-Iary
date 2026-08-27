@@ -3,9 +3,11 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/ui";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import { ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from "@/components/icons";
 import { site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact — demander une descente technique",
@@ -19,6 +21,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function ContactPage() {
+  const fonds = backdrops.contact;
   return (
     <>
       <JsonLd
@@ -35,9 +38,11 @@ export default function ContactPage() {
         title="Parlons de votre projet solaire"
         lead="Décrivez-nous votre situation en quelques lignes. Nous revenons vers vous pour convenir d'une descente technique : c'est elle qui détermine ce qui est installable et à quel prix."
         breadcrumbs={[{ name: "Contact", path: "/contact" }]}
+        backdrop={fonds[0]}
       />
 
-      <section className="section">
+      <section className="section relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-start">
           <ContactForm />
 

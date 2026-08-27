@@ -4,6 +4,8 @@ import { ArrowRightIcon, CheckIcon, ChevronDownIcon, QuoteIcon } from "@/compone
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbSchema } from "@/lib/seo";
 import type { Testimonial } from "@/lib/content";
+import type { Backdrop } from "@/lib/backdrops";
+import { SectionBackdrop } from "@/components/section-backdrop";
 
 /* -------------------------------------------------------------------------- */
 /*  Fil d'Ariane (visuel + données structurées)                                */
@@ -51,18 +53,22 @@ export function PageHero({
   title,
   lead,
   breadcrumbs,
+  backdrop,
   children,
 }: {
   eyebrow: string;
   title: string;
   lead: string;
   breadcrumbs: { name: string; path: string }[];
+  /** Photo de fond, très atténuée, derrière le titre de la page. */
+  backdrop?: Backdrop;
   children?: ReactNode;
 }) {
   return (
     // Pas de bandeau plein : le halo du fond suffit à porter le titre, comme
     // sur la maquette où les pages s'ouvrent directement sur le noir.
-    <section className="relative overflow-hidden">
+    <section className="relative isolate overflow-hidden">
+      {backdrop && <SectionBackdrop {...backdrop} />}
       <div className="container py-14 md:py-20">
         <Breadcrumbs items={breadcrumbs} />
         <div className="mt-7 max-w-3xl animate-rise">
@@ -180,6 +186,7 @@ export function CtaBand({
   primaryHref = "/contact",
   secondaryLabel = "Estimer mon installation",
   secondaryHref = "/simulateur",
+  backdrop,
 }: {
   title?: string;
   text?: string;
@@ -187,9 +194,12 @@ export function CtaBand({
   primaryHref?: string;
   secondaryLabel?: string;
   secondaryHref?: string;
+  /** Photo de fond, très atténuée, derrière la bande d'appel à l'action. */
+  backdrop?: Backdrop;
 }) {
   return (
-    <section className="section">
+    <section className="section relative isolate overflow-hidden">
+      {backdrop && <SectionBackdrop {...backdrop} />}
       <div className="container">
         {/* Grande carte à halo : le point le plus lumineux du bas de page. */}
         <div className="card-glow overflow-hidden px-6 py-16 text-center sm:px-12">

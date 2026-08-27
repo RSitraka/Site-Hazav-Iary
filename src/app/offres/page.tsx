@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
 import { CheckList, CtaBand, PageHero, SectionHeading } from "@/components/ui";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import {
   ArrowRightIcon,
   BoltIcon,
@@ -14,6 +15,7 @@ import {
 } from "@/components/icons";
 import { ariary, customPower, kits, promises, reasons } from "@/lib/offers";
 import { absoluteUrl, buildMetadata } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
@@ -39,6 +41,7 @@ const kitIcons = {
 };
 
 export default function OffresPage() {
+  const fonds = backdrops.offres;
   return (
     <>
       <JsonLd
@@ -73,6 +76,7 @@ export default function OffresPage() {
         title="Des kits prêts à poser, et tout le reste à votre mesure"
         lead="Voici nos offres du moment, prix affichés et paiement échelonné compris. Aucune de ces tailles ne vous correspond ? Nous montons l'installation à la dimension que vous voulez."
         breadcrumbs={[{ name: "Offres", path: "/offres" }]}
+        backdrop={fonds[0]}
       >
         <div className="flex flex-wrap gap-3">
           <Link href="/contact" className="btn-primary">
@@ -146,7 +150,8 @@ export default function OffresPage() {
       </section>
 
       {/* ---------- Grandes puissances : le sur-mesure ----------------------- */}
-      <section className="section pt-0">
+      <section className="section pt-0 relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container">
           <div className="card-glow overflow-hidden">
             <div
@@ -267,7 +272,8 @@ export default function OffresPage() {
       {/* ---------- La promesse : tout se dimensionne au besoin du client ---- */}
       {/* Placée après le catalogue : on lit d'abord les offres, puis ce qui   */}
       {/* se passe quand aucune ne correspond exactement.                      */}
-      <section className="section pt-0">
+      <section className="section pt-0 relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[2]} />
         <div className="container">
           <SectionHeading
             eyebrow="Notre engagement"

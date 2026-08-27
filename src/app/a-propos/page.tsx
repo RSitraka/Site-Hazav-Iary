@@ -2,10 +2,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { CheckList, CtaBand, PageHero, SectionHeading } from "@/components/ui";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import { ArrowRightIcon, LeafIcon, ShieldIcon, SunIcon } from "@/components/icons";
 import { commitments, processSteps } from "@/lib/content";
 import { keyFigures, site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 
 export const metadata: Metadata = buildMetadata({
   title: "À propos : notre mission pour une énergie propre à Madagascar",
@@ -38,6 +40,7 @@ const values = [
 ];
 
 export default function AProposPage() {
+  const fonds = backdrops.aPropos;
   return (
     <>
       <PageHero
@@ -45,6 +48,7 @@ export default function AProposPage() {
         title="Une entreprise malgache au service de l'énergie propre"
         lead={`${site.name} installe des panneaux solaires partout à Madagascar, depuis sa base d'Antananarivo. Notre différence tient à une chose simple : nous venons voir avant de chiffrer, et nous écrivons ce qui est convenu.`}
         breadcrumbs={[{ name: "À propos", path: "/a-propos" }]}
+        backdrop={fonds[0]}
       />
 
       <section className="section">
@@ -96,7 +100,8 @@ export default function AProposPage() {
         </div>
       </section>
 
-      <section className="section border-t bg-surface">
+      <section className="section border-t bg-surface relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container">
           <SectionHeading
             eyebrow="Nos valeurs"
@@ -148,6 +153,7 @@ export default function AProposPage() {
       </section>
 
       <CtaBand
+        backdrop={fonds[2]}
         title="Travaillons ensemble"
         text="Que vous soyez un particulier, une entreprise ou une organisation, la première étape est la même : comprendre votre besoin réel."
       />

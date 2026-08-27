@@ -4,9 +4,11 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
 import { CheckList, CtaBand, FaqList, PageHero, SectionHeading } from "@/components/ui";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import { ArrowRightIcon, serviceIcons } from "@/components/icons";
 import { getService, services } from "@/lib/services";
 import { buildMetadata, faqSchema, serviceSchema } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -29,6 +31,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export default async function ServicePage({ params }: Params) {
+  const fonds = backdrops.serviceDetail;
   const { slug } = await params;
   const service = getService(slug);
   if (!service) notFound();
@@ -57,6 +60,7 @@ export default async function ServicePage({ params }: Params) {
           { name: "Services", path: "/services" },
           { name: service.short, path: `/services/${service.slug}` },
         ]}
+        backdrop={fonds[0]}
       >
         <div className="flex flex-wrap items-center gap-3">
           <Link href="/contact" className="btn-primary">
@@ -118,7 +122,8 @@ export default async function ServicePage({ params }: Params) {
         </section>
       )}
 
-      <section className="section border-t">
+      <section className="section border-t relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container">
           <SectionHeading eyebrow="Aller plus loin" title="Nos autres prestations" />
           <div className="mt-10 grid gap-5 md:grid-cols-3">
@@ -144,7 +149,7 @@ export default async function ServicePage({ params }: Params) {
         </div>
       </section>
 
-      <CtaBand />
+      <CtaBand backdrop={fonds[2]} />
     </>
   );
 }

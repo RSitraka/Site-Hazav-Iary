@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/ui";
 import { site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 
 export const metadata: Metadata = buildMetadata({
   title: "Politique de confidentialité",
@@ -11,6 +12,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function ConfidentialitePage() {
+  const fonds = backdrops.legal;
   return (
     <>
       <PageHero
@@ -20,6 +22,7 @@ export default function ConfidentialitePage() {
         breadcrumbs={[
           { name: "Politique de confidentialité", path: "/politique-de-confidentialite" },
         ]}
+        backdrop={fonds[0]}
       />
 
       <section className="section">

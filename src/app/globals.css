@@ -509,3 +509,42 @@
     @apply my-10;
   }
 }
+
+/* =====================================================================
+   FONDS PHOTOGRAPHIQUES DE SECTION  (<SectionBackdrop />)
+   L'image ne doit jamais concurrencer le texte : elle est désaturée et
+   très transparente, puis recouverte d'un aplat de la couleur de page et
+   d'un fondu haut/bas. Les valeurs diffèrent entre les deux thèmes — sur
+   fond noir une photo « ressort » beaucoup plus vite que sur fond clair.
+   ===================================================================== */
+@layer components {
+  .backdrop-photo {
+    opacity: 0.09;
+    filter: saturate(0.7) contrast(0.95);
+  }
+
+  .dark .backdrop-photo {
+    opacity: 0.2;
+    filter: saturate(0.75) brightness(0.85);
+  }
+
+  /* Aplat de la couleur de fond : le principal « atténuateur ». */
+  .backdrop-veil {
+    background: rgb(var(--tone) / 0.55);
+  }
+
+  .dark .backdrop-veil {
+    background: rgb(var(--tone) / 0.45);
+  }
+
+  /* Fondu vers le fond de page en haut et en bas : pas d'arête franche. */
+  .backdrop-fade {
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--tone)) 0%,
+      rgb(var(--tone) / 0) 22%,
+      rgb(var(--tone) / 0) 78%,
+      rgb(var(--tone)) 100%
+    );
+  }
+}

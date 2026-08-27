@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
 import { CtaBand, FaqList, PageHero, SectionHeading } from "@/components/ui";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import { generalFaq } from "@/lib/content";
 import { services } from "@/lib/services";
 import { buildMetadata, faqSchema } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 
 export const metadata: Metadata = buildMetadata({
   title: "FAQ : prix, paiement et durée de vie d'une installation solaire",
@@ -20,6 +22,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function FaqPage() {
+  const fonds = backdrops.faq;
   // Les questions propres à chaque service enrichissent la page et le balisage.
   const serviceFaq = services.flatMap((service) =>
     service.faq.map((item) => ({ ...item, service: service.short })),
@@ -34,6 +37,7 @@ export default function FaqPage() {
         title="Tout ce qu'il faut savoir avant d'installer du solaire"
         lead="Comment le prix se fixe, comment se passe le paiement en plusieurs mois, ce que nous installons : les questions que nos clients posent le plus souvent."
         breadcrumbs={[{ name: "FAQ", path: "/faq" }]}
+        backdrop={fonds[0]}
       />
 
       <section className="section">
@@ -42,7 +46,8 @@ export default function FaqPage() {
         </div>
       </section>
 
-      <section className="section border-t bg-surface">
+      <section className="section border-t bg-surface relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container max-w-3xl">
           <SectionHeading
             eyebrow="Par prestation"
@@ -65,6 +70,7 @@ export default function FaqPage() {
       </section>
 
       <CtaBand
+        backdrop={fonds[2]}
         title="Votre question n'est pas là ?"
         text="Écrivez-nous : un ingénieur vous répond, sans obligation d'engagement."
       />

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { HeroPanel } from "@/components/hero-panel";
 import { PhotoCarousel } from "@/components/photo-carousel";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import { JsonLd } from "@/components/json-ld";
 import { CheckList, CtaBand, FaqList, SectionHeading, TestimonialCard } from "@/components/ui";
 import {
@@ -25,6 +26,7 @@ import {
   testimonials,
 } from "@/lib/content";
 import { photos } from "@/lib/gallery";
+import { backdrops } from "@/lib/backdrops";
 import { buildMetadata, faqSchema } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -42,6 +44,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function HomePage() {
+  const fonds = backdrops.accueil;
   const homeFaq = generalFaq.slice(0, 5);
 
   return (
@@ -145,7 +148,8 @@ export default function HomePage() {
       )}
 
       {/* ------------------------------ SERVICES ---------------------------- */}
-      <section className="section" id="services">
+      <section className="section relative isolate overflow-hidden" id="services">
+        <SectionBackdrop {...fonds[0]} />
         <div className="container">
           <SectionHeading
             eyebrow="Nos services"
@@ -237,7 +241,8 @@ export default function HomePage() {
       {/* ------------------------------ PROCESSUS ---------------------------
           Étapes numérotées reliées par un filet lumineux, comme la section
           « How it works » de la maquette. */}
-      <section className="section">
+      <section className="section relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container">
           <SectionHeading
             eyebrow="Comment ça se passe"
@@ -307,7 +312,8 @@ export default function HomePage() {
       </section>
 
       {/* -------------------------- ZONES ET MATÉRIEL ----------------------- */}
-      <section className="section">
+      <section className="section relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[2]} />
         <div className="container">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading

@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { SolarSimulator } from "@/components/solar-simulator";
 import { CtaBand, FaqList, PageHero, SectionHeading } from "@/components/ui";
+import { SectionBackdrop } from "@/components/section-backdrop";
 import { buildMetadata, faqSchema } from "@/lib/seo";
+import { backdrops } from "@/lib/backdrops";
 import { site } from "@/lib/site";
 
 const simulatorFaq = [
@@ -44,6 +46,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function SimulateurPage() {
+  const fonds = backdrops.simulateur;
   return (
     <>
       <JsonLd
@@ -68,6 +71,7 @@ export default function SimulateurPage() {
         title="Dimensionnez votre installation solaire en deux minutes"
         lead="Listez vos appareils, ajustez les hypothèses et obtenez immédiatement votre consommation mensuelle, le nombre de panneaux, la capacité batterie et la puissance d'onduleur."
         breadcrumbs={[{ name: "Simulateur", path: "/simulateur" }]}
+        backdrop={fonds[0]}
       />
 
       <section className="py-12 md:py-16">
@@ -76,7 +80,8 @@ export default function SimulateurPage() {
         </div>
       </section>
 
-      <section className="section border-t bg-surface">
+      <section className="section border-t bg-surface relative isolate overflow-hidden">
+        <SectionBackdrop {...fonds[1]} />
         <div className="container grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
           <SectionHeading
             eyebrow="Méthode de calcul"
@@ -88,6 +93,7 @@ export default function SimulateurPage() {
       </section>
 
       <CtaBand
+        backdrop={fonds[2]}
         title="Faites valider votre dimensionnement"
         text="Envoyez-nous vos résultats : nous vérifions les hypothèses, affinons le calcul selon votre toiture et vous remettons un devis détaillé."
         secondaryLabel="Voir nos services"
