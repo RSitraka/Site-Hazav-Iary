@@ -2,13 +2,15 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
-import { CtaBand, PageHero } from "@/components/ui";
+import { CtaBand, PageHero, SectionHeading } from "@/components/ui";
+import { PhotoCarousel } from "@/components/photo-carousel";
 import { SectionBackdrop } from "@/components/section-backdrop";
 import { ArrowRightIcon, serviceIcons } from "@/components/icons";
 import { services } from "@/lib/services";
 import { absoluteUrl, buildMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { backdrops } from "@/lib/backdrops";
+import { photos } from "@/lib/gallery";
 
 export const metadata: Metadata = buildMetadata({
   title: "Nos services : installation solaire, stockage, maintenance",
@@ -94,6 +96,26 @@ export default function ServicesPage() {
           })}
         </div>
       </section>
+
+      {/* ----------------------------- TERRAIN ------------------------------
+          Mêmes photos que l'accueil : nos propres chantiers, après la liste
+          des prestations — ce que ces prestations donnent, en vrai. */}
+      {photos.length > 0 && (
+        <section className="section pt-0 pb-0">
+          <div className="container">
+            <SectionHeading
+              eyebrow="Sur le terrain"
+              title="Ces prestations, chez nos clients"
+              lead="Descentes, poses et remises de matériel : nos interventions telles qu'elles se passent, dans les villages comme en ville."
+              align="center"
+            />
+          </div>
+          {/* Hors conteneur : la bande de photos déborde jusqu'aux bords. */}
+          <div className="mt-12">
+            <PhotoCarousel photos={photos} />
+          </div>
+        </section>
+      )}
 
       <CtaBand
         backdrop={fonds[2]}

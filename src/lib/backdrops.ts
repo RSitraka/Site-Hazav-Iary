@@ -2,18 +2,23 @@
  * ---------------------------------------------------------------------------
  * FONDS PHOTOGRAPHIQUES DES PAGES
  * ---------------------------------------------------------------------------
- * Chaque page pose trois photos très atténuées derrière son texte (voir
+ * Chaque page pose des photos atténuées derrière son texte (voir
  * `<SectionBackdrop />` et la section « FONDS PHOTOGRAPHIQUES » de
- * `globals.css`). Le but est d'ancrer le discours dans le réel — terrain
- * malgache, matériel, installations — sans jamais gêner la lecture.
+ * `globals.css`). Le sujet est toujours le même : des installations solaires
+ * réelles — toitures, balcons, stations portables — pour que le discours soit
+ * porté par ce dont il parle.
  *
- * Toutes les images viennent de `public/photos/` : ce sont les photos des
- * équipes Hazav'Iary, pas du stock. Pour en ajouter une, déposez le fichier,
- * décrivez-la dans `catalogue`, puis placez-la dans la page voulue.
+ * Ces images-ci viennent d'Unsplash (licence gratuite, usage commercial
+ * autorisé, sans attribution obligatoire) et sont stockées dans
+ * `public/photos/fonds/`. Elles sont volontairement séparées de
+ * `public/photos/`, qui ne contient que les photos des équipes Hazav'Iary —
+ * celles-ci alimentent les carrousels (`src/lib/gallery.ts`), jamais les fonds.
  *
- * Règle de composition : jamais deux fois la même photo dans une même page,
- * et l'on évite de reprendre en fond une photo déjà affichée en grand sur la
- * page (le carrousel de l'accueil, la galerie des réalisations).
+ * Les originaux faisaient jusqu'à 6720 px et 5 Mo ; ils ont été ramenés à
+ * 2200 px sur le plus grand côté, ce qui reste très au-delà de ce qu'un fond
+ * voilé demande.
+ *
+ * Règle de composition : jamais deux fois la même photo dans une même page.
  */
 export type Backdrop = {
   src: string;
@@ -30,39 +35,41 @@ export type Backdrop = {
 const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const p = (src: string, sujet: string, position = "center"): Backdrop => ({
-  src: `${base}/photos/${src}`,
+  src: `${base}/photos/fonds/${src}`,
   sujet,
   position,
 });
 
 const catalogue = {
-  /** Présentation d'un kit devant les habitants d'un village, latérite et ciel chargé. */
-  village: p("presentation-village.jpg", "Présentation devant les habitants d'un village", "center 40%"),
-  /** L'équipe au complet, panneau et générateur en main, plein ciel. */
-  equipe: p("equipe-hazaviary.jpg", "L'équipe Hazav'Iary sur le terrain", "center 35%"),
-  /** Le panneau et le générateur en démonstration, paysage de brousse au fond. */
-  kit: p("demonstration-kit-solaire.jpg", "Panneau et générateur en démonstration", "center 30%"),
-  /** Explication d'une ampoule solaire à une famille, devant une maison en terre. */
-  famille: p("explication-ampoule-famille.jpg", "Explication à une famille", "center 25%"),
-  /** Un prospectus lu de près : le geste commercial, au plus près des gens. */
-  prospectus: p("prospectus-hazaviary.jpg", "Un habitant lit le prospectus", "center 35%"),
-  /** L'emblème brodé sur un tee-shirt : une texture, plus qu'une scène. */
-  embleme: p("logo-equipe.jpg", "L'emblème Hazav'Iary sur les tee-shirts", "center 40%"),
+  /** Vue plongeante sur un champ de panneaux posé sur une toiture en tuiles. */
+  toiture: p("toiture-tuiles-panneaux.jpg", "Panneaux sur une toiture en tuiles", "center 45%"),
+  /** Un installateur visse un panneau, corde de sécurité et ciel franc. */
+  pose: p("pose-panneau-toiture.jpg", "Pose d'un panneau sur un toit", "center 40%"),
+  /** Deux panneaux inclinés sur un toit-terrasse, lumière d'automne. */
+  terrasse: p("panneaux-toit-terrasse.jpg", "Panneaux sur un toit-terrasse", "center 55%"),
+  /** Panneaux alignés sur le toit d'une maison en briques (photo verticale). */
+  maison: p("maison-briques-panneaux.jpg", "Panneaux sur une maison en briques", "center 35%"),
+  /** Un panneau accroché au garde-corps d'un balcon : le solaire en ville. */
+  balcon: p("panneau-balcon.jpg", "Panneau accroché à un balcon", "center 60%"),
+  /** Station portable en charge dans un intérieur : l'autonomie à la maison. */
+  interieur: p("station-portable-interieur.jpg", "Station portable en charge à la maison", "center 55%"),
+  /** Station portable qui alimente un campement à la nuit tombée. */
+  campement: p("station-portable-campement.jpg", "Station portable alimentant un campement", "center 50%"),
 } as const;
 
 /**
- * Trois fonds par page, dans l'ordre où ils apparaissent en descendant.
+ * Les fonds d'une page, dans l'ordre où ils apparaissent en descendant.
  */
 export const backdrops = {
-  accueil: [catalogue.village, catalogue.kit, catalogue.famille],
-  services: [catalogue.kit, catalogue.equipe, catalogue.village],
-  serviceDetail: [catalogue.equipe, catalogue.kit, catalogue.famille],
-  offres: [catalogue.famille, catalogue.prospectus, catalogue.kit],
-  realisations: [catalogue.village, catalogue.equipe, catalogue.embleme],
-  simulateur: [catalogue.kit, catalogue.village, catalogue.equipe],
-  aPropos: [catalogue.equipe, catalogue.famille, catalogue.embleme],
-  faq: [catalogue.famille, catalogue.village, catalogue.prospectus],
-  contact: [catalogue.prospectus, catalogue.equipe, catalogue.village],
+  accueil: [catalogue.toiture, catalogue.pose, catalogue.terrasse],
+  services: [catalogue.pose, catalogue.toiture, catalogue.maison],
+  serviceDetail: [catalogue.maison, catalogue.terrasse, catalogue.pose],
+  offres: [catalogue.interieur, catalogue.campement, catalogue.balcon],
+  realisations: [catalogue.toiture, catalogue.maison, catalogue.terrasse],
+  simulateur: [catalogue.balcon, catalogue.interieur, catalogue.toiture],
+  aPropos: [catalogue.pose, catalogue.terrasse, catalogue.campement],
+  faq: [catalogue.campement, catalogue.balcon, catalogue.maison],
+  contact: [catalogue.maison, catalogue.interieur],
   /** Pages légales : un seul fond, très en retrait — ce sont des pages de lecture. */
-  legal: [catalogue.embleme],
+  legal: [catalogue.terrasse],
 } satisfies Record<string, readonly Backdrop[]>;
