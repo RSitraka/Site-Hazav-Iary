@@ -1,33 +1,11 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 
-import { HeroPanel } from "@/components/hero-panel";
-import { PhotoCarousel } from "@/components/photo-carousel";
-import { SectionBackdrop } from "@/components/section-backdrop";
-import { JsonLd } from "@/components/json-ld";
-import { CheckList, CtaBand, FaqList, SectionHeading, TestimonialCard } from "@/components/ui";
-import {
-  ArrowRightIcon,
-  BoltIcon,
-  LeafIcon,
-  PhoneIcon,
-  serviceIcons,
-  ShieldIcon,
-  SunIcon,
-} from "@/components/icons";
-import { keyFigures, site } from "@/lib/site";
-import { services } from "@/lib/services";
-import {
-  commitments,
-  equipmentCatalog,
-  generalFaq,
-  processSteps,
-  provinces,
-  testimonials,
-} from "@/lib/content";
-import { photos } from "@/lib/gallery";
-import { backdrops } from "@/lib/backdrops";
-import { buildMetadata, faqSchema } from "@/lib/seo";
+import { LogoMark } from "@/components/logo";
+import { SceneLink } from "@/components/scene/scene-link";
+import { Plant } from "@/components/scene/decor";
+import { ArrowRightIcon, SunIcon } from "@/components/icons";
+import { site } from "@/lib/site";
+import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: `${site.name} — Installateur de panneaux solaires à Madagascar`,
@@ -43,362 +21,119 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
+/** Panneaux du toit : 2 rangées, plus ou moins de colonnes selon l'écran (CSS). */
+const PANEL_CELLS = Array.from({ length: 20 });
+
+/**
+ * ---------------------------------------------------------------------------
+ * SCÈNE 1 — L'EXTÉRIEUR
+ * ---------------------------------------------------------------------------
+ * La façade de la maison, centrée sur la porte d'entrée. L'accueil du site est
+ * affiché sur la porte, comme une plaque : logo, titre, accroche, présentation.
+ * « Entrer » ouvre la porte et fait avancer la caméra jusqu'au couloir.
+ *
+ * Le toit porte des panneaux solaires : c'est le métier de la maison.
+ */
 export default function HomePage() {
-  const fonds = backdrops.accueil;
-  const homeFaq = generalFaq.slice(0, 5);
-
   return (
-    <>
-      <JsonLd data={faqSchema(homeFaq)} />
+    <section className="ext" aria-labelledby="accueil-titre">
+      {/* Ciel : soleil le jour, lune et étoiles la nuit */}
+      <div className="ext-sky" aria-hidden="true">
+        <span className="ext-star-field" />
+        <span className="ext-orb" />
+        <span className="ext-hill ext-hill-back" />
+        <span className="ext-hill ext-hill-front" />
+      </div>
 
-      {/* ------------------------------- HERO -------------------------------
-          Composition de la maquette : titre centré au-dessus d'un halo bleu,
-          puis la « console » d'onglets posée sur l'arc lumineux. */}
-      <section className="relative overflow-hidden">
-        {/* Arc lumineux — l'horizon bleu derrière le panneau */}
-        <div
-          className="glow-arc top-[620px] h-[760px] animate-pulse-glow md:top-[780px]"
-          aria-hidden="true"
-        />
-
-        <div className="container relative pt-14 text-center md:pt-20">
-          <div className="mx-auto max-w-4xl animate-rise">
-            <p className="eyebrow">
-              <SunIcon width={13} height={13} />
-              Énergie solaire &amp; solutions vertes
-            </p>
-
-            <h1 className="h1 mt-7">
-              L&rsquo;énergie solaire qui <span className="text-accent">éclaire durablement</span>{" "}
-              Madagascar
-            </h1>
-
-            <p className="mx-auto mt-7 max-w-2xl font-mono text-[11.5px] font-bold uppercase leading-relaxed tracking-label muted">
-              Descente technique avant tout devis — dimensionnement écrit —
-              <br className="hidden sm:block" /> contrat à montant et durée fixés — paiement
-              échelonné sur plusieurs mois
-            </p>
-
-            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link href="/contact" className="btn-primary btn-lg">
-                Demander une visite technique
-                <ArrowRightIcon width={16} height={16} />
-              </Link>
-              <Link href="/simulateur" className="btn-secondary btn-lg">
-                Simuler mon installation
-              </Link>
-            </div>
-          </div>
-
-          {/* Console : les quatre temps d'un chantier */}
-          <HeroPanel className="mx-auto mt-14 max-w-5xl text-left" />
-
-          {/* Bandeau de couverture — équivalent de la barre de logos */}
-          <div className="mt-14 pb-16">
-            <p className="label">Nous intervenons partout à Madagascar</p>
-            <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
-              {provinces.map((province) => (
-                <li
-                  key={province}
-                  className="font-mono text-[12.5px] font-bold uppercase tracking-label text-ink-mut transition-colors hover:text-accent"
-                >
-                  {province}
-                </li>
-              ))}
-            </ul>
+      <div className="ext-house">
+        {/* Toit et panneaux solaires */}
+        <div className="ext-roof" aria-hidden="true">
+          <div className="ext-panels">
+            {PANEL_CELLS.map((_, i) => (
+              <span key={i} />
+            ))}
           </div>
         </div>
-      </section>
 
-      {/* ---------------------------- CHIFFRES CLÉS ------------------------- */}
-      <section className="container">
-        <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {keyFigures.map((figure) => (
-            <div key={figure.label} className="stat">
-              <dt className="sr-only">{figure.label}</dt>
-              <dd>
-                <span className="text-[2rem] font-extrabold tracking-title text-accent">
-                  {figure.value}
-                </span>
-                <span className="mt-1 block font-semibold">{figure.label}</span>
-                <span className="mt-1 block text-sm muted">{figure.hint}</span>
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+        {/* Façade */}
+        <div className="ext-facade">
+          <span className="ext-window" aria-hidden="true" />
 
-      {/* ------------------------------ TERRAIN -----------------------------
-          Carrousel de photos réelles des équipes, juste avant les services. */}
-      {photos.length > 0 && (
-        <section className="section pb-0">
-          <div className="container">
-            <SectionHeading
-              eyebrow="Sur le terrain"
-              title="Nos équipes, chez nos clients"
-              lead="Démonstrations, prises en main et poses : nos interventions telles qu'elles se passent, dans les villages comme en ville."
-              align="center"
-            />
-          </div>
-          {/* Hors conteneur : la bande de photos déborde jusqu'aux bords. */}
-          <div className="mt-12">
-            <PhotoCarousel photos={photos} />
-          </div>
-        </section>
-      )}
+          <div className="ext-door-wrap">
+            <span className="ext-lamp ext-lamp-left" aria-hidden="true" />
+            <span className="ext-lamp ext-lamp-right" aria-hidden="true" />
 
-      {/* ------------------------------ SERVICES ---------------------------- */}
-      <section className="section relative isolate overflow-hidden" id="services">
-        <SectionBackdrop {...fonds[0]} />
-        <div className="container">
-          <SectionHeading
-            eyebrow="Nos services"
-            title="De la visite de site au suivi de l'installation"
-            lead="Six prestations qui couvrent la chaîne complète : descente technique, dimensionnement, contrat, fourniture, pose et entretien."
-          />
+            <div className="door" data-door data-door-href="/couloir">
+              {/* Ce que l'on aperçoit quand la porte s'ouvre : la lumière du couloir */}
+              <span className="door-inside" aria-hidden="true" />
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service, i) => {
-              const Icon = serviceIcons[service.icon];
-              return (
-                <Link
-                  key={service.slug}
-                  href={`/services/${service.slug}`}
-                  className="card card-hover group flex flex-col"
-                >
-                  {/* Pastille d'icône en angle, comme sur la maquette */}
-                  <div className="flex items-start justify-between">
-                    <span className="num">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="corner-icon">
-                      <Icon width={16} height={16} />
+              <div className="door-leaf ext-door-leaf">
+                {/* La plaque : la page d'accueil du site */}
+                <div className="ext-plaque">
+                  <div className="flex items-center justify-center gap-2.5">
+                    <LogoMark className="h-11 w-11" priority />
+                    <span className="text-[1.15rem] font-extrabold tracking-title">
+                      <span className="text-ink-dim">HAZAV</span>
+                      <span className="text-accent">&rsquo;IARY</span>
                     </span>
                   </div>
-                  <h3 className="h3 mt-6 text-lg">{service.short}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed muted">{service.excerpt}</p>
-                  <span className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10.5px] font-bold uppercase tracking-label text-accent">
-                    En savoir plus
-                    <ArrowRightIcon
-                      width={14}
-                      height={14}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
-      {/* --------------------------- POURQUOI NOUS -------------------------- */}
-      <section className="section">
-        <div className="container grid gap-14 lg:grid-cols-2 lg:items-center">
-          <div>
-            <SectionHeading
-              eyebrow="Notre méthode"
-              title="Le bon système, ni plus gros, ni plus petit"
-              lead="Un système surdimensionné coûte inutilement cher ; sous-dimensionné, il déçoit dès la première semaine. Notre travail consiste à trouver le point juste."
-            />
-            <CheckList
-              className="mt-8"
-              items={[
-                "Descente sur site : toiture, ombrages, tableau électrique et appareils à alimenter",
-                "Relevé appareil par appareil, pas une estimation donnée au téléphone",
-                "Dimensionnement écrit : panneaux, capacité batterie, puissance d'onduleur",
-                "Contrat qui fixe le montant convenu et la durée de paiement",
-                "Matériel sorti du stock et rattaché nominativement à votre chantier",
-                "Dossier de chantier conservé, puis entretien pour tenir la production",
-              ]}
-            />
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/a-propos" className="btn-secondary">
-                Découvrir l&rsquo;entreprise
-              </Link>
-              <a href={`tel:${site.phoneHref}`} className="btn-ghost">
-                <PhoneIcon width={16} height={16} />
-                {site.phone}
-              </a>
-            </div>
-          </div>
+                  <p className="eyebrow mt-5">
+                    <SunIcon width={13} height={13} />
+                    Énergie solaire &amp; solutions vertes
+                  </p>
 
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {commitments.map((item, i) => {
-              const Icon = [ShieldIcon, BoltIcon, LeafIcon, SunIcon][i % 4];
-              return (
-                <li key={item.title} className="card card-hover">
-                  <span className="corner-icon">
-                    <Icon width={16} height={16} />
-                  </span>
-                  <h3 className="h3 mt-5 text-base">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed muted">{item.text}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
+                  <h1
+                    id="accueil-titre"
+                    className="mt-4 text-[1.55rem] font-extrabold leading-[1.12] tracking-title sm:text-[1.9rem]"
+                  >
+                    L&rsquo;énergie solaire qui{" "}
+                    <span className="text-accent">éclaire durablement</span> Madagascar
+                  </h1>
 
-      {/* ------------------------------ PROCESSUS ---------------------------
-          Étapes numérotées reliées par un filet lumineux, comme la section
-          « How it works » de la maquette. */}
-      <section className="section relative isolate overflow-hidden">
-        <SectionBackdrop {...fonds[1]} />
-        <div className="container">
-          <SectionHeading
-            eyebrow="Comment ça se passe"
-            title="Six étapes, du premier appel au dernier versement"
-            align="center"
-          />
-          <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {processSteps.map((step) => (
-              <li key={step.step} className="card card-hover pt-8">
-                {/* Filet lumineux + numéro en tête de carte */}
-                <div className="absolute inset-x-6 top-0 flex items-center gap-3">
-                  <span className="h-px flex-1 bg-gradient-to-r from-transparent to-accent/60" />
-                  <span className="num rounded-full border border-accent/30 bg-accent-soft px-2.5 py-1">
-                    {step.step}
-                  </span>
-                  <span className="h-px flex-1 bg-gradient-to-l from-transparent to-accent/60" />
+                  <p className="mt-4 text-[14.5px] leading-relaxed dim">
+                    Installateur de panneaux solaires basé à {site.address.city}, nous intervenons
+                    partout à {site.address.countryName}. Descente technique avant tout devis,
+                    dimensionnement écrit, contrat à montant fixé et paiement échelonné sur
+                    plusieurs mois.
+                  </p>
+
+                  <SceneLink href="/couloir" move="in" className="btn-primary btn-lg mt-6 w-full">
+                    Entrer
+                    <ArrowRightIcon width={16} height={16} />
+                  </SceneLink>
+                  <SceneLink
+                    href="/contact"
+                    move="in"
+                    className="mt-3 inline-block text-sm font-semibold text-accent underline-offset-4 hover:underline"
+                  >
+                    Demander une visite technique
+                  </SceneLink>
                 </div>
-                <h3 className="h3 mt-6 text-base">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed muted">{step.text}</p>
-              </li>
-            ))}
-          </ol>
+
+                {/* Poignée */}
+                <span className="door-knob" aria-hidden="true" />
+              </div>
+            </div>
+
+            {/* Marche et paillasson — « Tonga soa » : bienvenue, en malgache */}
+            <div className="ext-step" aria-hidden="true" />
+            <p className="ext-mat">
+              <span lang="mg">Tonga soa</span>
+              <span className="sr-only"> — bienvenue</span>
+            </p>
+          </div>
+
+          <span className="ext-window" aria-hidden="true" />
         </div>
-      </section>
+      </div>
 
-      {/* ----------------------------- SIMULATEUR --------------------------- */}
-      <section className="section">
-        <div className="container">
-          <div className="card-glow grid items-center gap-10 p-8 md:grid-cols-[1.3fr_1fr] md:p-12">
-            <div>
-              <p className="eyebrow">
-                <BoltIcon width={13} height={13} />
-                Outil gratuit
-              </p>
-              <h2 className="h2 mt-5">Combien de panneaux vous faut-il ?</h2>
-              <p className="lead mt-4">
-                Listez vos appareils, ajustez les hypothèses : le simulateur estime votre
-                consommation mensuelle, le nombre de panneaux, la capacité de batterie et la
-                puissance d&rsquo;onduleur nécessaires. La même méthode que nos ingénieurs sur le
-                terrain.
-              </p>
-              <Link href="/simulateur" className="btn-primary btn-lg mt-8">
-                Lancer le simulateur
-                <ArrowRightIcon width={16} height={16} />
-              </Link>
-            </div>
-            <div className="grid gap-3 text-sm">
-              {[
-                { label: "Consommation mensuelle", value: "kWh/mois" },
-                { label: "Nombre de panneaux", value: "unités" },
-                { label: "Capacité batterie", value: "kWh / Ah" },
-                { label: "Puissance onduleur", value: "kVA" },
-              ].map((row) => (
-                <div
-                  key={row.label}
-                  className="flex items-center justify-between rounded-xl border border-line bg-panel-3/60 px-4 py-3"
-                >
-                  <span className="font-medium">{row.label}</span>
-                  <span className="font-mono text-[12px] font-bold uppercase tracking-label text-accent">
-                    {row.value}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* -------------------------- ZONES ET MATÉRIEL ----------------------- */}
-      <section className="section relative isolate overflow-hidden">
-        <SectionBackdrop {...fonds[2]} />
-        <div className="container">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading
-              eyebrow="Réalisations"
-              title="Nos chantiers, partout à Madagascar"
-              lead="Des installations suivies d'un bout à l'autre de l'île, et un matériel identifié chantier par chantier."
-            />
-            <Link href="/realisations" className="btn-secondary">
-              Voir les réalisations
-            </Link>
-          </div>
-
-          <div className="mt-10 grid gap-5 lg:grid-cols-[1fr_1.2fr]">
-            <div className="card">
-              <h3 className="label">Zones d&rsquo;intervention</h3>
-              <p className="mt-4 leading-relaxed dim">
-                Nous intervenons dans toute {site.address.countryName}. Nos équipes partent
-                d&rsquo;{site.address.city} ; pour un site éloigné, les conditions de déplacement
-                sont convenues avant la visite et chiffrées dans le devis.
-              </p>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {provinces.map((province) => (
-                  <li key={province} className="badge badge-grow">
-                    {province}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              {equipmentCatalog.map((group) => (
-                <article key={group.title} className="card">
-                  <h3 className="label">{group.title}</h3>
-                  <ul className="mt-4 space-y-1.5 text-sm dim">
-                    {group.items.map((item) => (
-                      <li key={item} className="flex items-center gap-2">
-                        <span className="h-1 w-1 shrink-0 rounded-full bg-accent" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------- TÉMOIGNAGES --------------------------- */}
-      {testimonials.length > 0 && (
-        <section className="section">
-          <div className="container">
-            <SectionHeading
-              eyebrow="Témoignages"
-              title="Ce que disent nos clients"
-              align="center"
-            />
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {testimonials.map((item) => (
-                <TestimonialCard key={item.author} item={item} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* --------------------------------- FAQ ------------------------------ */}
-      <section className="section">
-        <div className="container grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
-          <SectionHeading
-            eyebrow="Questions fréquentes"
-            title="Vos questions avant de vous lancer"
-            lead="Prix, rentabilité, durée de vie, garanties : les réponses les plus demandées."
-          />
-          <div>
-            <FaqList items={homeFaq} />
-            <Link href="/faq" className="btn-ghost mt-5">
-              Voir toutes les questions
-              <ArrowRightIcon width={15} height={15} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <CtaBand />
-    </>
+      {/* Jardin et allée */}
+      <div className="ext-ground" aria-hidden="true">
+        <span className="ext-path" />
+        <Plant className="ext-bush ext-bush-left" />
+        <Plant className="ext-bush ext-bush-right" />
+      </div>
+    </section>
   );
 }

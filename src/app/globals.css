@@ -548,3 +548,871 @@
     );
   }
 }
+
+/* =====================================================================
+   MAISON — navigation en scènes
+   ---------------------------------------------------------------------
+   Le site se visite comme une maison : la façade (/), le couloir
+   (/couloir) et une pièce par page. Voir `src/lib/scene.ts` et
+   `src/components/scene/`.
+
+   Le jour (mode clair) et la nuit (mode sombre) ne changent que les
+   variables `--sc-*` ci-dessous : les dessins n'en connaissent pas
+   d'autres. Les textes, eux, restent sur les surfaces du thème.
+   ===================================================================== */
+@layer base {
+  :root {
+    --sc-sky-1: #7cc6e6;
+    --sc-sky-2: #dff2f8;
+    --sc-orb: #ffd36b;
+    --sc-orb-glow: rgba(255, 211, 107, 0.55);
+    --sc-stars: 0;
+    --sc-hill: #8fbf7a;
+    --sc-hill-2: #b3d79b;
+
+    --sc-roof: #3e4a52;
+    --sc-wall: #f1e6d6;
+    --sc-wall-shade: #e0cfb8;
+    --sc-trim: #d9c7ae;
+    --sc-door: #1e86a8;
+    --sc-door-2: #176e8c;
+    --sc-glass-1: #cdeaf5;
+    --sc-glass-2: #f6fbfd;
+    --sc-glass-glow: rgba(255, 255, 255, 0);
+    --sc-inside: #ffe9b8;
+    --sc-stone: #cbbba3;
+    --sc-mat: #8a4f2a;
+    --sc-grass-1: #8cc46f;
+    --sc-grass-2: #6fa855;
+    --sc-path: #dccbae;
+
+    --sc-wood: #9a6a43;
+    --sc-wood-dark: #6e4a2e;
+    --sc-curtain: #e59a4b;
+    --sc-cushion: #f0b46a;
+    --sc-leaf: #4fa65a;
+    --sc-leaf-2: #3a8a48;
+    --sc-pot: #c8693e;
+    --sc-pot-dark: #a55531;
+    --sc-lamp: #f0b44c;
+    --sc-slate: #465057;
+    --sc-accent-paper: #26a6ce;
+    --sc-wire: #6b6b6b;
+
+    --sc-hall-wall-1: #efe4d3;
+    --sc-hall-wall-2: #e4d6c1;
+    --sc-wainscot: #dcc9ad;
+    --sc-wainscot-line: #cdb897;
+    --sc-room-wall: #f4ece0;
+    --sc-room-wall-2: #eadfce;
+    --sc-floor-1: #c9996a;
+    --sc-floor-2: #b5845a;
+    --sc-baseboard: #fbf7f0;
+  }
+
+  .dark {
+    --sc-sky-1: #030c14;
+    --sc-sky-2: #0d2a3a;
+    --sc-orb: #f4ebd0;
+    --sc-orb-glow: rgba(244, 235, 208, 0.35);
+    --sc-stars: 1;
+    --sc-hill: #0c1d14;
+    --sc-hill-2: #10261b;
+
+    --sc-roof: #0b1013;
+    --sc-wall: #1a2329;
+    --sc-wall-shade: #131a1f;
+    --sc-trim: #2a3238;
+    --sc-door: #155f78;
+    --sc-door-2: #0e4558;
+    --sc-glass-1: #ffcf73;
+    --sc-glass-2: #ffe4a8;
+    --sc-glass-glow: rgba(255, 196, 100, 0.42);
+    --sc-inside: #ffc96b;
+    --sc-stone: #2f3438;
+    --sc-mat: #6a3a1d;
+    --sc-grass-1: #11261a;
+    --sc-grass-2: #0a170f;
+    --sc-path: #2a2823;
+
+    --sc-wood: #5e4029;
+    --sc-wood-dark: #3f2b1c;
+    --sc-curtain: #8a5420;
+    --sc-cushion: #a76a2a;
+    --sc-leaf: #2f7a44;
+    --sc-leaf-2: #23603a;
+    --sc-pot: #8e4a2c;
+    --sc-pot-dark: #6e3820;
+    --sc-lamp: #e2a240;
+    --sc-slate: #5a6670;
+    --sc-wire: #9aa4aa;
+
+    --sc-hall-wall-1: #0e161b;
+    --sc-hall-wall-2: #0a1115;
+    --sc-wainscot: #121c22;
+    --sc-wainscot-line: #0b1317;
+    --sc-room-wall: #0f171c;
+    --sc-room-wall-2: #0b1216;
+    --sc-floor-1: #2b2018;
+    --sc-floor-2: #21180f;
+    --sc-baseboard: #1a2227;
+  }
+}
+
+@layer components {
+  /* Les scènes touchent le pied de page : pas de marge noire entre les deux. */
+  #contenu:has(.ext, .corridor, .room) + footer {
+    margin-top: 0;
+  }
+  /* Le bouton « Sortir » ne doit masquer aucune ligne du pied de page. */
+  body:has(.scene-exit) footer {
+    padding-bottom: 72px;
+  }
+
+  /* ------------------------------------------------------------------
+     Caméra : sorties et entrées de scène
+     ------------------------------------------------------------------ */
+  .scene-stage.scene-leave-in {
+    animation: scene-zoom-in 0.62s 0.2s cubic-bezier(0.55, 0, 0.75, 0.2) forwards;
+  }
+  .scene-stage.scene-leave-out {
+    animation: scene-step-back 0.6s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+  }
+  .scene-stage.scene-enter-in {
+    animation: scene-arrive-in 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  }
+  .scene-stage.scene-enter-out {
+    animation: scene-arrive-out 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  }
+
+  @keyframes scene-zoom-in {
+    0% {
+      transform: none;
+      opacity: 1;
+    }
+    65% {
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2.8);
+      opacity: 0;
+    }
+  }
+  @keyframes scene-step-back {
+    to {
+      transform: scale(0.84);
+      opacity: 0;
+    }
+  }
+  @keyframes scene-arrive-in {
+    from {
+      transform: scale(0.88);
+      opacity: 0;
+    }
+  }
+  @keyframes scene-arrive-out {
+    from {
+      transform: scale(1.14);
+      opacity: 0;
+    }
+  }
+  @keyframes scene-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes scene-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  /* Portes : un battant qui pivote sur ses gonds (à gauche), vers l'intérieur. */
+  .door {
+    position: relative;
+    perspective: 1600px;
+  }
+  .door-inside {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 90% at 50% 100%, #fff6dc, var(--sc-inside) 45%, #a8742c);
+    opacity: 0.85;
+    transition: opacity 0.3s;
+  }
+  .door-leaf {
+    transform-origin: left center;
+    transition:
+      transform 0.45s cubic-bezier(0.3, 0.7, 0.2, 1),
+      box-shadow 0.3s;
+  }
+  .door.is-opening .door-leaf {
+    transform: rotateY(80deg);
+    transition-duration: 0.55s;
+  }
+  .door.is-closing .door-leaf {
+    animation: door-close 0.7s 0.15s cubic-bezier(0.3, 0.7, 0.2, 1) backwards;
+  }
+  @keyframes door-close {
+    from {
+      transform: rotateY(80deg);
+    }
+  }
+  .door-knob {
+    position: absolute;
+    right: 8px;
+    top: 52%;
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 35% 35%, #fff0b8, #d9a03c 60%, #8a5d16);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Réduction des animations : de simples fondus, aucune caméra. Ces
+     règles sont plus précises que la remise à zéro globale de `base`. */
+  @media (prefers-reduced-motion: reduce) {
+    .scene-stage.scene-leave-in,
+    .scene-stage.scene-leave-out {
+      animation: scene-fade-out 0.25s ease forwards !important;
+      animation-duration: 0.25s !important;
+    }
+    .scene-stage.scene-enter-in,
+    .scene-stage.scene-enter-out {
+      animation: scene-fade-in 0.3s ease backwards !important;
+      animation-duration: 0.3s !important;
+    }
+    .door-leaf,
+    .door.is-opening .door-leaf,
+    .c-door:hover .c-door-leaf {
+      transform: none !important;
+    }
+    .door.is-closing .door-leaf {
+      animation: none !important;
+    }
+  }
+
+  /* Bouton « Sortir » / « Retour » : toujours en bas à droite. */
+  .scene-exit {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 45;
+    box-shadow: var(--shadow-lg), var(--glow-strong);
+  }
+
+  /* ------------------------------------------------------------------
+     Scène 1 — l'extérieur
+     ------------------------------------------------------------------ */
+  .ext {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    min-height: 100svh;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Le ciel passe sous l'en-tête transparent. */
+    margin-top: -74px;
+    padding-top: calc(74px + 1.5rem);
+  }
+  .ext-sky {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom, var(--sc-sky-1), var(--sc-sky-2) 75%);
+  }
+  .ext-star-field {
+    position: absolute;
+    inset: 0 0 35% 0;
+    opacity: var(--sc-stars);
+    background-image:
+      radial-gradient(1.6px 1.6px at 8% 18%, #fff 50%, transparent 52%),
+      radial-gradient(1.2px 1.2px at 19% 42%, #fff 50%, transparent 52%),
+      radial-gradient(1.8px 1.8px at 31% 12%, #fff 50%, transparent 52%),
+      radial-gradient(1.1px 1.1px at 44% 30%, #fff 50%, transparent 52%),
+      radial-gradient(1.5px 1.5px at 57% 9%, #fff 50%, transparent 52%),
+      radial-gradient(1.2px 1.2px at 66% 38%, #fff 50%, transparent 52%),
+      radial-gradient(1.7px 1.7px at 74% 22%, #fff 50%, transparent 52%),
+      radial-gradient(1.1px 1.1px at 89% 46%, #fff 50%, transparent 52%),
+      radial-gradient(1.4px 1.4px at 94% 14%, #fff 50%, transparent 52%),
+      radial-gradient(1.2px 1.2px at 12% 64%, #fff 50%, transparent 52%),
+      radial-gradient(1.3px 1.3px at 82% 66%, #fff 50%, transparent 52%);
+  }
+  .ext-orb {
+    position: absolute;
+    top: calc(74px + 6%);
+    right: 9%;
+    width: clamp(48px, 7vw, 84px);
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: var(--sc-orb);
+    box-shadow: 0 0 90px 20px var(--sc-orb-glow);
+  }
+  .ext-hill {
+    position: absolute;
+    left: -15%;
+    right: -15%;
+    border-radius: 50% 50% 0 0;
+  }
+  .ext-hill-back {
+    bottom: 10%;
+    height: 34%;
+    background: var(--sc-hill-2);
+  }
+  .ext-hill-front {
+    bottom: 0;
+    left: 30%;
+    height: 26%;
+    background: var(--sc-hill);
+  }
+
+  .ext-house {
+    position: relative;
+    width: min(1000px, calc(100% - 1.25rem));
+    margin: 0 auto;
+  }
+  .ext-roof {
+    display: flex;
+    height: clamp(70px, 10vw, 124px);
+    margin: 0 -4%;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      to bottom,
+      var(--sc-roof),
+      color-mix(in srgb, var(--sc-roof) 80%, black)
+    );
+    clip-path: polygon(11% 0, 89% 0, 100% 100%, 0 100%);
+  }
+  .ext-panels {
+    display: grid;
+    width: 64%;
+    height: 64%;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3px;
+    transform: perspective(600px) rotateX(24deg);
+  }
+  .ext-panels span {
+    border: 1px solid rgb(var(--accent-pure) / 0.55);
+    border-radius: 2px;
+    background: linear-gradient(135deg, #2a8fb5, #0e3a4f 70%);
+    box-shadow: 0 0 12px rgb(var(--accent-pure) / 0.35);
+  }
+  @media (max-width: 639px) {
+    .ext-panels {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .ext-panels span:nth-child(n + 13) {
+      display: none;
+    }
+  }
+  .ext-facade {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(1rem, 5vw, 4.5rem);
+    padding: clamp(1.25rem, 4vw, 2.75rem) clamp(0.6rem, 3vw, 3rem) 0;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 26px, rgb(0 0 0 / 0.04) 26px 28px),
+      linear-gradient(
+        to right,
+        var(--sc-wall-shade),
+        var(--sc-wall) 12%,
+        var(--sc-wall) 88%,
+        var(--sc-wall-shade)
+      );
+  }
+  .ext-window {
+    display: none;
+    position: relative;
+    width: 150px;
+    height: 190px;
+    flex-shrink: 0;
+    align-self: center;
+    border: 10px solid var(--sc-wood);
+    border-radius: 6px;
+    background: linear-gradient(to bottom, var(--sc-glass-1), var(--sc-glass-2));
+    box-shadow:
+      0 0 60px var(--sc-glass-glow),
+      inset 0 0 0 1px rgb(0 0 0 / 0.1);
+  }
+  .ext-window::before,
+  .ext-window::after {
+    content: "";
+    position: absolute;
+    background: var(--sc-wood);
+  }
+  .ext-window::before {
+    left: calc(50% - 3px);
+    top: 0;
+    bottom: 0;
+    width: 6px;
+  }
+  .ext-window::after {
+    top: calc(50% - 3px);
+    left: 0;
+    right: 0;
+    height: 6px;
+  }
+  @media (min-width: 900px) {
+    .ext-window {
+      display: block;
+    }
+  }
+
+  .ext-door-wrap {
+    position: relative;
+    width: min(470px, 100%);
+  }
+  .ext-door-wrap .door {
+    border: clamp(8px, 1.6vw, 14px) solid var(--sc-trim);
+    border-bottom: 0;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08);
+  }
+  .ext-door-leaf {
+    position: relative;
+    padding: clamp(12px, 3vw, 26px) clamp(12px, 3vw, 26px) 44px;
+    border-radius: 10px 10px 0 0;
+    background:
+      linear-gradient(
+        to right,
+        rgb(0 0 0 / 0.14),
+        transparent 8%,
+        transparent 92%,
+        rgb(0 0 0 / 0.14)
+      ),
+      linear-gradient(to bottom, var(--sc-door), var(--sc-door-2));
+  }
+  .ext-door-leaf .door-knob {
+    top: auto;
+    bottom: 18px;
+    right: 18px;
+  }
+  .ext-plaque {
+    border: 1px solid rgb(var(--border-2));
+    border-radius: 20px;
+    background: rgb(var(--surface) / 0.97);
+    padding: clamp(18px, 4vw, 30px);
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .ext-lamp {
+    display: none;
+    position: absolute;
+    top: 64px;
+    width: 16px;
+    height: 28px;
+    border-radius: 5px 5px 8px 8px;
+    background: linear-gradient(#fff3c9, var(--sc-lamp));
+    box-shadow: 0 0 40px 10px rgb(255 200 110 / 0.45);
+  }
+  .ext-lamp-left {
+    left: -36px;
+  }
+  .ext-lamp-right {
+    right: -36px;
+  }
+  @media (min-width: 640px) {
+    .ext-lamp {
+      display: block;
+    }
+  }
+  .ext-step {
+    height: 14px;
+    margin: 0 -22px;
+    border-radius: 3px 3px 0 0;
+    background: var(--sc-stone);
+  }
+  .ext-mat {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 1;
+    margin-top: 10px;
+    transform: translateX(-50%);
+    border-radius: 6px;
+    background: var(--sc-mat);
+    padding: 6px 22px;
+    color: #f6e9d2;
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 3px 8px rgb(0 0 0 / 0.25);
+  }
+  .ext-ground {
+    position: relative;
+    height: clamp(90px, 14vh, 140px);
+    background: linear-gradient(to bottom, var(--sc-grass-1), var(--sc-grass-2));
+  }
+  .ext-path {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: min(520px, 80%);
+    transform: translateX(-50%);
+    background: var(--sc-path);
+    clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%);
+  }
+  .ext-bush {
+    position: absolute;
+    bottom: 38%;
+    height: clamp(70px, 10vw, 110px);
+    width: auto;
+  }
+  .ext-bush-left {
+    left: 5%;
+  }
+  .ext-bush-right {
+    right: 5%;
+  }
+
+  /* ------------------------------------------------------------------
+     Scène 2 — le couloir
+     ------------------------------------------------------------------ */
+  .corridor {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    min-height: 100svh;
+    flex-direction: column;
+    margin-top: -74px;
+    padding-top: calc(74px + 4.5rem);
+    background: linear-gradient(to bottom, var(--sc-hall-wall-1), var(--sc-hall-wall-2));
+  }
+  /* Lambris : le bas du mur, derrière les portes. */
+  .corridor::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(90px, 15vh, 140px);
+    z-index: -1;
+    height: 200px;
+    border-top: 6px solid var(--sc-wood);
+    background: repeating-linear-gradient(
+      90deg,
+      var(--sc-wainscot) 0 58px,
+      var(--sc-wainscot-line) 58px 61px
+    );
+  }
+  .corridor-ceiling {
+    position: absolute;
+    top: 74px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    display: flex;
+    justify-content: space-around;
+    pointer-events: none;
+  }
+  .corridor-lamp {
+    height: 64px;
+    width: auto;
+    filter: drop-shadow(0 22px 34px rgb(255 205 120 / 0.55));
+  }
+  .corridor-doors-scroll {
+    margin-top: auto;
+    padding: 2.5rem 1.25rem 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+  .corridor-doors {
+    display: flex;
+    width: max-content;
+    margin: 0 auto;
+    align-items: flex-end;
+    gap: 22px;
+  }
+  .corridor-door-slot {
+    position: relative;
+    scroll-snap-align: center;
+  }
+  .c-door {
+    width: min(64vw, 240px);
+    height: 340px;
+    border: 10px solid var(--sc-trim);
+    border-bottom: 0;
+    border-radius: 14px 14px 0 0;
+    background: #1b1209;
+  }
+  @media (min-width: 640px) {
+    .c-door {
+      width: 158px;
+      height: 320px;
+    }
+  }
+  .c-door-leaf {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 10px;
+    border-radius: 4px 4px 0 0;
+    background:
+      linear-gradient(
+        to right,
+        rgb(0 0 0 / 0.16),
+        transparent 10%,
+        transparent 90%,
+        rgb(0 0 0 / 0.16)
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--door) 88%, white),
+        color-mix(in srgb, var(--door) 72%, black)
+      );
+    color: #1b2024;
+  }
+  .c-door-panel {
+    display: block;
+    width: 74%;
+    height: 22%;
+    border-radius: 6px;
+    box-shadow:
+      inset 2px 2px 0 rgb(0 0 0 / 0.2),
+      inset -2px -2px 0 rgb(255 255 255 / 0.16);
+  }
+  .c-door-plaque {
+    display: block;
+    width: 78%;
+    border: 2px solid #c9a86a;
+    border-radius: 8px;
+    background: #f7f1e6;
+    padding: 10px 6px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.25);
+    color: #1b2024;
+  }
+  .c-door-name {
+    display: block;
+    margin-top: 4px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+  }
+  .c-door-desc {
+    display: block;
+    margin-top: 4px;
+    font-size: 11.5px;
+    line-height: 1.35;
+    color: #46525a;
+  }
+  /* Survol / focus clavier : la porte s'entrouvre, la lumière passe. */
+  .c-door:hover .c-door-leaf,
+  .c-door-leaf:focus-visible {
+    transform: rotateY(18deg);
+    box-shadow: 0 0 40px rgb(255 200 110 / 0.35);
+  }
+  .c-door:hover .door-inside,
+  .c-door:focus-within .door-inside {
+    opacity: 1;
+  }
+  .c-door-leaf:focus-visible {
+    outline: 3px solid rgb(var(--accent));
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .c-door-spill {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: 100%;
+    height: 26px;
+    background: radial-gradient(50% 100% at 50% 0, rgb(255 205 120 / 0.65), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .corridor-door-slot:hover .c-door-spill,
+  .corridor-door-slot:focus-within .c-door-spill {
+    opacity: 1;
+  }
+  .corridor-floor {
+    position: relative;
+    height: clamp(90px, 15vh, 140px);
+    border-top: 8px solid var(--sc-baseboard);
+    background:
+      linear-gradient(to bottom, rgb(0 0 0 / 0.18), transparent 40%),
+      repeating-linear-gradient(90deg, var(--sc-floor-1) 0 88px, var(--sc-floor-2) 88px 91px);
+  }
+  .corridor-rug {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: min(760px, 86%);
+    transform: translateX(-50%);
+    background:
+      linear-gradient(
+        to right,
+        transparent 3%,
+        rgb(255 255 255 / 0.15) 3% 4%,
+        transparent 4% 96%,
+        rgb(255 255 255 / 0.15) 96% 97%,
+        transparent 97%
+      ),
+      rgb(var(--accent-pure) / 0.38);
+    clip-path: polygon(14% 0, 86% 0, 100% 100%, 0 100%);
+  }
+
+  /* ------------------------------------------------------------------
+     Scène 3 — les pièces
+     ------------------------------------------------------------------ */
+  .room {
+    position: relative;
+    isolation: isolate;
+    margin-top: -74px;
+    padding-top: 74px;
+  }
+  .room-wall {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 46px, rgb(0 0 0 / 0.03) 46px 48px),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--room) 10%, var(--sc-room-wall)),
+        var(--sc-room-wall-2)
+      );
+  }
+  .room-plaque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    border: 3px solid var(--sc-wood);
+    border-radius: 14px;
+    background: #f7f1e6;
+    padding: 10px 26px 12px;
+    text-align: center;
+    color: #1b2024;
+    box-shadow: var(--shadow);
+  }
+  .room-plaque-kicker {
+    font-family: var(--font-mono), monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: #5a646a;
+  }
+  .room-plaque-name {
+    margin-top: 2px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+  }
+  .room-plaque-desc {
+    margin-top: 2px;
+    font-size: 13px;
+    color: #46525a;
+  }
+  /* Le tableau : le contenu de la page, accroché au mur. */
+  .room-board {
+    position: relative;
+    overflow: clip;
+    border: clamp(6px, 1vw, 10px) solid var(--sc-wood);
+    border-radius: 26px;
+    background: rgb(var(--tone));
+    box-shadow:
+      0 30px 60px rgb(0 0 0 / 0.3),
+      0 0 0 1px rgb(0 0 0 / 0.1);
+  }
+  /* Sol : le meuble se tient sur le parquet, au pied du tableau. */
+  .room-floor {
+    position: relative;
+    height: 172px;
+    padding-bottom: 22px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0 96px,
+      var(--sc-baseboard) 96px 106px,
+      transparent 106px
+    );
+  }
+  .room-floor::after {
+    content: "";
+    position: absolute;
+    inset: 106px 0 0 0;
+    z-index: -1;
+    background:
+      linear-gradient(to bottom, rgb(0 0 0 / 0.2), transparent 50%),
+      repeating-linear-gradient(90deg, var(--sc-floor-1) 0 88px, var(--sc-floor-2) 88px 91px);
+  }
+
+  /* Cadres photo et visionneuse */
+  .frame {
+    position: relative;
+    display: inline-block;
+    border-radius: 6px;
+    background: var(--sc-wood);
+    padding: 7px;
+    box-shadow: 0 10px 22px rgb(0 0 0 / 0.3);
+    cursor: zoom-in;
+    transition:
+      transform 0.25s,
+      box-shadow 0.25s;
+  }
+  .frame:hover,
+  .frame:focus-visible {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow:
+      0 14px 30px rgb(0 0 0 / 0.35),
+      var(--glow-strong);
+  }
+  .frame:focus-visible {
+    border-radius: 6px;
+  }
+  .frame-mat {
+    display: block;
+    background: #f4efe6;
+    padding: 5px;
+  }
+  .frame-wire {
+    position: absolute;
+    left: 50%;
+    top: -20px;
+    width: 46%;
+    height: 20px;
+    transform: translateX(-50%);
+    background:
+      linear-gradient(
+          to top right,
+          transparent calc(50% - 1px),
+          var(--sc-wire) 50%,
+          transparent calc(50% + 1px)
+        )
+        left / 50% 100% no-repeat,
+      linear-gradient(
+          to top left,
+          transparent calc(50% - 1px),
+          var(--sc-wire) 50%,
+          transparent calc(50% + 1px)
+        )
+        right / 50% 100% no-repeat;
+  }
+  .lightbox {
+    max-width: 92vw;
+    max-height: 92svh;
+    margin: auto;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    overflow: visible;
+  }
+  .lightbox::backdrop {
+    background: rgb(0 0 0 / 0.85);
+    backdrop-filter: blur(4px);
+  }
+}
