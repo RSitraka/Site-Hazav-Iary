@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+
+Host: https://rsitraka.github.io/Site-Hazav-Iary
+Sitemap: https://rsitraka.github.io/Site-Hazav-Iary/sitemap.xml
