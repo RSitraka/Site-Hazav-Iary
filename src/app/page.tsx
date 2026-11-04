@@ -1,10 +1,21 @@
+import Link from "next/link";
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 
 import { LogoMark } from "@/components/logo";
-import { SceneLink } from "@/components/scene/scene-link";
-import { Plant } from "@/components/scene/decor";
-import { ArrowRightIcon, SunIcon } from "@/components/icons";
-import { site } from "@/lib/site";
+import { SectionBackdrop } from "@/components/section-backdrop";
+import {
+  ArrowRightIcon,
+  AuditIcon,
+  BoltIcon,
+  MailIcon,
+  PanelIcon,
+  ShieldIcon,
+  SunIcon,
+  WrenchIcon,
+} from "@/components/icons";
+import { mainNav, site } from "@/lib/site";
+import { backdrops } from "@/lib/backdrops";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -21,118 +32,107 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-/** Panneaux du toit : 2 rangées, plus ou moins de colonnes selon l'écran (CSS). */
-const PANEL_CELLS = Array.from({ length: 20 });
+/** Pictogramme de chaque cellule (onglet). */
+const cellIcons: Record<string, typeof SunIcon> = {
+  "/services": WrenchIcon,
+  "/realisations": PanelIcon,
+  "/offres": ShieldIcon,
+  "/simulateur": BoltIcon,
+  "/a-propos": AuditIcon,
+  "/contact": MailIcon,
+};
 
 /**
  * ---------------------------------------------------------------------------
- * SCÈNE 1 — L'EXTÉRIEUR
+ * ACCUEIL — un panneau solaire
  * ---------------------------------------------------------------------------
- * La façade de la maison, centrée sur la porte d'entrée. L'accueil du site est
- * affiché sur la porte, comme une plaque : logo, titre, accroche, présentation.
- * « Entrer » ouvre la porte et fait avancer la caméra jusqu'au couloir.
+ * En haut, le texte de présentation sur une plaque vitrée. En dessous, les
+ * onglets du site sous forme de cellules photovoltaïques dans leur cadre
+ * aluminium (3 × 2, une seule colonne sur mobile).
  *
- * Le toit porte des panneaux solaires : c'est le métier de la maison.
+ * Chaque cellule « bipe » à tour de rôle : une diode verte s'allume et une
+ * onde lumineuse part de la cellule, pour inviter au clic. Les ondes sont
+ * décalées d'une cellule à l'autre et s'arrêtent si le système demande de
+ * réduire les animations (voir `.pv-*` dans `globals.css`).
  */
 export default function HomePage() {
   return (
-    <section className="ext" aria-labelledby="accueil-titre">
-      {/* Ciel : soleil le jour, lune et étoiles la nuit */}
-      <div className="ext-sky" aria-hidden="true">
-        <span className="ext-star-field" />
-        <span className="ext-orb" />
-        <span className="ext-hill ext-hill-back" />
-        <span className="ext-hill ext-hill-front" />
-      </div>
+    <section className="relative isolate overflow-hidden">
+      <SectionBackdrop {...backdrops.accueil[0]} />
 
-      <div className="ext-house">
-        {/* Toit et panneaux solaires */}
-        <div className="ext-roof" aria-hidden="true">
-          <div className="ext-panels">
-            {PANEL_CELLS.map((_, i) => (
-              <span key={i} />
-            ))}
+      <div className="container pb-20 pt-10 md:pt-14">
+        {/* --------------------------- Plaque de texte --------------------------- */}
+        <div className="pv-glass animate-rise">
+          <div className="flex items-center justify-center gap-2.5">
+            <LogoMark className="h-11 w-11" priority />
+            <span className="text-[1.15rem] font-extrabold tracking-title">
+              <span className="text-ink-dim">HAZAV</span>
+              <span className="text-accent">&rsquo;IARY</span>
+            </span>
+          </div>
+
+          <p className="eyebrow mt-6">
+            <SunIcon width={13} height={13} />
+            Énergie solaire &amp; solutions vertes
+          </p>
+
+          <h1 className="h1 mx-auto mt-5 max-w-4xl">
+            L&rsquo;énergie solaire qui <span className="text-accent">éclaire durablement</span>{" "}
+            Madagascar
+          </h1>
+
+          <p className="lead mx-auto mt-5 max-w-2xl">
+            Installateur de panneaux solaires basé à {site.address.city}, nous intervenons partout
+            à {site.address.countryName}. Descente technique avant tout devis, dimensionnement
+            écrit, contrat à montant fixé et paiement échelonné sur plusieurs mois.
+          </p>
+
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link href="/contact" className="btn-primary btn-lg">
+              Demander une visite technique
+              <ArrowRightIcon width={16} height={16} />
+            </Link>
+            <a href={`tel:${site.phoneHref}`} className="btn-secondary btn-lg">
+              {site.phone}
+            </a>
           </div>
         </div>
 
-        {/* Façade */}
-        <div className="ext-facade">
-          <span className="ext-window" aria-hidden="true" />
+        {/* ---------------------- Panneau : les onglets ---------------------- */}
+        <nav aria-label="Pages du site" className="pv-frame mt-8">
+          <ul className="pv-grid">
+            {mainNav.map((item, i) => {
+              const Icon = cellIcons[item.href] ?? SunIcon;
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="pv-cell group"
+                    style={{ "--i": i } as CSSProperties}
+                  >
+                    {/* Diode et onde du « bip » */}
+                    <span className="pv-ping" aria-hidden="true" />
+                    <span className="pv-led" aria-hidden="true" />
 
-          <div className="ext-door-wrap">
-            <span className="ext-lamp ext-lamp-left" aria-hidden="true" />
-            <span className="ext-lamp ext-lamp-right" aria-hidden="true" />
-
-            <div className="door" data-door data-door-href="/couloir">
-              {/* Ce que l'on aperçoit quand la porte s'ouvre : la lumière du couloir */}
-              <span className="door-inside" aria-hidden="true" />
-
-              <div className="door-leaf ext-door-leaf">
-                {/* La plaque : la page d'accueil du site */}
-                <div className="ext-plaque">
-                  <div className="flex items-center justify-center gap-2.5">
-                    <LogoMark className="h-11 w-11" priority />
-                    <span className="text-[1.15rem] font-extrabold tracking-title">
-                      <span className="text-ink-dim">HAZAV</span>
-                      <span className="text-accent">&rsquo;IARY</span>
+                    <span className="pv-icon" aria-hidden="true">
+                      <Icon width={20} height={20} />
                     </span>
-                  </div>
-
-                  <p className="eyebrow mt-5">
-                    <SunIcon width={13} height={13} />
-                    Énergie solaire &amp; solutions vertes
-                  </p>
-
-                  <h1
-                    id="accueil-titre"
-                    className="mt-4 text-[1.55rem] font-extrabold leading-[1.12] tracking-title sm:text-[1.9rem]"
-                  >
-                    L&rsquo;énergie solaire qui{" "}
-                    <span className="text-accent">éclaire durablement</span> Madagascar
-                  </h1>
-
-                  <p className="mt-4 text-[14.5px] leading-relaxed dim">
-                    Installateur de panneaux solaires basé à {site.address.city}, nous intervenons
-                    partout à {site.address.countryName}. Descente technique avant tout devis,
-                    dimensionnement écrit, contrat à montant fixé et paiement échelonné sur
-                    plusieurs mois.
-                  </p>
-
-                  <SceneLink href="/couloir" move="in" className="btn-primary btn-lg mt-6 w-full">
-                    Entrer
-                    <ArrowRightIcon width={16} height={16} />
-                  </SceneLink>
-                  <SceneLink
-                    href="/contact"
-                    move="in"
-                    className="mt-3 inline-block text-sm font-semibold text-accent underline-offset-4 hover:underline"
-                  >
-                    Demander une visite technique
-                  </SceneLink>
-                </div>
-
-                {/* Poignée */}
-                <span className="door-knob" aria-hidden="true" />
-              </div>
-            </div>
-
-            {/* Marche et paillasson — « Tonga soa » : bienvenue, en malgache */}
-            <div className="ext-step" aria-hidden="true" />
-            <p className="ext-mat">
-              <span lang="mg">Tonga soa</span>
-              <span className="sr-only"> — bienvenue</span>
-            </p>
-          </div>
-
-          <span className="ext-window" aria-hidden="true" />
-        </div>
-      </div>
-
-      {/* Jardin et allée */}
-      <div className="ext-ground" aria-hidden="true">
-        <span className="ext-path" />
-        <Plant className="ext-bush ext-bush-left" />
-        <Plant className="ext-bush ext-bush-right" />
+                    <span className="pv-label">{item.label}</span>
+                    {item.description && <span className="pv-desc">{item.description}</span>}
+                    <span className="pv-go">
+                      Ouvrir
+                      <ArrowRightIcon
+                        width={14}
+                        height={14}
+                        className="transition-transform group-hover:translate-x-1"
+                      />
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
     </section>
   );

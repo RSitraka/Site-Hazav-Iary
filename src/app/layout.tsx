@@ -114,11 +114,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
 
         <SiteHeader />
-        {/* `overflow: clip` : le zoom de « caméra » ne doit pas créer de barre de
-            défilement (contrairement à `hidden`, il laisse `sticky` fonctionner). */}
-        <main id="contenu" className="overflow-clip">
-          {children}
-        </main>
+        <main id="contenu">{children}</main>
         <SiteFooter />
       </body>
     </html>
